@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Стулья - Мебель для здоровья</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .cart-notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .cart-notification.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            gap: 10px;
+        }
+
+        .cart-item-info {
+            flex-grow: 1;
+        }
+
+        .cart-item-title {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .remove-item {
+            background: none;
+            border: none;
+            color: #ff4444;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .remove-item:hover {
+            color: #cc0000;
+        }
+
+        @keyframes addToCart {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .cart-btn.animate {
+            animation: addToCart 0.3s ease;
+        }
+
+        .product-card {
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            z-index: 1000;
+        }
+
+        .product-modal-content {
+            position: relative;
+            background-color: #fff;
+            margin: 5% auto;
+            padding: 30px;
+            width: 80%;
+            max-width: 800px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+
+        .product-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .product-modal-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .product-modal-close {
+            font-size: 28px;
+            font-weight: bold;
+            color: #666;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .product-modal-close:hover {
+            color: #333;
+        }
+
+        .product-modal-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .product-modal-image {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .product-modal-info {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .product-modal-feature {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .product-modal-feature i {
+            color: #4CAF50;
+        }
+
+        .product-modal-price {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+            margin-top: 20px;
+        }
+
+        .product-modal-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .product-modal-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .product-modal-btn.primary {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .product-modal-btn.primary:hover {
+            background-color: #45a049;
+        }
+
+        .product-modal-btn.secondary {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        .product-modal-btn.secondary:hover {
+            background-color: #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <a href="index.html">
+                    <img src="images/LOG 2.jpg" alt="Логотип" class="logo">
+                </a>
+                <p class="slogan">Наша концепция — качественная недорогая мебель для здоровья спины всей семьи!</p>
+            </div>
+            <div class="contact-section">
+                <div class="contact-icons">
+                    <a href="tel:+79991234567" class="contact-link"><i class="fas fa-phone"></i> +7 (999) 123-45-67</a>
+                    <a href="mailto:info@example.com" class="contact-link"><i class="fas fa-envelope"></i> info@example.com</a>
+                    <button class="cart-btn">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">0</span>
+                    </button>
+                </div>
+                <button class="callback-btn">Обратный звонок</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Основной контент -->
+    <main>
+        <section class="category-header">
+            <h1>СТУЛЬЯ</h1>
+            <p class="category-description">Эргономичные стулья для комфортной работы и отдыха</p>
+        </section>
+
+        <section class="products-grid">
+            <div class="product-card">
+                <img src="РАЗДЕЛЫ/СТУЛЬЯ/модели/1.jpg" alt="Стул ФРЕД">
+                <h3>Стул ФРЕД</h3>
+                <button class="order-btn">ЗАКАЗАТЬ</button>
+            </div>
+            <div class="product-card">
+                <img src="РАЗДЕЛЫ/СТУЛЬЯ/модели/2.jpg" alt="Стул РУМБА">
+                <h3>Стул РУМБА</h3>
+                <button class="order-btn">ЗАКАЗАТЬ</button>
+            </div>
+            <div class="product-card">
+                <img src="РАЗДЕЛЫ/СТУЛЬЯ/модели/3.jpg" alt="Стул КОРА">
+                <h3>Стул КОРА</h3>
+                <button class="order-btn">ЗАКАЗАТЬ</button>
+            </div>
+            <div class="product-card">
+                <img src="РАЗДЕЛЫ/СТУЛЬЯ/модели/4.jpg" alt="Стул-кресло ВЕРСАЛЬ">
+                <h3>Стул-кресло ВЕРСАЛЬ</h3>
+                <button class="order-btn">ЗАКАЗАТЬ</button>
+            </div>
+            <div class="product-card">
+                <img src="РАЗДЕЛЫ/СТУЛЬЯ/модели/5.jpg" alt="Стул-кресло СОФИЯ">
+                <h3>Стул-кресло СОФИЯ</h3>
+                <button class="order-btn">ЗАКАЗАТЬ</button>
+            </div>
+            <div class="product-card">
+                <img src="РАЗДЕЛЫ/СТУЛЬЯ/модели/6.jpg" alt="СТУЛЬЯ БАРНЫЕ, ПОЛУБАРНЫЕ">
+                <h3>СТУЛЬЯ БАРНЫЕ, ПОЛУБАРНЫЕ</h3>
+                <button class="order-btn">ЗАКАЗАТЬ</button>
+            </div>
+            <div class="product-card">
+                <img src="РАЗДЕЛЫ/СТУЛЬЯ/модели/7.jpg" alt="СТУЛЬЯ ПОВОРОТНЫЕ">
+                <h3>СТУЛЬЯ ПОВОРОТНЫЕ</h3>
+                <button class="order-btn">ЗАКАЗАТЬ</button>
+            </div>
+            <div class="product-card">
+                <img src="РАЗДЕЛЫ/СТУЛЬЯ/модели/8.jpg" alt="СТУЛ-КРЕСЛО БАРНЫЙ, ПОЛУБАРНЫЙ">
+                <h3>СТУЛ-КРЕСЛО БАРНЫЙ, ПОЛУБАРНЫЙ</h3>
+                <button class="order-btn">ЗАКАЗАТЬ</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Модальное окно корзины -->
+    <div class="modal" id="cartModal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Корзина</h2>
+            <div class="cart-items">
+                <!-- Товары будут добавляться сюда динамически -->
+            </div>
+            <div class="cart-total">
+                <p>Товаров в корзине: <span id="totalItems">0</span></p>
+            </div>
+            <form id="cartForm">
+                <div class="form-group">
+                    <label for="cartName">ВАШЕ ИМЯ</label>
+                    <input type="text" id="cartName" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="cartEmail">ВАШ E-MAIL</label>
+                    <input type="email" id="cartEmail" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="cartPhone">ВАШ ТЕЛЕФОН</label>
+                    <input type="tel" id="cartPhone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="cartComment">КОММЕНТАРИЙ К ЗАКАЗУ</label>
+                    <textarea id="cartComment" name="comment" rows="4"></textarea>
+                </div>
+                <button type="submit" class="submit-btn">ОФОРМИТЬ ЗАКАЗ</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Модальное окно детальной информации о товаре -->
+    <div class="product-modal" id="productModal">
+        <div class="product-modal-content">
+            <div class="product-modal-header">
+                <h2 class="product-modal-title">Стул ФРЕД</h2>
+                <span class="product-modal-close">&times;</span>
+            </div>
+            <div class="product-modal-body">
+                <img src="РАЗДЕЛЫ/СТУЛЬЯ/модели/1.jpg" alt="Стул ФРЕД" class="product-modal-image">
+                <div class="product-modal-info">
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Стул кухонный ПРЕМИУМ качества</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Обивка - антивандальный микровелюр</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Огромное кол-во цветов и оттенков</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Легко чистится в домашних условиях</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Стул с мягкой спинкой</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Стул с мягким сиденьем</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Недорогой кухонный стул</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Максимал. рекомендованный вес до 140кг</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Примечание: данная модель может быть изготовлена с поворотным механизмом</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для второго товара -->
+    <div class="product-modal" id="productModal2">
+        <div class="product-modal-content">
+            <div class="product-modal-header">
+                <h2 class="product-modal-title">Стул РУМБА</h2>
+                <span class="product-modal-close">&times;</span>
+            </div>
+            <div class="product-modal-body">
+                <img src="РАЗДЕЛЫ/СТУЛЬЯ/модели/2.jpg" alt="Стул РУМБА" class="product-modal-image">
+                <div class="product-modal-info">
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Стул кухонный ПРЕМИУМ качества</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Обивка - антивандальный микровелюр</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Огромное кол-во цветов и оттенков</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Легко чистится в домашних условиях</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Стул с мягкой спинкой</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Стул с мягким сиденьем</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Недорогой кухонный стул</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Максимал. рекомендованный вес до 140кг</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Примечание: данная модель может быть изготовлена с поворотным механизмом</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для третьего товара -->
+    <div class="product-modal" id="productModal3">
+        <div class="product-modal-content">
+            <div class="product-modal-header">
+                <h2 class="product-modal-title">Стул КОРА</h2>
+                <span class="product-modal-close">&times;</span>
+            </div>
+            <div class="product-modal-body">
+                <img src="РАЗДЕЛЫ/СТУЛЬЯ/модели/3.jpg" alt="Стул КОРА" class="product-modal-image">
+                <div class="product-modal-info">
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Стул кухонный ПРЕМИУМ качества</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Обивка - антивандальный микровелюр</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Огромное кол-во цветов и оттенков</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Легко чистится в домашних условиях</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Стул с мягкой спинкой</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Стул с мягким сиденьем</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Недорогой кухонный стул</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Максимал. рекомендованный вес до 140кг</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Примечание: данная модель может быть изготовлена с поворотным механизмом</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для четвертого товара -->
+    <div class="product-modal" id="productModal4">
+        <div class="product-modal-content">
+            <div class="product-modal-header">
+                <h2 class="product-modal-title">Стул-кресло ВЕРСАЛЬ</h2>
+                <span class="product-modal-close">&times;</span>
+            </div>
+            <div class="product-modal-body">
+                <img src="РАЗДЕЛЫ/СТУЛЬЯ/модели/4.jpg" alt="Стул-кресло ВЕРСАЛЬ" class="product-modal-image">
+                <div class="product-modal-info">
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Кресло-стул ПРЕМИУМ качества</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Обивка - антивандальный микровелюр</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Огромное кол-во цветов и оттенков</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Легко чистится в домашних условиях</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Стул с мягкой спинкой</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Стул с мягким сиденьем</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Недорогой кухонный стул</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Максимал. рекомендованный вес до 140кг</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Примечание: данная модель может быть изготовлена с поворотным механизмом</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для пятого товара -->
+    <div class="product-modal" id="productModal5">
+        <div class="product-modal-content">
+            <div class="product-modal-header">
+                <h2 class="product-modal-title">Стул-кресло СОФИЯ</h2>
+                <span class="product-modal-close">&times;</span>
+            </div>
+            <div class="product-modal-body">
+                <img src="РАЗДЕЛЫ/СТУЛЬЯ/модели/5.jpg" alt="Стул-кресло СОФИЯ" class="product-modal-image">
+                <div class="product-modal-info">
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Кресло-стул ПРЕМИУМ качества</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Обивка - антивандальный микровелюр</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Огромное кол-во цветов и оттенков</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Легко чистится в домашних условиях</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Стул с мягкой спинкой</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Стул с мягким сиденьем</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Недорогой кухонный стул</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Максимал. рекомендованный вес до 140кг</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Примечание: данная модель может быть изготовлена с поворотным механизмом</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для шестого товара -->
+    <div class="product-modal" id="productModal6">
+        <div class="product-modal-content">
+            <div class="product-modal-header">
+                <h2 class="product-modal-title">СТУЛЬЯ БАРНЫЕ, ПОЛУБАРНЫЕ</h2>
+                <span class="product-modal-close">&times;</span>
+            </div>
+            <div class="product-modal-body">
+                <img src="РАЗДЕЛЫ/СТУЛЬЯ/модели/6.jpg" alt="СТУЛЬЯ БАРНЫЕ, ПОЛУБАРНЫЕ" class="product-modal-image">
+                <div class="product-modal-info">
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Барные стулья ПРЕМИУМ качества</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Обивка - антивандальный микровелюр</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Огромное кол-во цветов и оттенков</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Барный стул со спинкой</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Барные стулья для кухни и кафе</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Барный стул высокий и пониже</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Максимал. рекомендованный вес до 140кг</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Примечание: данная модель может быть изготовлена с поворотным механизмом</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для седьмого товара -->
+    <div class="product-modal" id="productModal7">
+        <div class="product-modal-content">
+            <div class="product-modal-header">
+                <h2 class="product-modal-title">СТУЛЬЯ ПОВОРОТНЫЕ</h2>
+                <span class="product-modal-close">&times;</span>
+            </div>
+            <div class="product-modal-body">
+                <img src="РАЗДЕЛЫ/СТУЛЬЯ/модели/7.jpg" alt="СТУЛЬЯ ПОВОРОТНЫЕ" class="product-modal-image">
+                <div class="product-modal-info">
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Барные стулья ПРЕМИУМ качества</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Стул с поворотным механизмом 360 градусов</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Обивка - антивандальный микровелюр</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Огромное кол-во цветов и оттенков</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Барный стул со спинкой</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Барные стулья для кухни и кафе</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Барный стул высокий и пониже</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Максимал. рекомендованный вес до 140кг</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для восьмого товара -->
+    <div class="product-modal" id="productModal8">
+        <div class="product-modal-content">
+            <div class="product-modal-header">
+                <h2 class="product-modal-title">СТУЛ-КРЕСЛО БАРНЫЙ, ПОЛУБАРНЫЙ</h2>
+                <span class="product-modal-close">&times;</span>
+            </div>
+            <div class="product-modal-body">
+                <img src="РАЗДЕЛЫ/СТУЛЬЯ/модели/8.jpg" alt="СТУЛ-КРЕСЛО БАРНЫЙ, ПОЛУБАРНЫЙ" class="product-modal-image">
+                <div class="product-modal-info">
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Барное кресло-стул ПРЕМИУМ качества</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Обивка - антивандальный микровелюр</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Огромное кол-во цветов и оттенков</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Барный стул со спинкой</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Барные стулья для кухни и кафе</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Барный стул высокий и пониже</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Максимал. рекомендованный вес до 140кг</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Примечание: данная модель может быть изготовлена с поворотным механизмом</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Функционал корзины
+        let cart = [];
+        const cartCount = document.querySelector('.cart-count');
+        const cartBtn = document.querySelector('.cart-btn');
+
+        function addToCart(product) {
+            cart.push(product);
+            updateCartCount();
+            showCartNotification(product.name);
+        }
+
+        function updateCartCount() {
+            cartCount.textContent = cart.length;
+            cartBtn.classList.add('animate');
+            setTimeout(() => {
+                cartBtn.classList.remove('animate');
+            }, 300);
+        }
+
+        function showCartNotification(productName) {
+            const notification = document.createElement('div');
+            notification.className = 'cart-notification';
+            notification.textContent = `${productName} добавлен в корзину`;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 10);
+
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }, 2000);
+        }
+
+        // Обработчики кнопок "ЗАКАЗАТЬ"
+        document.querySelectorAll('.order-btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const card = this.closest('.product-card');
+                const product = {
+                    name: card.querySelector('h3').textContent,
+                    image: card.querySelector('img').src,
+                    price: '0', // Здесь можно добавить цену, если она есть
+                    quantity: 1
+                };
+                addToCart(product);
+            });
+        });
+
+        // Обработчик кнопки корзины
+        cartBtn.addEventListener('click', function() {
+            const cartModal = document.getElementById('cartModal');
+            const cartItems = cartModal.querySelector('.cart-items');
+            cartItems.innerHTML = '';
+
+            cart.forEach((item, index) => {
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}" style="width: 50px; height: 50px; object-fit: contain;">
+                    <div class="cart-item-info">
+                        <div class="cart-item-title">${item.name}</div>
+                    </div>
+                    <button class="remove-item" onclick="removeFromCart(${index})">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+                cartItems.appendChild(cartItem);
+            });
+
+            document.getElementById('totalItems').textContent = cart.length;
+            cartModal.style.display = 'block';
+        });
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartCount();
+            const cartModal = document.getElementById('cartModal');
+            const cartItems = cartModal.querySelector('.cart-items');
+            cartItems.innerHTML = '';
+            
+            cart.forEach((item, i) => {
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}" style="width: 50px; height: 50px; object-fit: contain;">
+                    <div class="cart-item-info">
+                        <div class="cart-item-title">${item.name}</div>
+                    </div>
+                    <button class="remove-item" onclick="removeFromCart(${i})">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+                cartItems.appendChild(cartItem);
+            });
+
+            document.getElementById('totalItems').textContent = cart.length;
+        }
+
+        // Обработчики для открытия модальных окон товаров
+        document.querySelectorAll('.product-card').forEach((card, index) => {
+            card.addEventListener('click', function(e) {
+                if (!e.target.classList.contains('order-btn')) {
+                    const modalId = `productModal${index === 0 ? '' : index + 1}`;
+                    document.getElementById(modalId).style.display = 'block';
+                }
+            });
+        });
+
+        // Закрытие модальных окон товаров
+        document.querySelectorAll('.product-modal-close').forEach(closeBtn => {
+            closeBtn.addEventListener('click', function() {
+                this.closest('.product-modal').style.display = 'none';
+            });
+        });
+
+        // Закрытие модальных окон при клике вне их содержимого
+        window.onclick = function(event) {
+            const modals = document.querySelectorAll('.product-modal');
+            const cartModal = document.getElementById('cartModal');
+            
+            modals.forEach(modal => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+            
+            if (event.target === cartModal) {
+                cartModal.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html> 

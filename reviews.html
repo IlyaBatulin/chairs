@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Отзывы - Мебель для здоровья</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Шапка -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <a href="index.html">
+                    <img src="images/LOG 2.jpg" alt="Логотип" class="logo">
+                </a>
+                <p class="slogan">Наша концепция — качественная недорогая мебель для здоровья спины всей семьи!</p>
+            </div>
+            <div class="contact-section">
+                <div class="contact-icons">
+                    <a href="tel:+79991234567" class="contact-link"><i class="fas fa-phone"></i> +7 (999) 123-45-67</a>
+                    <a href="mailto:info@example.com" class="contact-link"><i class="fas fa-envelope"></i> info@example.com</a>
+                </div>
+                <button class="callback-btn">Обратный звонок</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="reviews-page">
+        <section class="reviews-content">
+            <h1>Отзывы наших клиентов</h1>
+            
+            <div class="reviews-sources">
+                <a href="reviews.html" class="active">Отзывы на сайте</a>
+                <a href="https://www.avito.ru/user/156aa76adb290d3cafc66c4c00d721cc/profile?src=sharing" target="_blank">Отзывы на Авито</a>
+            </div>
+
+            <button class="add-review-btn" onclick="openReviewModal()">
+                <i class="fas fa-plus"></i> Оставить отзыв
+            </button>
+
+            <div class="reviews-grid" id="reviewsContainer">
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-info">
+                            <h3 class="review-author">Анна Петрова</h3>
+                            <div class="review-date"><i class="far fa-calendar-alt"></i> 15.03.2024</div>
+                        </div>
+                    </div>
+                    <div class="review-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="review-text">Купила массажное кресло премиум-класса, очень довольна! Спина перестала болеть уже после первой недели использования. Отдельное спасибо Максиму за подробную консультацию и помощь с выбором.</div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-info">
+                            <h3 class="review-author">Дмитрий Иванов</h3>
+                            <div class="review-date"><i class="far fa-calendar-alt"></i> 02.04.2024</div>
+                        </div>
+                    </div>
+                    <div class="review-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="review-text">Заказывал детское растущее кресло для сына. Качество отличное, ребенок доволен. Особенно радует возможность регулировки по высоте - теперь не придется менять стул каждый год.</div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-info">
+                            <h3 class="review-author">Елена Сидорова</h3>
+                            <div class="review-date"><i class="far fa-calendar-alt"></i> 10.04.2024</div>
+                        </div>
+                    </div>
+                    <div class="review-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                    <div class="review-text">Приобрела компактное массажное кресло. Идеально вписалось в небольшую квартиру. Функционал полностью соответствует описанию. Единственное - хотелось бы больше вариантов расцветок.</div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-info">
+                            <h3 class="review-author">Сергей Николаев</h3>
+                            <div class="review-date"><i class="far fa-calendar-alt"></i> 12.04.2024</div>
+                        </div>
+                    </div>
+                    <div class="review-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="review-text">Отличный магазин! Купил офисный стул "Комфорт" - действительно удобный. Доставка быстрая, сборка заняла всего 15 минут. Рекомендую!</div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-info">
+                            <h3 class="review-author">Марина Козлова</h3>
+                            <div class="review-date"><i class="far fa-calendar-alt"></i> 14.04.2024</div>
+                        </div>
+                    </div>
+                    <div class="review-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="review-text">Заказала кресло для работы из дома. Порадовала быстрая доставка и профессиональная сборка. Кресло очень удобное, спина больше не устает даже после долгого рабочего дня. Большое спасибо!</div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-info">
+                            <h3 class="review-author">Игорь Васильев</h3>
+                            <div class="review-date"><i class="far fa-calendar-alt"></i> 15.04.2024</div>
+                        </div>
+                    </div>
+                    <div class="review-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                    <div class="review-text">Приобрел геймерское кресло. Качество материалов на высоте, регулировки позволяют настроить идеальное положение. Единственный минус - немного скрипит при наклоне, но это не критично.</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Модальное окно для отзыва -->
+    <div class="modal" id="reviewModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeReviewModal()">&times;</span>
+            <h2>Оставить отзыв</h2>
+            <form id="reviewForm">
+                <div class="form-group">
+                    <label for="reviewName">Ваше имя</label>
+                    <input type="text" id="reviewName" name="reviewName" required placeholder="Как к вам обращаться?">
+                </div>
+                <div class="form-group">
+                    <label>Ваша оценка</label>
+                    <div class="rating-stars">
+                        <div class="stars">
+                            <i class="far fa-star" data-rating="1"></i>
+                            <i class="far fa-star" data-rating="2"></i>
+                            <i class="far fa-star" data-rating="3"></i>
+                            <i class="far fa-star" data-rating="4"></i>
+                            <i class="far fa-star" data-rating="5"></i>
+                        </div>
+                        <span class="rating-text">Нажмите на звезду для оценки</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="reviewText">Ваш отзыв</label>
+                    <textarea id="reviewText" name="reviewText" required 
+                        placeholder="Расскажите о вашем опыте использования нашей продукции..."></textarea>
+                </div>
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-paper-plane"></i> Отправить отзыв
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 

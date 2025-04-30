@@ -1,0 +1,13 @@
+{
+  "name": "chairs-website",
+  "version": "1.0.0",
+  "description": "Сайт-визитка магазина кресел",
+  "main": "index.html",
+  "scripts": {
+    "start": "live-server",
+    "dev": "live-server"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  }
+}
