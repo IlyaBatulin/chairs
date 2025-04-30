@@ -7,37 +7,37 @@ const products = [
     id: 1,
     name: 'Офисное кресло "Комфорт"',
     price: 12990,
-    image: '/images/chair1.jpg',
+    image: 'https://images.unsplash.com/photo-1580480055273-228ff5388ef8?w=800&auto=format&fit=crop&q=60',
   },
   {
     id: 2,
     name: 'Геймерское кресло "Про"',
     price: 24990,
-    image: '/images/chair2.jpg',
+    image: 'https://images.unsplash.com/photo-1592078615290-033ee584e267?w=800&auto=format&fit=crop&q=60',
   },
   {
     id: 3,
     name: 'Детское кресло "Радуга"',
     price: 8990,
-    image: '/images/chair3.jpg',
+    image: 'https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=800&auto=format&fit=crop&q=60',
   },
   {
     id: 4,
     name: 'Кресло-качалка "Уют"',
     price: 18990,
-    image: '/images/chair4.jpg',
+    image: 'https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=800&auto=format&fit=crop&q=60',
   },
   {
     id: 5,
     name: 'Компьютерное кресло "Стандарт"',
     price: 15990,
-    image: '/images/chair5.jpg',
+    image: 'https://images.unsplash.com/photo-1580480055273-228ff5388ef8?w=800&auto=format&fit=crop&q=60',
   },
   {
     id: 6,
     name: 'Кресло для руководителя "Престиж"',
     price: 34990,
-    image: '/images/chair6.jpg',
+    image: 'https://images.unsplash.com/photo-1592078615290-033ee584e267?w=800&auto=format&fit=crop&q=60',
   },
 ];
 
