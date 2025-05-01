@@ -232,7 +232,7 @@
             };
 
             // Отправляем данные на сервер
-            fetch('send_order.php', {
+            fetch('/api/send-order', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
