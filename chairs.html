@@ -833,6 +833,47 @@
                 cartModal.style.display = 'none';
             }
         }
+
+        // Обработчик отправки формы корзины
+        document.getElementById('cartForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                name: document.getElementById('cartName').value,
+                email: document.getElementById('cartEmail').value,
+                phone: document.getElementById('cartPhone').value,
+                comment: document.getElementById('cartComment').value,
+                items: cart
+            };
+
+            // Отправляем данные на сервер
+            fetch('send_order.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Заказ успешно отправлен!');
+                    // Очищаем корзину
+                    cart = [];
+                    updateCartCount();
+                    // Закрываем модальное окно
+                    document.getElementById('cartModal').style.display = 'none';
+                    // Очищаем форму
+                    this.reset();
+                } else {
+                    alert('Ошибка при отправке заказа: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Ошибка:', error);
+                alert('Произошла ошибка при отправке заказа');
+            });
+        });
     </script>
 </body>
 </html> 
