@@ -9,6 +9,37 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .cart-notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .cart-notification.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        @keyframes addToCart {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .cart-btn.animate {
+            animation: addToCart 0.3s ease;
+        }
+    </style>
 </head>
 <body>
     <!-- Шапка -->
@@ -219,6 +250,48 @@
 
     <script src="script.js"></script>
     <script>
+        // Функционал корзины
+        let cart = [];
+        const cartCount = document.querySelector('.cart-count');
+        const cartBtn = document.querySelector('.cart-btn');
+
+        function addToCart(productName, price) {
+            const product = {
+                name: productName,
+                price: price,
+                quantity: 1
+            };
+            cart.push(product);
+            updateCartCount();
+            showCartNotification(productName);
+        }
+
+        function updateCartCount() {
+            cartCount.textContent = cart.length;
+            cartBtn.classList.add('animate');
+            setTimeout(() => {
+                cartBtn.classList.remove('animate');
+            }, 300);
+        }
+
+        function showCartNotification(productName) {
+            const notification = document.createElement('div');
+            notification.className = 'cart-notification';
+            notification.textContent = `${productName} добавлен в корзину`;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 10);
+
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }, 2000);
+        }
+
         // Обработчик отправки формы корзины
         document.getElementById('cartForm').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -259,6 +332,37 @@
                 alert('Произошла ошибка при отправке заказа');
             });
         });
+
+        function openOfficeModal() {
+            const modal = document.getElementById('officeModal');
+            modal.style.display = 'block';
+            
+            // Обновляем обработчики кнопок заказа
+            const orderButtons = modal.querySelectorAll('.order-btn');
+            orderButtons.forEach(button => {
+                button.onclick = function(e) {
+                    e.stopPropagation();
+                    const productCard = this.closest('.product-card');
+                    const productName = productCard.querySelector('h3').textContent;
+                    addToCart(productName, 89990);
+                };
+            });
+        }
+
+        function openSportModal() {
+            const modal = document.getElementById('sportModal');
+            modal.style.display = 'block';
+            
+            // Обновляем обработчик кнопки заказа
+            const orderButton = modal.querySelector('.order-btn');
+            if (orderButton) {
+                orderButton.onclick = function(e) {
+                    e.stopPropagation();
+                    const productName = "Кресло с массажем спортивное";
+                    addToCart(productName, 79990);
+                };
+            }
+        }
     </script>
 </body>
 </html> 
