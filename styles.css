@@ -38,7 +38,7 @@ body {
 
 .slogan {
     color: #8B6B4D;
-    font-size: 32px;
+    font-size: 28px;
     margin-top: 20px;
     max-width: 400px;
     font-weight: 500;
@@ -426,10 +426,11 @@ body {
 
 .contact-photo {
     max-width: 250px;
-    height: auto;
-    border-radius: 0;
-    object-fit: contain;
+    height: 250px;
+    border-radius: 50%;
+    object-fit: cover;
     border: 3px solid #8B6B4D;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .contact-details {
@@ -667,6 +668,12 @@ body {
     .gallery-next {
         margin-left: 10px;
     }
+
+    .contact-photo {
+        margin: 0 auto 20px;
+        width: 200px;
+        height: 200px;
+    }
 }
 
 @media (max-width: 640px) {
@@ -736,6 +743,7 @@ body {
         font-size: 20px;
         text-align: center;
         margin: 15px auto;
+        max-width: 320px;
     }
 
     .contact-icons {
@@ -833,6 +841,11 @@ body {
     .add-review-btn {
         width: 90%;
         margin: 10px auto;
+    }
+
+    .contact-photo {
+        width: 150px;
+        height: 150px;
     }
 }
 
