@@ -740,4 +740,55 @@ document.addEventListener('click', (e) => {
         mobileMenu.classList.remove('active');
         document.body.style.overflow = '';
     }
+});
+
+// Галерея-слайдер
+document.addEventListener('DOMContentLoaded', function() {
+    const galleryTrack = document.querySelector('.gallery-track');
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    const prevButton = document.querySelector('.gallery-prev');
+    const nextButton = document.querySelector('.gallery-next');
+    
+    if (!galleryTrack || !prevButton || !nextButton) return;
+    
+    let currentIndex = 0;
+    const itemWidth = galleryItems[0].offsetWidth;
+    const visibleItems = Math.floor(galleryTrack.parentElement.offsetWidth / itemWidth);
+    const maxIndex = galleryItems.length - visibleItems;
+    
+    // Обновление размеров при изменении окна
+    window.addEventListener('resize', function() {
+        const newItemWidth = galleryItems[0].offsetWidth;
+        const newVisibleItems = Math.floor(galleryTrack.parentElement.offsetWidth / newItemWidth);
+        const newMaxIndex = galleryItems.length - newVisibleItems;
+        
+        if (currentIndex > newMaxIndex) {
+            currentIndex = newMaxIndex > 0 ? newMaxIndex : 0;
+            updateGalleryPosition();
+        }
+    });
+    
+    // Функция для обновления позиции галереи
+    function updateGalleryPosition() {
+        galleryTrack.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
+    }
+    
+    // Обработчик для кнопки "Предыдущий"
+    prevButton.addEventListener('click', function() {
+        if (currentIndex > 0) {
+            currentIndex--;
+            updateGalleryPosition();
+        }
+    });
+    
+    // Обработчик для кнопки "Следующий"
+    nextButton.addEventListener('click', function() {
+        if (currentIndex < maxIndex) {
+            currentIndex++;
+            updateGalleryPosition();
+        }
+    });
+    
+    // Инициализация начальной позиции
+    updateGalleryPosition();
 }); 
