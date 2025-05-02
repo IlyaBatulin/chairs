@@ -723,6 +723,16 @@ body {
         border-bottom: 2px solid #8B6B4D;
         padding: 10px 0;
     }
+
+    .category-cards {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+    
+    .category-card {
+        margin: 15px auto;
+    }
 }
 
 @media (max-width: 640px) {
@@ -736,6 +746,12 @@ body {
     .gallery-frame {
         width: 90%;
         margin: 0 auto;
+    }
+    
+    .category-cards {
+        grid-template-columns: 1fr;
+        max-width: 350px;
+        gap: 25px;
     }
     
     .category-card {
@@ -792,6 +808,21 @@ body {
         font-size: 16px;
         padding: 8px 0;
         max-width: 280px;
+    }
+    
+    .category-cards {
+        grid-template-columns: 1fr;
+        max-width: 300px;
+        gap: 20px;
+    }
+    
+    .category-card img {
+        height: 250px;
+    }
+    
+    .category-card h3 {
+        font-size: 16px;
+        padding: 12px;
     }
 
     .contact-icons {
