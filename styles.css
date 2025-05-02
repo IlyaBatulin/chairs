@@ -674,6 +674,39 @@ body {
         width: 200px;
         height: 200px;
     }
+
+    .product-card {
+        max-width: 90%;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .product-card img {
+        width: 85%;
+        object-fit: contain;
+    }
+    
+    .product-card h3 {
+        text-align: center;
+    }
+    
+    .product-card p {
+        text-align: center;
+    }
+    
+    .order-btn {
+        width: 80%;
+        margin: 10px auto 0;
+        text-align: center;
+    }
+    
+    .details-btn {
+        width: 80%;
+        margin: 0 auto 10px;
+        text-align: center;
+    }
 }
 
 @media (max-width: 640px) {
@@ -980,4 +1013,212 @@ body {
     .mobile-menu-btn.active span:nth-child(3) {
         transform: translateY(-9px) rotate(-45deg);
     }
+}
+
+/* Стили корзины */
+.cart-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    padding: 5px;
+    color: #8B6B4D;
+    font-size: 24px;
+}
+
+.cart-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #8B6B4D;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cart-items {
+    margin-bottom: 20px;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.cart-item-name {
+    flex-grow: 1;
+    margin-right: 20px;
+}
+
+.cart-item-remove {
+    color: #ff0000;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.cart-total {
+    font-weight: bold;
+    margin: 20px 0;
+    text-align: right;
+}
+
+#cartForm {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#cartForm .form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+#cartForm label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+#cartForm input,
+#cartForm textarea {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+#cartForm textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+/* Стили для продуктов */
+.product-description {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 25px;
+    margin-bottom: 30px;
+}
+
+.description-header h3 {
+    color: #333;
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.description-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.description-features.vertical {
+    grid-template-columns: 1fr;
+    gap: 15px;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease;
+}
+
+.feature-item:hover {
+    transform: translateY(-2px);
+}
+
+.feature-item i {
+    font-size: 24px;
+    color: #8B6B4D;
+    width: 30px;
+    text-align: center;
+}
+
+.feature-item span {
+    font-size: 16px;
+    color: #444;
+}
+
+.products-grid.three-columns {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.order-btn {
+    background: #8B6B4D;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.details-btn {
+    background: transparent;
+    color: #8B6B4D;
+    border: 2px solid #8B6B4D;
+    padding: 10px 25px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    margin-top: auto;
+    margin-bottom: 10px;
+}
+
+.details-btn:hover {
+    background: rgba(139, 107, 77, 0.1);
+    transform: translateY(-2px);
+}
+
+.order-btn:hover {
+    background: #6F563E;
+    transform: translateY(-2px);
+}
+
+.order-btn.full-width {
+    margin-top: 30px;
+    font-size: 18px;
+    padding: 15px 30px;
+}
+
+/* Стили для спортивного кресла */
+.sport-chair-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-bottom: 20px;
+}
+
+.sport-chair-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.sport-chair-info h3 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 20px;
 } 
