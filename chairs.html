@@ -10,187 +10,29 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        .cart-notification {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #4CAF50;
-            color: white;
-            padding: 15px 25px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            transform: translateY(100px);
-            opacity: 0;
-            transition: all 0.3s ease;
-            z-index: 1000;
-        }
-
-        .cart-notification.show {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        .cart-item {
-            display: flex;
+        /* Стиль для кнопки Назад */
+        .back-btn {
+            display: inline-flex;
             align-items: center;
-            padding: 10px;
-            border-bottom: 1px solid #eee;
-            gap: 10px;
-        }
-
-        .cart-item-info {
-            flex-grow: 1;
-        }
-
-        .cart-item-title {
-            font-weight: 600;
+            gap: 8px;
+            padding: 8px 15px;
+            background-color: #f0f0f0;
             color: #333;
-        }
-
-        .remove-item {
-            background: none;
             border: none;
-            color: #ff4444;
-            cursor: pointer;
-            padding: 5px;
-        }
-
-        .remove-item:hover {
-            color: #cc0000;
-        }
-
-        @keyframes addToCart {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
-        }
-
-        .cart-btn.animate {
-            animation: addToCart 0.3s ease;
-        }
-
-        .product-card {
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-        .product-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .product-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.7);
-            z-index: 1000;
-        }
-
-        .product-modal-content {
-            position: relative;
-            background-color: #fff;
-            margin: 5% auto;
-            padding: 30px;
-            width: 80%;
-            max-width: 800px;
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-        }
-
-        .product-modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .product-modal-title {
-            font-size: 24px;
-            font-weight: 600;
-            color: #333;
-        }
-
-        .product-modal-close {
-            font-size: 28px;
-            font-weight: bold;
-            color: #666;
-            cursor: pointer;
-            transition: color 0.3s ease;
-        }
-
-        .product-modal-close:hover {
-            color: #333;
-        }
-
-        .product-modal-body {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-        }
-
-        .product-modal-image {
-            width: 100%;
-            height: auto;
-            border-radius: 8px;
-        }
-
-        .product-modal-info {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .product-modal-feature {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .product-modal-feature i {
-            color: #4CAF50;
-        }
-
-        .product-modal-price {
-            font-size: 24px;
-            font-weight: 600;
-            color: #333;
-            margin-top: 20px;
-        }
-
-        .product-modal-buttons {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .product-modal-btn {
-            padding: 12px 25px;
-            border: none;
-            border-radius: 5px;
-            font-weight: 600;
+            border-radius: 4px;
+            font-weight: 500;
             cursor: pointer;
             transition: all 0.3s ease;
+            margin-bottom: 15px;
+            text-decoration: none;
         }
-
-        .product-modal-btn.primary {
-            background-color: #4CAF50;
-            color: white;
-        }
-
-        .product-modal-btn.primary:hover {
-            background-color: #45a049;
-        }
-
-        .product-modal-btn.secondary {
-            background-color: #f5f5f5;
-            color: #333;
-        }
-
-        .product-modal-btn.secondary:hover {
+        
+        .back-btn:hover {
             background-color: #e0e0e0;
+        }
+        
+        .back-btn i {
+            font-size: 16px;
         }
     </style>
 </head>
@@ -221,6 +63,7 @@
     <!-- Основной контент -->
     <main>
         <section class="category-header">
+            <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Назад на главную</a>
             <h1>СТУЛЬЯ</h1>
             <p class="category-description">Эргономичные стулья для комфортной работы и отдыха</p>
         </section>
@@ -229,42 +72,42 @@
             <div class="product-card">
                 <img src="РАЗДЕЛЫ/СТУЛЬЯ/модели/1.jpg" alt="Стул ФРЕД">
                 <h3>Стул ФРЕД</h3>
-                <button class="order-btn">ЗАКАЗАТЬ</button>
+                <button class="order-btn" onclick='addToCart("Стул ФРЕД", 12990)'>ЗАКАЗАТЬ</button>
             </div>
             <div class="product-card">
                 <img src="РАЗДЕЛЫ/СТУЛЬЯ/модели/2.jpg" alt="Стул РУМБА">
                 <h3>Стул РУМБА</h3>
-                <button class="order-btn">ЗАКАЗАТЬ</button>
+                <button class="order-btn" onclick='addToCart("Стул РУМБА", 13990)'>ЗАКАЗАТЬ</button>
             </div>
             <div class="product-card">
                 <img src="РАЗДЕЛЫ/СТУЛЬЯ/модели/3.jpg" alt="Стул КОРА">
                 <h3>Стул КОРА</h3>
-                <button class="order-btn">ЗАКАЗАТЬ</button>
+                <button class="order-btn" onclick='addToCart("Стул КОРА", 14990)'>ЗАКАЗАТЬ</button>
             </div>
             <div class="product-card">
                 <img src="РАЗДЕЛЫ/СТУЛЬЯ/модели/4.jpg" alt="Стул-кресло ВЕРСАЛЬ">
                 <h3>Стул-кресло ВЕРСАЛЬ</h3>
-                <button class="order-btn">ЗАКАЗАТЬ</button>
+                <button class="order-btn" onclick='addToCart("Стул-кресло ВЕРСАЛЬ", 19990)'>ЗАКАЗАТЬ</button>
             </div>
             <div class="product-card">
                 <img src="РАЗДЕЛЫ/СТУЛЬЯ/модели/5.jpg" alt="Стул-кресло СОФИЯ">
                 <h3>Стул-кресло СОФИЯ</h3>
-                <button class="order-btn">ЗАКАЗАТЬ</button>
+                <button class="order-btn" onclick='addToCart("Стул-кресло СОФИЯ", 18990)'>ЗАКАЗАТЬ</button>
             </div>
             <div class="product-card">
                 <img src="РАЗДЕЛЫ/СТУЛЬЯ/модели/6.jpg" alt="СТУЛЬЯ БАРНЫЕ, ПОЛУБАРНЫЕ">
                 <h3>СТУЛЬЯ БАРНЫЕ, ПОЛУБАРНЫЕ</h3>
-                <button class="order-btn">ЗАКАЗАТЬ</button>
+                <button class="order-btn" onclick='addToCart("СТУЛЬЯ БАРНЫЕ, ПОЛУБАРНЫЕ", 15990)'>ЗАКАЗАТЬ</button>
             </div>
             <div class="product-card">
                 <img src="РАЗДЕЛЫ/СТУЛЬЯ/модели/7.jpg" alt="СТУЛЬЯ ПОВОРОТНЫЕ">
                 <h3>СТУЛЬЯ ПОВОРОТНЫЕ</h3>
-                <button class="order-btn">ЗАКАЗАТЬ</button>
+                <button class="order-btn" onclick='addToCart("СТУЛЬЯ ПОВОРОТНЫЕ", 16990)'>ЗАКАЗАТЬ</button>
             </div>
             <div class="product-card">
                 <img src="РАЗДЕЛЫ/СТУЛЬЯ/модели/8.jpg" alt="СТУЛ-КРЕСЛО БАРНЫЙ, ПОЛУБАРНЫЙ">
                 <h3>СТУЛ-КРЕСЛО БАРНЫЙ, ПОЛУБАРНЫЙ</h3>
-                <button class="order-btn">ЗАКАЗАТЬ</button>
+                <button class="order-btn" onclick='addToCart("СТУЛ-КРЕСЛО БАРНЫЙ, ПОЛУБАРНЫЙ", 20990)'>ЗАКАЗАТЬ</button>
             </div>
         </section>
     </main>
@@ -698,182 +541,6 @@
         </div>
     </div>
 
-    <script>
-        // Функционал корзины
-        let cart = [];
-        const cartCount = document.querySelector('.cart-count');
-        const cartBtn = document.querySelector('.cart-btn');
-
-        function addToCart(product) {
-            cart.push(product);
-            updateCartCount();
-            showCartNotification(product.name);
-        }
-
-        function updateCartCount() {
-            cartCount.textContent = cart.length;
-            cartBtn.classList.add('animate');
-            setTimeout(() => {
-                cartBtn.classList.remove('animate');
-            }, 300);
-        }
-
-        function showCartNotification(productName) {
-            const notification = document.createElement('div');
-            notification.className = 'cart-notification';
-            notification.textContent = `${productName} добавлен в корзину`;
-            document.body.appendChild(notification);
-
-            setTimeout(() => {
-                notification.classList.add('show');
-            }, 10);
-
-            setTimeout(() => {
-                notification.classList.remove('show');
-                setTimeout(() => {
-                    notification.remove();
-                }, 300);
-            }, 2000);
-        }
-
-        // Обработчики кнопок "ЗАКАЗАТЬ"
-        document.querySelectorAll('.order-btn').forEach(button => {
-            button.addEventListener('click', function(e) {
-                e.preventDefault();
-                const card = this.closest('.product-card');
-                const product = {
-                    name: card.querySelector('h3').textContent,
-                    image: card.querySelector('img').src,
-                    price: '0', // Здесь можно добавить цену, если она есть
-                    quantity: 1
-                };
-                addToCart(product);
-            });
-        });
-
-        // Обработчик кнопки корзины
-        cartBtn.addEventListener('click', function() {
-            const cartModal = document.getElementById('cartModal');
-            const cartItems = cartModal.querySelector('.cart-items');
-            cartItems.innerHTML = '';
-
-            cart.forEach((item, index) => {
-                const cartItem = document.createElement('div');
-                cartItem.className = 'cart-item';
-                cartItem.innerHTML = `
-                    <img src="${item.image}" alt="${item.name}" style="width: 50px; height: 50px; object-fit: contain;">
-                    <div class="cart-item-info">
-                        <div class="cart-item-title">${item.name}</div>
-                    </div>
-                    <button class="remove-item" onclick="removeFromCart(${index})">
-                        <i class="fas fa-times"></i>
-                    </button>
-                `;
-                cartItems.appendChild(cartItem);
-            });
-
-            document.getElementById('totalItems').textContent = cart.length;
-            cartModal.style.display = 'block';
-        });
-
-        function removeFromCart(index) {
-            cart.splice(index, 1);
-            updateCartCount();
-            const cartModal = document.getElementById('cartModal');
-            const cartItems = cartModal.querySelector('.cart-items');
-            cartItems.innerHTML = '';
-            
-            cart.forEach((item, i) => {
-                const cartItem = document.createElement('div');
-                cartItem.className = 'cart-item';
-                cartItem.innerHTML = `
-                    <img src="${item.image}" alt="${item.name}" style="width: 50px; height: 50px; object-fit: contain;">
-                    <div class="cart-item-info">
-                        <div class="cart-item-title">${item.name}</div>
-                    </div>
-                    <button class="remove-item" onclick="removeFromCart(${i})">
-                        <i class="fas fa-times"></i>
-                    </button>
-                `;
-                cartItems.appendChild(cartItem);
-            });
-
-            document.getElementById('totalItems').textContent = cart.length;
-        }
-
-        // Обработчики для открытия модальных окон товаров
-        document.querySelectorAll('.product-card').forEach((card, index) => {
-            card.addEventListener('click', function(e) {
-                if (!e.target.classList.contains('order-btn')) {
-                    const modalId = `productModal${index === 0 ? '' : index + 1}`;
-                    document.getElementById(modalId).style.display = 'block';
-                }
-            });
-        });
-
-        // Закрытие модальных окон товаров
-        document.querySelectorAll('.product-modal-close').forEach(closeBtn => {
-            closeBtn.addEventListener('click', function() {
-                this.closest('.product-modal').style.display = 'none';
-            });
-        });
-
-        // Закрытие модальных окон при клике вне их содержимого
-        window.onclick = function(event) {
-            const modals = document.querySelectorAll('.product-modal');
-            const cartModal = document.getElementById('cartModal');
-            
-            modals.forEach(modal => {
-                if (event.target === modal) {
-                    modal.style.display = 'none';
-                }
-            });
-            
-            if (event.target === cartModal) {
-                cartModal.style.display = 'none';
-            }
-        }
-
-        // Обработчик отправки формы корзины
-        document.getElementById('cartForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const formData = {
-                name: document.getElementById('cartName').value,
-                email: document.getElementById('cartEmail').value,
-                phone: document.getElementById('cartPhone').value,
-                comment: document.getElementById('cartComment').value,
-                items: cart
-            };
-
-            // Отправляем данные на сервер
-            fetch('/api/send-order', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Заказ успешно отправлен!');
-                    // Очищаем корзину
-                    cart = [];
-                    updateCartCount();
-                    // Закрываем модальное окно
-                    document.getElementById('cartModal').style.display = 'none';
-                    // Очищаем форму
-                    this.reset();
-                } else {
-                    alert('Ошибка при отправке заказа: ' + data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Ошибка:', error);
-                alert('Произошла ошибка при отправке заказа');
-            });
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html> 

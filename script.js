@@ -1,80 +1,3 @@
-// Обработка модального окна заказа
-const modal = document.getElementById('orderModal');
-const orderButtons = document.querySelectorAll('.order-btn');
-const closeButton = document.querySelector('.close');
-const orderForm = document.getElementById('orderForm');
-
-// Открытие модального окна при клике на кнопку "ЗАКАЗАТЬ"
-orderButtons.forEach(button => {
-    button.addEventListener('click', function() {
-        const productName = this.parentElement.querySelector('h3').textContent;
-        modal.style.display = 'block';
-        // Добавляем название товара в скрытое поле формы
-        let productInput = orderForm.querySelector('input[name="product"]');
-        if (!productInput) {
-            productInput = document.createElement('input');
-            productInput.type = 'hidden';
-            productInput.name = 'product';
-            orderForm.appendChild(productInput);
-        }
-        productInput.value = productName;
-    });
-});
-
-// Закрытие модального окна при клике на крестик
-closeButton.addEventListener('click', function() {
-    modal.style.display = 'none';
-});
-
-// Закрытие модального окна при клике вне его
-window.addEventListener('click', function(event) {
-    if (event.target === modal) {
-        modal.style.display = 'none';
-    }
-});
-
-// Обработка отправки формы
-orderForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const formData = new FormData(this);
-    const data = {
-        name: formData.get('name'),
-        email: formData.get('email'),
-        phone: formData.get('phone'),
-        product: formData.get('product')
-    };
-
-    // Здесь можно добавить отправку данных на сервер
-    // Пример с использованием fetch:
-    /*
-    fetch('/api/order', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data)
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Success:', data);
-    })
-    .catch((error) => {
-        console.error('Error:', error);
-    });
-    */
-
-    // Временно: просто выводим данные в консоль
-    console.log('Данные заказа:', data);
-    
-    // Очищаем форму и закрываем модальное окно
-    this.reset();
-    modal.style.display = 'none';
-    
-    // Показываем сообщение об успешной отправке
-    alert('Спасибо за заказ! Мы свяжемся с вами в ближайшее время.');
-});
-
 // Галерея
 const galleryImages = document.querySelectorAll('.gallery-image');
 let currentImageIndex = 0;
@@ -202,7 +125,7 @@ document.addEventListener('keydown', (e) => {
 // Кнопка обратного звонка
 const callbackBtn = document.querySelector('.callback-btn');
 callbackBtn.addEventListener('click', function() {
-    modal.style.display = 'block';
+    // Модальное окно оформления заказа убрано, поэтому этот обработчик не используется
 });
 
 // Функция для показа уведомлений
@@ -215,8 +138,57 @@ function showNotification(message, type = 'success') {
 
     const notification = document.createElement('div');
     notification.className = `notification ${type}`;
-    notification.textContent = message;
+    notification.innerHTML = `
+        <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+        <span>${message}</span>
+    `;
     document.body.appendChild(notification);
+
+    // Добавляем стили для уведомлений
+    const style = document.createElement('style');
+    if (!document.querySelector('#notification-styles')) {
+        style.id = 'notification-styles';
+        style.textContent = `
+            .notification {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                transform: translateY(100px);
+                padding: 12px 24px;
+                border-radius: 8px;
+                color: white;
+                font-size: 14px;
+                font-weight: 500;
+                opacity: 0;
+                transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+                z-index: 9999;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                max-width: 320px;
+                width: auto;
+            }
+            
+            .notification.success {
+                background-color: #2ecc71;
+            }
+            
+            .notification.error {
+                background-color: #e74c3c;
+            }
+            
+            .notification.show {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            
+            .notification i {
+                font-size: 18px;
+            }
+        `;
+        document.head.appendChild(style);
+    }
 
     // Добавляем класс show после небольшой задержки для анимации
     requestAnimationFrame(() => {
@@ -229,7 +201,7 @@ function showNotification(message, type = 'success') {
         setTimeout(() => {
             notification.remove();
         }, 300);
-    }, 2000);
+    }, 3000);
 }
 
 // Анимация появления элементов при скролле
@@ -258,63 +230,14 @@ window.addEventListener('load', () => {
 
 window.addEventListener('scroll', animateOnScroll);
 
-// Добавляем стили для уведомлений
-const style = document.createElement('style');
-style.textContent = `
-    .notification {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        padding: 15px 25px;
-        border-radius: 5px;
-        color: white;
-        font-weight: bold;
-        transform: translateX(120%);
-        transition: transform 0.3s ease;
-        z-index: 2000;
-    }
-    
-    .notification.show {
-        transform: translateX(0);
-    }
-    
-    .notification.success {
-        background-color: #4CAF50;
-    }
-    
-    .notification.error {
-        background-color: #f44336;
-    }
-    
-    .gallery-modal {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.9);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 2000;
-    }
-    
-    .gallery-modal img {
-        max-width: 90%;
-        max-height: 90vh;
-        object-fit: contain;
-    }
-    
-    .close-gallery {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        color: white;
-        font-size: 30px;
-        cursor: pointer;
-    }
+// Убрана лишняя глобальная стилизация уведомлений и галереи
+
+// Убираем всплывающее окно оформления заказа
+const hideOrderModalStyle = document.createElement('style');
+hideOrderModalStyle.textContent = `
+    #orderModal { display: none !important; }
 `;
-document.head.appendChild(style);
+document.head.appendChild(hideOrderModalStyle);
 
 document.addEventListener('DOMContentLoaded', function() {
     // Модальные окна подкатегорий
@@ -414,18 +337,25 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Инициализация корзины
-let cart = [];
-let cartCount = 0;
+// Корзина
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+let cartCount = cart.length;
 const cartBtn = document.querySelector('.cart-btn');
 const cartModal = document.getElementById('cartModal');
 const cartItemsContainer = document.querySelector('.cart-items');
 const cartTotalElement = document.getElementById('totalItems');
 
+// Обновляем кнопку корзины при загрузке страницы
+document.addEventListener('DOMContentLoaded', function() {
+    updateCartButton();
+});
+
 function addToCart(name, price) {
     cart.push({ name, price });
     cartCount++;
     updateCartButton();
+    // Сохраняем корзину в localStorage
+    localStorage.setItem('cart', JSON.stringify(cart));
     showNotification('Товар добавлен в корзину', 'success');
 }
 
@@ -441,6 +371,8 @@ function removeFromCart(index) {
     cartCount--;
     updateCartButton();
     updateCartModal();
+    // Сохраняем корзину в localStorage после удаления
+    localStorage.setItem('cart', JSON.stringify(cart));
 }
 
 function updateCartModal() {
@@ -482,12 +414,17 @@ if (cartBtn) {
 }
 
 // Закрытие модального окна корзины при клике на крестик
-const closeCartButton = cartModal ? cartModal.querySelector('.close') : null;
-if (closeCartButton) {
-    closeCartButton.addEventListener('click', function() {
-        cartModal.style.display = 'none';
+document.addEventListener('DOMContentLoaded', function() {
+    const closeButtons = document.querySelectorAll('.modal .close');
+    closeButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const modal = this.closest('.modal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+        });
     });
-}
+});
 
 // Закрытие модального окна при клике вне его
 window.addEventListener('click', function(event) {
@@ -525,6 +462,8 @@ if (cartForm) {
         updateCartButton();
         cartModal.style.display = 'none';
         cartForm.reset();
+        // Очищаем корзину в localStorage после оформления заказа
+        localStorage.setItem('cart', JSON.stringify([]));
         showNotification('Заказ успешно отправлен', 'success');
     });
 }
@@ -583,21 +522,7 @@ function updateCartCount() {
 }
 
 function showCartNotification(message) {
-    const notification = document.createElement('div');
-    notification.className = 'cart-notification';
-    notification.textContent = message;
-    document.body.appendChild(notification);
-
-    setTimeout(() => {
-        notification.classList.add('show');
-    }, 10);
-
-    setTimeout(() => {
-        notification.classList.remove('show');
-        setTimeout(() => {
-            notification.remove();
-        }, 300);
-    }, 2000);
+    showNotification(`${message} добавлен в корзину`, 'success');
 }
 
 // Функции для работы с отзывами

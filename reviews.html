@@ -7,6 +7,32 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Стиль для кнопки Назад */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 15px;
+            background-color: #f0f0f0;
+            color: #333;
+            border: none;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+            text-decoration: none;
+        }
+        
+        .back-btn:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .back-btn i {
+            font-size: 16px;
+        }
+    </style>
 </head>
 <body>
     <!-- Шапка -->
@@ -22,6 +48,10 @@
                 <div class="contact-icons">
                     <a href="tel:+79857600542" class="contact-link"><i class="fas fa-phone"></i> +7 (985) 760-05-42</a>
                     <a href="mailto:info@example.com" class="contact-link"><i class="fas fa-envelope"></i> info@example.com</a>
+                    <button class="cart-btn">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">0</span>
+                    </button>
                 </div>
                 <button class="callback-btn">Обратный звонок</button>
             </div>
@@ -30,6 +60,7 @@
 
     <main class="reviews-page">
         <section class="reviews-content">
+            <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Назад на главную</a>
             <h1>Отзывы наших клиентов</h1>
             
             <div class="reviews-sources">
@@ -178,6 +209,39 @@
                 <button type="submit" class="submit-btn">
                     <i class="fas fa-paper-plane"></i> Отправить отзыв
                 </button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Модальное окно корзины -->
+    <div class="modal" id="cartModal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Корзина</h2>
+            <div class="cart-items">
+                <!-- Товары будут добавляться сюда динамически -->
+            </div>
+            <div class="cart-total">
+                <p>Товаров в корзине: <span id="totalItems">0</span></p>
+            </div>
+            <form id="cartForm">
+                <div class="form-group">
+                    <label for="cartName">ВАШЕ ИМЯ</label>
+                    <input type="text" id="cartName" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="cartEmail">ВАШ E-MAIL</label>
+                    <input type="email" id="cartEmail" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="cartPhone">ВАШ ТЕЛЕФОН</label>
+                    <input type="tel" id="cartPhone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="cartComment">КОММЕНТАРИЙ К ЗАКАЗУ</label>
+                    <textarea id="cartComment" name="comment" rows="4"></textarea>
+                </div>
+                <button type="submit" class="submit-btn">ОФОРМИТЬ ЗАКАЗ</button>
             </form>
         </div>
     </div>

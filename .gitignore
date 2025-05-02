@@ -21,3 +21,4 @@ yarn-error.log*
 # Временные файлы
 *.tmp
 *.temp 
+.vercel

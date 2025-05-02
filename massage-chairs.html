@@ -10,34 +10,29 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        .cart-notification {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #4CAF50;
-            color: white;
-            padding: 15px 25px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            transform: translateY(100px);
-            opacity: 0;
+        /* Стиль для кнопки Назад */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 15px;
+            background-color: #f0f0f0;
+            color: #333;
+            border: none;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
             transition: all 0.3s ease;
-            z-index: 1000;
+            margin-bottom: 15px;
+            text-decoration: none;
         }
-
-        .cart-notification.show {
-            transform: translateY(0);
-            opacity: 1;
+        
+        .back-btn:hover {
+            background-color: #e0e0e0;
         }
-
-        @keyframes addToCart {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
-        }
-
-        .cart-btn.animate {
-            animation: addToCart 0.3s ease;
+        
+        .back-btn i {
+            font-size: 16px;
         }
     </style>
 </head>
@@ -68,6 +63,7 @@
     <!-- Основной контент -->
     <main>
         <section class="category-header">
+            <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Назад на главную</a>
             <h1>КРЕСЛА С МАССАЖЕМ</h1>
             <p class="category-description">Профессиональные массажные кресла для вашего здоровья и комфорта</p>
         </section>
@@ -249,120 +245,5 @@
     </div>
 
     <script src="script.js"></script>
-    <script>
-        // Функционал корзины
-        let cart = [];
-        const cartCount = document.querySelector('.cart-count');
-        const cartBtn = document.querySelector('.cart-btn');
-
-        function addToCart(productName, price) {
-            const product = {
-                name: productName,
-                price: price,
-                quantity: 1
-            };
-            cart.push(product);
-            updateCartCount();
-            showCartNotification(productName);
-        }
-
-        function updateCartCount() {
-            cartCount.textContent = cart.length;
-            cartBtn.classList.add('animate');
-            setTimeout(() => {
-                cartBtn.classList.remove('animate');
-            }, 300);
-        }
-
-        function showCartNotification(productName) {
-            const notification = document.createElement('div');
-            notification.className = 'cart-notification';
-            notification.textContent = `${productName} добавлен в корзину`;
-            document.body.appendChild(notification);
-
-            setTimeout(() => {
-                notification.classList.add('show');
-            }, 10);
-
-            setTimeout(() => {
-                notification.classList.remove('show');
-                setTimeout(() => {
-                    notification.remove();
-                }, 300);
-            }, 2000);
-        }
-
-        // Обработчик отправки формы корзины
-        document.getElementById('cartForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const formData = {
-                name: document.getElementById('cartName').value,
-                email: document.getElementById('cartEmail').value,
-                phone: document.getElementById('cartPhone').value,
-                comment: document.getElementById('cartComment').value,
-                items: cart
-            };
-
-            // Отправляем данные на сервер
-            fetch('/api/send-order', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Заказ успешно отправлен!');
-                    // Очищаем корзину
-                    cart = [];
-                    updateCartCount();
-                    // Закрываем модальное окно
-                    document.getElementById('cartModal').style.display = 'none';
-                    // Очищаем форму
-                    this.reset();
-                } else {
-                    alert('Ошибка при отправке заказа: ' + data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Ошибка:', error);
-                alert('Произошла ошибка при отправке заказа');
-            });
-        });
-
-        function openOfficeModal() {
-            const modal = document.getElementById('officeModal');
-            modal.style.display = 'block';
-            
-            // Обновляем обработчики кнопок заказа
-            const orderButtons = modal.querySelectorAll('.order-btn');
-            orderButtons.forEach(button => {
-                button.onclick = function(e) {
-                    e.stopPropagation();
-                    const productCard = this.closest('.product-card');
-                    const productName = productCard.querySelector('h3').textContent;
-                    addToCart(productName, 89990);
-                };
-            });
-        }
-
-        function openSportModal() {
-            const modal = document.getElementById('sportModal');
-            modal.style.display = 'block';
-            
-            // Обновляем обработчик кнопки заказа
-            const orderButton = modal.querySelector('.order-btn');
-            if (orderButton) {
-                orderButton.onclick = function(e) {
-                    e.stopPropagation();
-                    const productName = "Кресло с массажем спортивное";
-                    addToCart(productName, 79990);
-                };
-            }
-        }
-    </script>
 </body>
 </html> 

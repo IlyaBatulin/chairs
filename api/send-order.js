@@ -29,6 +29,12 @@ export default async function handler(req, res) {
     });
 
     // Создаем транспортер для отправки писем
+    // Для работы нужно:
+    // 1. Включить двухфакторную аутентификацию в Gmail
+    // 2. Создать пароль приложения в настройках безопасности Google
+    // 3. Установить переменные окружения в Vercel:
+    //    - EMAIL_USER: ваш Gmail адрес
+    //    - EMAIL_PASS: пароль приложения
     const transporter = nodemailer.createTransport({
       host: 'smtp.gmail.com',
       port: 587,
@@ -40,9 +46,10 @@ export default async function handler(req, res) {
     });
 
     // Отправляем письмо
+    // Измените email ниже на тот, куда должны приходить заказы
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
-      to: 'ilyabatulin22@gmail.com',
+      to: 'ilyabatulin22@gmail.com', // Замените на нужный email
       subject: 'Новый заказ с сайта',
       text: message,
       replyTo: data.email
