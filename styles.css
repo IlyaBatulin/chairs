@@ -1108,35 +1108,6 @@ body {
     margin-bottom: 20px;
 }
 
-/* Медиа-запросы */
-@media (max-width: 1024px) {
-    .products-grid.three-columns {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 768px) {
-    .products-grid.three-columns {
-        grid-template-columns: 1fr;
-    }
-    
-    .sport-chair-container {
-        grid-template-columns: 1fr;
-    }
-    
-    .modal-content {
-        padding: 20px;
-    }
-    
-    .feature-item {
-        padding: 12px;
-    }
-    
-    .feature-item i {
-        font-size: 20px;
-    }
-}
-
 /* Медиа-запросы для адаптивности */
 @media (max-width: 1200px) {
     .header-content,
@@ -1144,6 +1115,12 @@ body {
     .gallery,
     .contact-info {
         max-width: 95%;
+    }
+}
+
+@media (max-width: 1024px) {
+    .products-grid.three-columns {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
@@ -1170,6 +1147,7 @@ body {
         flex-direction: column;
         align-items: center;
         text-align: center;
+        padding: 0 15px;
     }
 
     .logo-section {
@@ -1184,9 +1162,19 @@ body {
     .category-cards {
         grid-template-columns: 1fr;
         gap: 20px;
+        padding: 0 10px;
     }
 
     .products-grid {
+        grid-template-columns: 1fr;
+        padding: 40px 10px;
+    }
+    
+    .products-grid.three-columns {
+        grid-template-columns: 1fr;
+    }
+    
+    .sport-chair-container {
         grid-template-columns: 1fr;
     }
 
@@ -1210,6 +1198,7 @@ body {
     .modal-content {
         width: 90%;
         margin: 20px auto;
+        padding: 20px;
     }
 
     .review-buttons {
@@ -1220,6 +1209,144 @@ body {
     .review-btn {
         width: 100%;
     }
+    
+    .product-card {
+        max-width: 90%;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .product-card img {
+        width: 85%;
+        object-fit: contain;
+    }
+    
+    .product-card h3 {
+        text-align: center;
+    }
+    
+    .product-card p {
+        text-align: center;
+    }
+    
+    .order-btn {
+        width: 80%;
+        margin: 10px auto 0;
+        text-align: center;
+    }
+    
+    .details-btn {
+        width: 80%;
+        margin: 0 auto 10px;
+        text-align: center;
+    }
+    
+    .feature-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 12px;
+    }
+    
+    .feature-item i {
+        font-size: 20px;
+    }
+    
+    .subcategory-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .review-card {
+        text-align: center;
+    }
+    
+    .mobile-menu nav a {
+        text-align: center;
+    }
+
+    .mobile-menu-btn {
+        display: flex;
+    }
+
+    .mobile-menu {
+        display: block;
+    }
+
+    .mobile-menu-btn.active span:nth-child(1) {
+        transform: translateY(9px) rotate(45deg);
+    }
+
+    .mobile-menu-btn.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .mobile-menu-btn.active span:nth-child(3) {
+        transform: translateY(-9px) rotate(-45deg);
+    }
+}
+
+@media (max-width: 640px) {
+    .main-categories, 
+    .gallery, 
+    .reviews, 
+    .contact {
+        padding: 30px 10px;
+    }
+    
+    .gallery-frame {
+        width: 90%;
+        margin: 0 auto;
+    }
+    
+    .category-card {
+        margin: 10px auto;
+        max-width: 90%;
+    }
+    
+    .category-header {
+        padding: 30px 10px;
+    }
+    
+    .callback-btn {
+        width: 90%;
+        text-align: center;
+        margin: 10px auto;
+        padding: 12px 15px;
+    }
+    
+    .products-grid.three-columns {
+        padding: 20px 10px;
+    }
+    
+    .review-card {
+        padding: 15px;
+        margin: 0 auto 20px;
+        width: 90%;
+    }
+    
+    .product-description {
+        padding: 20px 10px;
+    }
+    
+    .description-features {
+        padding: 15px 5px;
+    }
+    
+    .subcategories-modal .modal-content {
+        padding: 20px 10px;
+    }
+    
+    #cartForm {
+        width: 95%;
+        margin: 0 auto;
+        padding: 15px 10px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1229,11 +1356,14 @@ body {
 
     .slogan {
         font-size: 20px;
+        text-align: center;
+        margin: 15px auto;
     }
 
     .contact-icons {
         flex-direction: column;
         gap: 10px;
+        align-items: center;
     }
 
     .gallery-grid {
@@ -1242,34 +1372,127 @@ body {
 
     .category-header h1 {
         font-size: 2em;
+        text-align: center;
     }
 
     .category-description {
         font-size: 1em;
+        text-align: center;
+        padding: 0 15px;
     }
 
     .product-card {
         padding: 15px;
+        width: 95%;
+        margin: 0 auto;
     }
 
     .product-card img {
         height: 200px;
+        width: 80%;
+        margin: 0 auto;
     }
 
     .product-card h3 {
         font-size: 16px;
+        text-align: center;
+        margin: 10px auto;
     }
 
     .product-card p {
         font-size: 14px;
+        text-align: center;
+        padding: 0 5px;
     }
 
     .product-card .price {
         font-size: 20px;
+        text-align: center;
+        margin: 10px auto;
     }
 
     .order-btn {
         padding: 8px 15px;
+        font-size: 14px;
+        width: 90%;
+        margin: 10px auto 0;
+    }
+    
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        width: 100%;
+    }
+    
+    .form-group label {
+        text-align: center;
+        display: block;
+        margin: 0 auto 5px;
+    }
+    
+    .subcategories-grid {
+        padding: 20px 10px;
+    }
+    
+    .subcategory-item {
+        padding: 10px;
+    }
+    
+    .subcategory-item img {
+        margin: 0 auto;
+    }
+    
+    .cart-item {
+        padding: 10px;
+        justify-content: center;
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .cart-item-name {
+        margin-bottom: 5px;
+    }
+    
+    .add-review-btn {
+        width: 90%;
+        margin: 10px auto;
+    }
+}
+
+@media (max-width: 360px) {
+    .logo {
+        width: 120px;
+    }
+    
+    .slogan {
+        font-size: 18px;
+    }
+    
+    .product-card {
+        padding: 10px;
+    }
+    
+    .product-card img {
+        height: 180px;
+    }
+    
+    .feature-item {
+        padding: 8px;
+    }
+    
+    .feature-item i {
+        font-size: 18px;
+    }
+    
+    .modal-content {
+        padding: 15px 10px;
+    }
+    
+    .contact-name {
+        font-size: 20px;
+    }
+    
+    .contact-phone, .contact-email {
         font-size: 14px;
     }
 }
