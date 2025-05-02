@@ -9,13 +9,11 @@ body {
 /* Шапка */
 .header {
     background-image: url('images/ШАПКА.jpg');
-    background-size: contain;
+    background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
     padding: 20px 0;
     min-height: 500px;
     position: relative;
-    background-color: #f5f5f5;
 }
 
 .header-content {
@@ -41,15 +39,13 @@ body {
 .slogan {
     color: #8B6B4D;
     font-size: 22px;
-    margin-top: 20px;
-    max-width: 400px;
+    margin-top: 15px;
+    max-width: 380px;
     font-weight: 500;
     font-style: italic;
     line-height: 1.3;
-    padding: 10px 15px;
-    background-color: rgba(255, 255, 255, 0.8);
-    border-radius: 5px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-left: 3px solid #8B6B4D;
+    padding-left: 15px;
 }
 
 .contact-section {
@@ -715,6 +711,18 @@ body {
         margin: 0 auto 10px;
         text-align: center;
     }
+
+    .slogan {
+        font-size: 18px;
+        text-align: center;
+        margin: 15px auto;
+        max-width: 100%;
+        border-left: none;
+        padding-left: 0;
+        border-top: 2px solid #8B6B4D;
+        border-bottom: 2px solid #8B6B4D;
+        padding: 10px 0;
+    }
 }
 
 @media (max-width: 640px) {
@@ -781,10 +789,9 @@ body {
     }
 
     .slogan {
-        font-size: 20px;
-        text-align: center;
-        margin: 15px auto;
-        max-width: 320px;
+        font-size: 16px;
+        padding: 8px 0;
+        max-width: 280px;
     }
 
     .contact-icons {
