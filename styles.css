@@ -38,7 +38,7 @@ body {
 
 .slogan {
     color: #8B6B4D;
-    font-size: 24px;
+    font-size: 32px;
     margin-top: 20px;
     max-width: 400px;
     font-weight: 500;
@@ -382,10 +382,10 @@ body {
 }
 
 .contact-photo {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    object-fit: cover;
+    max-width: 250px;
+    height: auto;
+    border-radius: 0;
+    object-fit: contain;
     border: 3px solid #8B6B4D;
 }
 
@@ -1054,6 +1054,26 @@ body {
     cursor: pointer;
     transition: all 0.3s ease;
     width: 100%;
+    margin-top: 10px;
+}
+
+.details-btn {
+    background: transparent;
+    color: #8B6B4D;
+    border: 2px solid #8B6B4D;
+    padding: 10px 25px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    margin-top: auto;
+    margin-bottom: 10px;
+}
+
+.details-btn:hover {
+    background: rgba(139, 107, 77, 0.1);
+    transform: translateY(-2px);
 }
 
 .order-btn:hover {
