@@ -32,6 +32,18 @@
         .back-btn i {
             font-size: 16px;
         }
+        
+        /* Стиль для звезд Авито */
+        .stars-container {
+            display: inline-flex;
+            margin-left: 5px;
+        }
+        
+        .stars-container i {
+            color: #8B6B4D;
+            font-size: 14px;
+            margin-right: 2px;
+        }
     </style>
 </head>
 <body>
@@ -65,7 +77,7 @@
             
             <div class="reviews-sources">
                 <a href="reviews.html" class="active">Отзывы на сайте</a>
-                <a href="https://www.avito.ru/user/156aa76adb290d3cafc66c4c00d721cc/profile/all?src=sharing&sellerId=156aa76adb290d3cafc66c4c00d721cc" target="_blank">Отзывы на Авито</a>
+                <a href="https://www.avito.ru/user/156aa76adb290d3cafc66c4c00d721cc/profile/all?src=sharing&sellerId=156aa76adb290d3cafc66c4c00d721cc" target="_blank">Отзывы на Авито <span class="stars-container"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span></a>
             </div>
 
             <button class="add-review-btn" onclick="openReviewModal()">
