@@ -34,6 +34,111 @@
         .back-btn i {
             font-size: 16px;
         }
+        
+        /* Стили для модальных окон товаров */
+        .product-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .product-modal-content {
+            max-width: 1000px;
+            width: 90%;
+            margin: 50px auto;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-modal-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            position: relative;
+            background-color: #f9f9f9;
+        }
+
+        .product-modal-title {
+            margin: 0;
+            color: #333;
+            font-size: 24px;
+            text-align: center;
+        }
+
+        .product-modal-close {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 28px;
+            color: #666;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .product-modal-close:hover {
+            color: #333;
+        }
+
+        .product-modal-body {
+            padding: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .product-modal-image {
+            width: 100%;
+            max-width: 350px;
+            height: auto;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-modal-info {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .product-modal-feature {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .product-modal-feature:hover {
+            transform: translateX(5px);
+            background: #f0f0f0;
+        }
+
+        .product-modal-feature i {
+            color: #8B6B4D;
+            font-size: 18px;
+        }
+
+        @media (max-width: 768px) {
+            .product-modal-body {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .product-modal-image {
+                margin: 0 auto;
+            }
+        }
     </style>
 </head>
 <body>
@@ -69,122 +174,100 @@
         </section>
 
         <section class="products-grid">
-            <div class="product-card" onclick="openOfficeModal()">
+            <div class="product-card">
                 <img src="РАЗДЕЛЫ/КРЕС С МАССАЖ/классические/11.jpg" alt="Офисное кресло с массажем">
                 <h3>КРЕСЛО С МАССАЖЕМ ОФИСНОЕ</h3>
                 <p>Комфортное офисное кресло с функцией массажа</p>
+                <p class="price">89 990 ₽</p>
+                <button class="details-btn" onclick="openProductModal1()">ПОДРОБНЕЕ</button>
+                <button class="order-btn" onclick='addToCart("Офисное кресло с массажем", 89990)'>В КОРЗИНУ</button>
             </div>
-            <div class="product-card" onclick="openSportModal()">
+            <div class="product-card">
                 <img src="РАЗДЕЛЫ/КРЕС С МАССАЖ/спортивные/10.jpg" alt="Спортивное кресло с массажем">
                 <h3>КРЕСЛО С МАССАЖЕМ СПОРТИВНОЕ</h3>
                 <p>Эргономичное спортивное кресло с массажной функцией</p>
+                <p class="price">79 990 ₽</p>
+                <button class="details-btn" onclick="openProductModal2()">ПОДРОБНЕЕ</button>
+                <button class="order-btn" onclick='addToCart("Кресло с массажем спортивное", 79990)'>В КОРЗИНУ</button>
             </div>
         </section>
     </main>
 
-    <!-- Модальное окно офисных кресел -->
-    <div class="modal" id="officeModal">
-        <div class="modal-content">
-            <span class="close" onclick="closeOfficeModal()">&times;</span>
-            <h2>КРЕСЛА С МАССАЖЕМ ОФИСНЫЕ</h2>
-            
-            <div class="product-description">
-                <div class="description-features">
-                    <div class="feature-item">
+    <!-- Модальное окно для офисных кресел (новый формат) -->
+    <div class="product-modal" id="productModal1">
+        <div class="product-modal-content">
+            <div class="product-modal-header">
+                <h2 class="product-modal-title">КРЕСЛО С МАССАЖЕМ ОФИСНОЕ</h2>
+                <span class="product-modal-close" onclick="closeProductModal1()">&times;</span>
+            </div>
+            <div class="product-modal-body">
+                <img src="РАЗДЕЛЫ/КРЕС С МАССАЖ/классические/11.jpg" alt="Офисное кресло с массажем" class="product-modal-image">
+                <div class="product-modal-info">
+                    <div class="product-modal-feature">
                         <i class="fas fa-star"></i>
                         <span>Компьютерное кресло ПРЕМИУМ качества</span>
                     </div>
-                    <div class="feature-item">
+                    <div class="product-modal-feature">
                         <i class="fas fa-home"></i>
                         <span>Офисное кресло для дома и работы</span>
                     </div>
-                    <div class="feature-item">
+                    <div class="product-modal-feature">
                         <i class="fas fa-spa"></i>
                         <span>Функция вибромассажа ВСЕЙ СПИНЫ</span>
                     </div>
-                    <div class="feature-item">
+                    <div class="product-modal-feature">
                         <i class="fas fa-shoe-prints"></i>
                         <span>Выдвигаемая подставка для ног</span>
                     </div>
-                    <div class="feature-item">
+                    <div class="product-modal-feature">
                         <i class="fas fa-chair"></i>
                         <span>Регулируемое кресло мягкое BOSS</span>
                     </div>
-                    <div class="feature-item">
+                    <div class="product-modal-feature">
                         <i class="fas fa-weight"></i>
                         <span>Максимал. рекомендованный вес до 150кг</span>
                     </div>
                 </div>
             </div>
-
-            <div class="products-grid three-columns">
-                <div class="product-card">
-                    <img src="РАЗДЕЛЫ/КРЕС С МАССАЖ/классические/МОДЕЛИ/1.jpg" alt="Офисное кресло с массажем - Черное">
-                    <h3>Офисное кресло с массажем "Черное"</h3>
-                    <p>Классический дизайн и максимальный комфорт</p>
-                    <p class="price">89 990 ₽</p>
-                    <button class="order-btn" onclick='addToCart("Офисное кресло с массажем Черное", 89990)'>В КОРЗИНУ</button>
-                </div>
-                <div class="product-card">
-                    <img src="РАЗДЕЛЫ/КРЕС С МАССАЖ/классические/МОДЕЛИ/2.jpg" alt="Офисное кресло с массажем - Коричневое">
-                    <h3>Офисное кресло с массажем "Коричневое"</h3>
-                    <p>Премиум качество и комфорт</p>
-                    <p class="price">89 990 ₽</p>
-                    <button class="order-btn" onclick='addToCart("Офисное кресло с массажем Коричневое", 89990)'>В КОРЗИНУ</button>
-                </div>
-                <div class="product-card">
-                    <img src="РАЗДЕЛЫ/КРЕС С МАССАЖ/классические/МОДЕЛИ/3.jpg" alt="Офисное кресло с массажем - Серое">
-                    <h3>Офисное кресло с массажем "Серое"</h3>
-                    <p>Стильный дизайн и эргономичная форма</p>
-                    <p class="price">89 990 ₽</p>
-                    <button class="order-btn" onclick='addToCart("Офисное кресло с массажем Серое", 89990)'>В КОРЗИНУ</button>
-                </div>
-            </div>
         </div>
     </div>
 
-    <!-- Модальное окно спортивных кресел -->
-    <div class="modal" id="sportModal">
-        <div class="modal-content">
-            <span class="close" onclick="closeSportModal()">&times;</span>
-            <h2>КРЕСЛО С МАССАЖЕМ СПОРТИВНОЕ</h2>
-            
-            <div class="sport-chair-container">
-                <div class="sport-chair-image">
-                    <img src="РАЗДЕЛЫ/КРЕС С МАССАЖ/спортивные/10.jpg" alt="Игровое кресло с массажем">
-                </div>
-                <div class="sport-chair-info">
-                    <h3>КОМПЬЮТЕРНОЕ КРЕСЛО ИГРОВОЕ С МАССАЖЕМ</h3>
-                    <div class="description-features vertical">
-                        <div class="feature-item">
-                            <i class="fas fa-star"></i>
-                            <span>Компьютерное кресло ПРЕМИУМ качества</span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-gamepad"></i>
-                            <span>Игровое кресло для любителей компьютерных игр</span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-spa"></i>
-                            <span>Функция вибромассажа (пояснич.зоны)</span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-lightbulb"></i>
-                            <span>Функция подсветки</span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-shoe-prints"></i>
-                            <span>Выдвигаемая подставка для ног</span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-weight"></i>
-                            <span>Максимал. рекомендованный вес до 120кг</span>
-                        </div>
+    <!-- Модальное окно для спортивных кресел (новый формат) -->
+    <div class="product-modal" id="productModal2">
+        <div class="product-modal-content">
+            <div class="product-modal-header">
+                <h2 class="product-modal-title">КРЕСЛО С МАССАЖЕМ СПОРТИВНОЕ</h2>
+                <span class="product-modal-close" onclick="closeProductModal2()">&times;</span>
+            </div>
+            <div class="product-modal-body">
+                <img src="РАЗДЕЛЫ/КРЕС С МАССАЖ/спортивные/10.jpg" alt="Спортивное кресло с массажем" class="product-modal-image">
+                <div class="product-modal-info">
+                    <div class="product-modal-feature">
+                        <i class="fas fa-star"></i>
+                        <span>Компьютерное кресло ПРЕМИУМ качества</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-gamepad"></i>
+                        <span>Игровое кресло для любителей компьютерных игр</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-spa"></i>
+                        <span>Функция вибромассажа (пояснич.зоны)</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-lightbulb"></i>
+                        <span>Функция подсветки</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-shoe-prints"></i>
+                        <span>Выдвигаемая подставка для ног</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-weight"></i>
+                        <span>Максимал. рекомендованный вес до 120кг</span>
                     </div>
                 </div>
             </div>
-            
-            <button class="order-btn full-width" onclick='addToCart("Кресло с массажем спортивное", 79990)'>В КОРЗИНУ</button>
         </div>
     </div>
 
@@ -244,6 +327,156 @@
         </div>
     </div>
 
+    <!-- Скрытые старые модальные окна (для совместимости) -->
+    <div class="modal" id="officeModal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" onclick="closeOfficeModal()">&times;</span>
+            <h2>КРЕСЛА С МАССАЖЕМ ОФИСНЫЕ</h2>
+            
+            <div class="product-description">
+                <div class="description-features">
+                    <div class="feature-item">
+                        <i class="fas fa-star"></i>
+                        <span>Компьютерное кресло ПРЕМИУМ качества</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-home"></i>
+                        <span>Офисное кресло для дома и работы</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-spa"></i>
+                        <span>Функция вибромассажа ВСЕЙ СПИНЫ</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-shoe-prints"></i>
+                        <span>Выдвигаемая подставка для ног</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-chair"></i>
+                        <span>Регулируемое кресло мягкое BOSS</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-weight"></i>
+                        <span>Максимал. рекомендованный вес до 150кг</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="products-grid three-columns">
+                <div class="product-card">
+                    <img src="РАЗДЕЛЫ/КРЕС С МАССАЖ/классические/МОДЕЛИ/1.jpg" alt="Офисное кресло с массажем - Черное">
+                    <h3>Офисное кресло с массажем "Черное"</h3>
+                    <p>Классический дизайн и максимальный комфорт</p>
+                    <p class="price">89 990 ₽</p>
+                    <button class="order-btn" onclick='addToCart("Офисное кресло с массажем Черное", 89990)'>В КОРЗИНУ</button>
+                </div>
+                <div class="product-card">
+                    <img src="РАЗДЕЛЫ/КРЕС С МАССАЖ/классические/МОДЕЛИ/2.jpg" alt="Офисное кресло с массажем - Коричневое">
+                    <h3>Офисное кресло с массажем "Коричневое"</h3>
+                    <p>Премиум качество и комфорт</p>
+                    <p class="price">89 990 ₽</p>
+                    <button class="order-btn" onclick='addToCart("Офисное кресло с массажем Коричневое", 89990)'>В КОРЗИНУ</button>
+                </div>
+                <div class="product-card">
+                    <img src="РАЗДЕЛЫ/КРЕС С МАССАЖ/классические/МОДЕЛИ/3.jpg" alt="Офисное кресло с массажем - Серое">
+                    <h3>Офисное кресло с массажем "Серое"</h3>
+                    <p>Стильный дизайн и эргономичная форма</p>
+                    <p class="price">89 990 ₽</p>
+                    <button class="order-btn" onclick='addToCart("Офисное кресло с массажем Серое", 89990)'>В КОРЗИНУ</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="sportModal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" onclick="closeSportModal()">&times;</span>
+            <h2>КРЕСЛО С МАССАЖЕМ СПОРТИВНОЕ</h2>
+            
+            <div class="sport-chair-container">
+                <div class="sport-chair-image">
+                    <img src="РАЗДЕЛЫ/КРЕС С МАССАЖ/спортивные/10.jpg" alt="Игровое кресло с массажем">
+                </div>
+                <div class="sport-chair-info">
+                    <h3>КОМПЬЮТЕРНОЕ КРЕСЛО ИГРОВОЕ С МАССАЖЕМ</h3>
+                    <div class="description-features vertical">
+                        <div class="feature-item">
+                            <i class="fas fa-star"></i>
+                            <span>Компьютерное кресло ПРЕМИУМ качества</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-gamepad"></i>
+                            <span>Игровое кресло для любителей компьютерных игр</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-spa"></i>
+                            <span>Функция вибромассажа (пояснич.зоны)</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-lightbulb"></i>
+                            <span>Функция подсветки</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-shoe-prints"></i>
+                            <span>Выдвигаемая подставка для ног</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-weight"></i>
+                            <span>Максимал. рекомендованный вес до 120кг</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="order-btn full-width" onclick='addToCart("Кресло с массажем спортивное", 79990)'>В КОРЗИНУ</button>
+        </div>
+    </div>
+
     <script src="script.js"></script>
+    <script>
+        // Функции для модальных окон продуктов
+        function openProductModal1() {
+            document.getElementById('productModal1').style.display = 'block';
+        }
+
+        function closeProductModal1() {
+            document.getElementById('productModal1').style.display = 'none';
+        }
+
+        function openProductModal2() {
+            document.getElementById('productModal2').style.display = 'block';
+        }
+
+        function closeProductModal2() {
+            document.getElementById('productModal2').style.display = 'none';
+        }
+
+        // Сохраняем старые функции для совместимости
+        function openOfficeModal() {
+            document.getElementById('officeModal').style.display = 'block';
+        }
+
+        function closeOfficeModal() {
+            document.getElementById('officeModal').style.display = 'none';
+        }
+
+        function openSportModal() {
+            document.getElementById('sportModal').style.display = 'block';
+        }
+
+        function closeSportModal() {
+            document.getElementById('sportModal').style.display = 'none';
+        }
+
+        // Закрытие модальных окон при клике вне содержимого
+        window.onclick = function(event) {
+            if (event.target.classList.contains('product-modal')) {
+                event.target.style.display = 'none';
+            }
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+            }
+        }
+    </script>
 </body>
 </html> 
