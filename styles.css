@@ -18,22 +18,29 @@ body {
     height: 100vh;
     max-height: 800px;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .header-content {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 30px 20px;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+    width: 100%;
+    position: relative;
+    z-index: 10;
 }
 
 .logo-section {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .logo {
@@ -58,6 +65,10 @@ body {
     flex-direction: column;
     align-items: flex-end;
     gap: 15px;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .contact-icons {
@@ -664,6 +675,40 @@ body {
 
 /* Адаптивность */
 @media (max-width: 768px) {
+    .header {
+        min-height: 400px;
+        height: auto;
+        display: block;
+    }
+    
+    .header-content {
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+    }
+    
+    .logo-section, .contact-section {
+        width: 100%;
+        max-width: 400px;
+        margin-bottom: 20px;
+    }
+    
+    .contact-section {
+        align-items: center;
+    }
+    
+    .slogan {
+        font-size: 18px;
+        text-align: center;
+        margin: 15px auto;
+        max-width: 100%;
+        border-left: none;
+        padding-left: 0;
+        border-top: 2px solid #8B6B4D;
+        border-bottom: 2px solid #8B6B4D;
+        padding: 10px 0;
+    }
+
     .modal-content {
         margin: 20px;
         padding: 20px;
@@ -738,18 +783,6 @@ body {
         width: 80%;
         margin: 0 auto 10px;
         text-align: center;
-    }
-
-    .slogan {
-        font-size: 18px;
-        text-align: center;
-        margin: 15px auto;
-        max-width: 100%;
-        border-left: none;
-        padding-left: 0;
-        border-top: 2px solid #8B6B4D;
-        border-bottom: 2px solid #8B6B4D;
-        padding: 10px 0;
     }
 
     .category-cards {
@@ -831,6 +864,22 @@ body {
     .header {
         min-height: 350px;
         height: auto;
+        display: block;
+        padding: 10px 0;
+    }
+    
+    .header-content {
+        padding: 15px;
+    }
+    
+    .logo-section, .contact-section {
+        width: 100%;
+        padding: 10px;
+    }
+    
+    .logo {
+        width: 120px;
+        margin: 0 auto;
         display: block;
     }
 
