@@ -29,16 +29,14 @@ export default async function handler(req, res) {
     });
 
     // Создаем транспортер для отправки писем
-    // Для работы нужно:
-    // 1. Включить двухфакторную аутентификацию в Gmail
-    // 2. Создать пароль приложения в настройках безопасности Google
-    // 3. Установить переменные окружения в Vercel:
-    //    - EMAIL_USER: ваш Gmail адрес
-    //    - EMAIL_PASS: пароль приложения
+    // Настройки для почтового сервера ruskreslo.ru
+    // Переменные окружения в Vercel:
+    //    - EMAIL_USER: info@ruskreslo.ru
+    //    - EMAIL_PASS: пароль от почтового ящика
     const transporter = nodemailer.createTransport({
-      host: 'smtp.gmail.com',
-      port: 587,
-      secure: false,
+      host: 'mail.ruskreslo.ru',
+      port: 465,
+      secure: true, // true для порта 465 (SSL/TLS)
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS
@@ -46,10 +44,9 @@ export default async function handler(req, res) {
     });
 
     // Отправляем письмо
-    // Измените email ниже на тот, куда должны приходить заказы
     await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: 'ilyabatulin22@gmail.com', // Замените на нужный email
+      from: process.env.EMAIL_USER, // info@ruskreslo.ru
+      to: 'info@ruskreslo.ru', // Адрес для получения заказов
       subject: 'Новый заказ с сайта',
       text: message,
       replyTo: data.email
