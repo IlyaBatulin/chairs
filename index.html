@@ -32,16 +32,15 @@
                         <span class="cart-count">0</span>
                     </button>
                 </div>
-                <button class="callback-btn">Обратный звонок</button>
             </div>
         </div>
     </header>
 
     <div class="mobile-menu">
         <nav>
+            <a href="massage-chairs.html">Кресла с массажем</a>
             <a href="children-chairs.html">Детские растущие кресла</a>
             <a href="chairs.html">Стулья</a>
-            <a href="massage-chairs.html">Кресла с массажем</a>
             <a href="reviews.html">Отзывы</a>
         </nav>
     </div>
@@ -50,6 +49,11 @@
     <main>
         <section class="main-categories">
             <div class="category-cards">
+                <a href="massage-chairs.html" class="category-card">
+                    <img src="images/1.jpg" alt="Кресла с массажем">
+                    <h3>КРЕСЛА С МАССАЖЕМ</h3>
+                </a>
+
                 <a href="children-chairs.html" class="category-card">
                     <img src="images/2.jpg" alt="Детские растущие кресла">
                     <h3>КРЕСЛА ДЕТСКИЕ РАСТУЩИЕ</h3>
@@ -58,11 +62,6 @@
                 <a href="chairs.html" class="category-card">
                     <img src="images/3.jpg" alt="Стулья">
                     <h3>СТУЛЬЯ</h3>
-                </a>
-                
-                <a href="massage-chairs.html" class="category-card">
-                    <img src="images/3.jpg" alt="Кресла с массажем">
-                    <h3>КРЕСЛА С МАССАЖЕМ</h3>
                 </a>
             </div>
         </section>
@@ -185,29 +184,6 @@
             </div>
         </section>
     </main>
-
-    <!-- Модальное окно заказа -->
-    <div class="modal" id="orderModal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Оформление заказа</h2>
-            <form id="orderForm">
-                <div class="form-group">
-                    <label for="name">ВАШЕ ИМЯ</label>
-                    <input type="text" id="name" name="name" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">ВАШ E-MAIL</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="phone">ВАШ ТЕЛЕФОН</label>
-                    <input type="tel" id="phone" name="phone" required>
-                </div>
-                <button type="submit" class="submit-btn">ОФОРМИТЬ ЗАКАЗ</button>
-            </form>
-        </div>
-    </div>
 
     <!-- Модальное окно корзины -->
     <div class="modal" id="cartModal">

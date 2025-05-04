@@ -122,12 +122,6 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// Кнопка обратного звонка
-const callbackBtn = document.querySelector('.callback-btn');
-callbackBtn.addEventListener('click', function() {
-    // Модальное окно оформления заказа убрано, поэтому этот обработчик не используется
-});
-
 // Функция для показа уведомлений
 function showNotification(message, type = 'success') {
     // Удаляем предыдущие уведомления
@@ -231,77 +225,6 @@ window.addEventListener('load', () => {
 window.addEventListener('scroll', animateOnScroll);
 
 // Убрана лишняя глобальная стилизация уведомлений и галереи
-
-// Убираем всплывающее окно оформления заказа
-const hideOrderModalStyle = document.createElement('style');
-hideOrderModalStyle.textContent = `
-    #orderModal { display: none !important; }
-`;
-document.head.appendChild(hideOrderModalStyle);
-
-document.addEventListener('DOMContentLoaded', function() {
-    // Модальные окна подкатегорий
-    const categoryCards = document.querySelectorAll('.category-card');
-    const subcategoryModals = {
-        massage: document.getElementById('massageModal'),
-        children: document.getElementById('childrenModal'),
-        chairs: document.getElementById('chairsModal')
-    };
-    const closeButtons = document.querySelectorAll('.subcategories-modal .close');
-
-    // Открытие модальных окон подкатегорий
-    categoryCards.forEach(card => {
-        card.addEventListener('click', function() {
-            const category = this.dataset.category;
-            const modal = subcategoryModals[category];
-            if (modal) {
-                modal.style.display = 'block';
-                document.body.style.overflow = 'hidden';
-            }
-        });
-    });
-
-    // Закрытие модальных окон подкатегорий
-    closeButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const modal = this.closest('.subcategories-modal');
-            modal.style.display = 'none';
-            document.body.style.overflow = '';
-        });
-    });
-
-    // Закрытие при клике вне модального окна
-    window.addEventListener('click', function(event) {
-        if (event.target.classList.contains('subcategories-modal')) {
-            event.target.style.display = 'none';
-            document.body.style.overflow = '';
-        }
-    });
-
-    // Обработка кнопок заказа в подкатегориях
-    const orderButtons = document.querySelectorAll('.subcategory-item .order-btn');
-    const orderModal = document.getElementById('orderModal');
-    
-    orderButtons.forEach(button => {
-        button.addEventListener('click', function(e) {
-            e.stopPropagation();
-            const productName = this.parentElement.querySelector('h3').textContent;
-            const subcategoryModal = this.closest('.subcategories-modal');
-            subcategoryModal.style.display = 'none';
-            orderModal.style.display = 'block';
-            
-            // Добавляем название товара в скрытое поле формы
-            let productInput = orderForm.querySelector('input[name="product"]');
-            if (!productInput) {
-                productInput = document.createElement('input');
-                productInput.type = 'hidden';
-                productInput.name = 'product';
-                orderForm.appendChild(productInput);
-            }
-            productInput.value = productName;
-        });
-    });
-});
 
 // Управление раскрытием категорий
 document.addEventListener('DOMContentLoaded', () => {
@@ -476,25 +399,14 @@ if (cartForm) {
         localStorage.setItem('cart', JSON.stringify([]));
         console.log('Корзина очищена в localStorage');
         
-        // Собираем данные формы
-        const formData = new FormData(cartForm);
-        const formAction = cartForm.getAttribute('action');
-        
-        // Отправляем данные через fetch
-        fetch(formAction, {
-            method: 'POST',
-            body: formData,
-            mode: 'no-cors' // Важно для cross-origin запросов
-        })
-        .then(response => {
-            console.log('Ответ сервера получен');
+        // Имитируем отправку, чтобы показать уведомление об успешной отправке
+        setTimeout(function() {
             showLargeNotification('Заказ успешно отправлен!', 'Спасибо за ваш заказ. Мы свяжемся с вами в ближайшее время.');
+            // Закрываем модальное окно корзины
             cartModal.style.display = 'none';
-        })
-        .catch(error => {
-            console.error('Ошибка отправки:', error);
-            showNotification('Произошла ошибка при отправке заказа. Пожалуйста, попробуйте позже.', 'error');
-        });
+            // Отправляем форму стандартным способом после показа уведомления
+            cartForm.submit();
+        }, 1000);
     });
 } else {
     console.error('Форма корзины не найдена');
@@ -727,7 +639,7 @@ function displayReviews() {
     console.log('Отображение отзывов');
     const container = document.getElementById('reviewsContainer');
     if (!container) {
-        console.log('Контейнер отзывов не найден, это нормально для страниц без отзывов');
+        console.error('Контейнер отзывов не найден');
         return;
     }
     
@@ -865,31 +777,29 @@ document.addEventListener('DOMContentLoaded', function() {
 const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
 const mobileMenu = document.querySelector('.mobile-menu');
 
-if (mobileMenuBtn && mobileMenu) {
-    mobileMenuBtn.addEventListener('click', () => {
-        mobileMenuBtn.classList.toggle('active');
-        mobileMenu.classList.toggle('active');
-        document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
-    });
+mobileMenuBtn.addEventListener('click', () => {
+    mobileMenuBtn.classList.toggle('active');
+    mobileMenu.classList.toggle('active');
+    document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+});
 
-    // Закрытие меню при клике на ссылку
-    mobileMenu.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-            mobileMenuBtn.classList.remove('active');
-            mobileMenu.classList.remove('active');
-            document.body.style.overflow = '';
-        });
+// Закрытие меню при клике на ссылку
+mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+        mobileMenuBtn.classList.remove('active');
+        mobileMenu.classList.remove('active');
+        document.body.style.overflow = '';
     });
+});
 
-    // Закрытие меню при клике вне меню
-    document.addEventListener('click', (e) => {
-        if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target) && mobileMenu.classList.contains('active')) {
-            mobileMenuBtn.classList.remove('active');
-            mobileMenu.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-    });
-}
+// Закрытие меню при клике вне меню
+document.addEventListener('click', (e) => {
+    if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target) && mobileMenu.classList.contains('active')) {
+        mobileMenuBtn.classList.remove('active');
+        mobileMenu.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+});
 
 // Галерея-слайдер
 document.addEventListener('DOMContentLoaded', function() {
