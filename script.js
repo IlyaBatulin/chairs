@@ -411,6 +411,14 @@ if (cartForm) {
             console.log('Скрытое поле:', field.name, field.value);
         });
         
+        // Добавляем проверку на наличие правильного поля honeypot
+        const honeypotField = cartForm.querySelector('input[name="_honeypot"]');
+        if (honeypotField) {
+            console.log('Поле honeypot найдено и настроено правильно');
+        } else {
+            console.error('Поле honeypot не найдено или настроено неправильно!');
+        }
+        
         // Увеличиваем задержку перед отправкой формы
         setTimeout(function() {
             showLargeNotification('Заказ успешно отправлен!', 'Спасибо за ваш заказ. Мы свяжемся с вами в ближайшее время.');
