@@ -1,4 +1,4 @@
-import nodemailer from 'nodemailer';
+import sgMail from '@sendgrid/mail';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -30,44 +30,42 @@ export default async function handler(req, res) {
       message += `- ${item.name}\n`;
     });
 
-    console.log('Создание транспортера с настройками:');
-    console.log('- Host:', 'mail.ruskreslo.ru');
-    console.log('- Port:', 465);
-    console.log('- Secure:', true);
-    console.log('- User:', process.env.EMAIL_USER ? 'Установлен' : 'НЕ УСТАНОВЛЕН');
-    console.log('- Pass:', process.env.EMAIL_PASS ? 'Установлен' : 'НЕ УСТАНОВЛЕН');
+    // Проверяем наличие API ключа SendGrid
+    if (!process.env.SENDGRID_API_KEY) {
+      console.error('Ошибка: API ключ SendGrid не установлен');
+      return res.status(500).json({ 
+        success: false, 
+        message: 'Ошибка конфигурации сервера: API ключ не настроен' 
+      });
+    }
 
-    // Создаем транспортер для отправки писем
-    // Настройки для почтового сервера ruskreslo.ru
-    // Переменные окружения в Vercel:
-    //    - EMAIL_USER: info@ruskreslo.ru
-    //    - EMAIL_PASS: пароль от почтового ящика
-    const transporter = nodemailer.createTransport({
-      host: 'mail.ruskreslo.ru',
-      port: 465,
-      secure: true, // true для порта 465 (SSL/TLS)
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-      }
-    });
+    console.log('Настройка SendGrid...');
+    // Устанавливаем API ключ SendGrid
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
     console.log('Отправка письма...');
-    // Отправляем письмо
-    const info = await transporter.sendMail({
-      from: process.env.EMAIL_USER, // info@ruskreslo.ru
-      to: 'info@ruskreslo.ru', // Адрес для получения заказов
+    // Подготавливаем данные письма
+    const msg = {
+      to: 'info@ruskreslo.ru', // Адрес получателя
+      from: process.env.EMAIL_FROM || 'info@ruskreslo.ru', // Адрес отправителя
       subject: 'Новый заказ с сайта',
       text: message,
       replyTo: data.email
-    });
+    };
 
-    console.log('Письмо отправлено успешно:', info.messageId);
+    // Отправляем письмо
+    await sgMail.send(msg);
+
+    console.log('Письмо отправлено успешно');
     res.status(200).json({ success: true, message: 'Заказ успешно отправлен' });
   } catch (error) {
     console.error('Ошибка при отправке заказа:', error);
-    console.error('Детали ошибки:', error.message);
-    if (error.code) console.error('Код ошибки:', error.code);
-    res.status(500).json({ success: false, message: 'Ошибка при отправке заказа: ' + error.message });
+    if (error.response) {
+      console.error('Детали ошибки SendGrid:', error.response.body);
+    }
+    res.status(500).json({ 
+      success: false, 
+      message: 'Ошибка при отправке заказа: ' + (error.message || 'Неизвестная ошибка') 
+    });
   }
 } 
