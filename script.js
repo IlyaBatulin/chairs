@@ -360,7 +360,8 @@ window.addEventListener('click', function(event) {
 const cartForm = document.getElementById('cartForm');
 if (cartForm) {
     console.log('Форма корзины найдена');
-    cartForm.addEventListener('submit', function(e) {
+    cartForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
         console.log('Отправка формы корзины');
         
         if (cart.length === 0) {
@@ -389,47 +390,63 @@ if (cartForm) {
         }
 
         // Создаем ощущение отправки с задержкой
-        e.preventDefault();
         showNotification('Отправка заказа...', 'success');
         
-        // Очищаем корзину 
-        cart = [];
-        cartCount = 0;
-        updateCartButton();
-        localStorage.setItem('cart', JSON.stringify([]));
-        console.log('Корзина очищена в localStorage');
-
-        console.log('Попытка отправки формы через FormSubmit');
+        // Определяем тип страницы (массажные кресла или детские)
+        const pageUrl = window.location.pathname;
+        const pageType = pageUrl.includes('massage-chairs') ? 'massage' : 'children';
+        console.log('Тип страницы:', pageType);
         
-        // Явно проверяем, что форма корректно настроена для FormSubmit
-        const formAction = cartForm.getAttribute('action');
-        console.log('Форма будет отправлена по адресу:', formAction);
+        // Подготавливаем данные для отправки
+        const formData = {
+            name: document.getElementById('cartName').value,
+            email: document.getElementById('cartEmail').value,
+            phone: document.getElementById('cartPhone').value,
+            cartItems: cartItemsField.value,
+            pageType: pageType
+        };
         
-        // Проверяем наличие всех необходимых полей FormSubmit
-        const hiddenFields = cartForm.querySelectorAll('input[type="hidden"]');
-        hiddenFields.forEach(field => {
-            console.log('Скрытое поле:', field.name, field.value);
-        });
+        console.log('Подготовлены данные для отправки:', formData);
         
-        // Добавляем проверку на наличие правильного поля honeypot
-        const honeypotField = cartForm.querySelector('input[name="_honeypot"]');
-        if (honeypotField) {
-            console.log('Поле honeypot найдено и настроено правильно');
-        } else {
-            console.error('Поле honeypot не найдено или настроено неправильно!');
-        }
-        
-        // Увеличиваем задержку перед отправкой формы
-        setTimeout(function() {
-            showLargeNotification('Заказ успешно отправлен!', 'Спасибо за ваш заказ. Мы свяжемся с вами в ближайшее время.');
-            // Закрываем модальное окно корзины
-            cartModal.style.display = 'none';
+        try {
+            // Отправляем запрос к API
+            const response = await fetch('/api/send-email', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
             
-            // Используем прямое перенаправление на FormSubmit
-            console.log('Отправка формы...');
-            cartForm.submit();
-            console.log('Форма отправлена');
-        }, 2000); // Увеличили задержку до 2 секунд
+            const result = await response.json();
+            console.log('Результат отправки:', result);
+            
+            if (result.success) {
+                // Очищаем корзину 
+                cart = [];
+                cartCount = 0;
+                updateCartButton();
+                localStorage.setItem('cart', JSON.stringify([]));
+                console.log('Корзина очищена в localStorage');
+                
+                // Показываем уведомление об успешной отправке
+                showLargeNotification('Заказ успешно отправлен!', 'Спасибо за ваш заказ. Мы свяжемся с вами в ближайшее время.');
+                
+                // Закрываем модальное окно корзины
+                cartModal.style.display = 'none';
+                
+                // Перенаправляем на страницу благодарности
+                setTimeout(function() {
+                    window.location.href = '/thank-you.html';
+                }, 2000);
+            } else {
+                showNotification('Ошибка при отправке заказа: ' + (result.error || 'Неизвестная ошибка'), 'error');
+                console.error('Ошибка при отправке:', result);
+            }
+        } catch (error) {
+            console.error('Ошибка при отправке запроса:', error);
+            showNotification('Ошибка соединения с сервером', 'error');
+        }
     });
 } else {
     console.error('Форма корзины не найдена');
