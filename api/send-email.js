@@ -21,12 +21,12 @@ module.exports = async (req, res) => {
     
     // Настройка транспорта email
     const transporter = nodemailer.createTransport({
-      host: 'smtp.yandex.ru', // SMTP сервер Яндекс почты
+      host: 'mail.hosting.reg.ru', // SMTP сервер REG.RU
       port: 465,
       secure: true,
       auth: {
-        user: 'your_email@yandex.ru', // Замените на вашу Яндекс почту
-        pass: 'your_app_password' // Замените на пароль приложения, полученный в настройках Яндекс почты
+        user: 'info@ruskreslo.ru', // Адрес почты на REG.RU
+        pass: '08032009Mm-+' // Пароль от почты
       }
     });
     
@@ -37,7 +37,7 @@ module.exports = async (req, res) => {
     
     // Отправляем письмо
     const mailResult = await transporter.sendMail({
-      from: 'your_email@yandex.ru', // Должно совпадать с user в transporter
+      from: 'info@ruskreslo.ru', // Должно совпадать с user в transporter
       to: 'info@ruskreslo.ru',
       subject: subject || emailSubject,
       html: `
