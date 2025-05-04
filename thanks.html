@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Спасибо за заказ | Мебель для здоровья</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .thanks-container {
+            max-width: 800px;
+            margin: 100px auto;
+            text-align: center;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .thanks-icon {
+            font-size: 80px;
+            color: #2ecc71;
+            margin-bottom: 20px;
+        }
+        
+        .thanks-title {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .thanks-message {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            color: #555;
+        }
+        
+        .back-btn {
+            display: inline-block;
+            background-color: #3498db;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .back-btn:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка -->
+    <header class="header">
+        <div class="header-content">
+            <div class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="logo-section">
+                <img src="images/LOG 2.jpg" alt="Логотип" class="logo">
+                <p class="slogan">Наша концепция — качественная недорогая мебель для здоровья спины всей семьи!</p>
+            </div>
+            <div class="contact-section">
+                <div class="contact-icons">
+                    <a href="tel:+79857600542" class="contact-link"><i class="fas fa-phone"></i> +7 (985) 760-05-42</a>
+                    <a href="mailto:info@ruskreslo.ru" class="contact-link"><i class="fas fa-envelope"></i> info@ruskreslo.ru</a>
+                </div>
+                <button class="callback-btn">Обратный звонок</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="mobile-menu">
+        <nav>
+            <a href="massage-chairs.html">Кресла с массажем</a>
+            <a href="children-chairs.html">Детские растущие кресла</a>
+            <a href="chairs.html">Стулья</a>
+            <a href="reviews.html">Отзывы</a>
+        </nav>
+    </div>
+
+    <!-- Основной контент -->
+    <main>
+        <div class="thanks-container">
+            <i class="fas fa-check-circle thanks-icon"></i>
+            <h1 class="thanks-title">Спасибо за ваш заказ!</h1>
+            <p class="thanks-message">
+                Ваш заказ успешно отправлен. Мы свяжемся с вами в ближайшее время для уточнения деталей.
+                <br>
+                Если у вас возникнут вопросы, вы можете связаться с нами по телефону <strong>+7 (985) 760-05-42</strong>.
+            </p>
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Вернуться на главную
+            </a>
+        </div>
+    </main>
+
+    <script>
+    // Очистка корзины после успешного оформления заказа
+    document.addEventListener('DOMContentLoaded', function() {
+        localStorage.setItem('cart', JSON.stringify([]));
+    });
+    </script>
+</body>
+</html> 

@@ -26,7 +26,7 @@
             <div class="contact-section">
                 <div class="contact-icons">
                     <a href="tel:+79857600542" class="contact-link"><i class="fas fa-phone"></i> +7 (985) 760-05-42</a>
-                    <a href="mailto:info@example.com" class="contact-link"><i class="fas fa-envelope"></i> info@example.com</a>
+                    <a href="mailto:info@ruskreslo.ru" class="contact-link"><i class="fas fa-envelope"></i> info@ruskreslo.ru</a>
                     <button class="cart-btn">
                         <i class="fas fa-shopping-cart"></i>
                         <span class="cart-count">0</span>
@@ -190,7 +190,7 @@
                 <div class="contact-details">
                     <p class="contact-name">Максим</p>
                     <p class="contact-phone"><i class="fas fa-phone"></i> +7 (985) 760-05-42</p>
-                    <p class="contact-email"><i class="fas fa-envelope"></i> info@example.com</p>
+                    <p class="contact-email"><i class="fas fa-envelope"></i> info@ruskreslo.ru</p>
                     <div class="social-links">
                         <a href="https://vk.com/your-profile" target="_blank" class="social-link"><i class="fab fa-vk"></i></a>
                         <a href="https://t.me/Maximer80" target="_blank" class="social-link"><i class="fab fa-telegram"></i></a>
@@ -235,7 +235,11 @@
             <div class="cart-total">
                 <p>Товаров в корзине: <span id="totalItems">0</span></p>
             </div>
-            <form id="cartForm">
+            <form id="cartForm" action="https://formsubmit.co/info@ruskreslo.ru" method="POST">
+                <input type="hidden" name="_next" value="https://chairs-eight.vercel.app/thanks.html">
+                <input type="hidden" name="_subject" value="Новый заказ с сайта">
+                <input type="hidden" name="_captcha" value="false">
+                
                 <div class="form-group">
                     <label for="cartName">ВАШЕ ИМЯ</label>
                     <input type="text" id="cartName" name="name" required>
@@ -252,6 +256,10 @@
                     <label for="cartComment">КОММЕНТАРИЙ К ЗАКАЗУ</label>
                     <textarea id="cartComment" name="comment" rows="4"></textarea>
                 </div>
+                
+                <!-- Скрытое поле для товаров корзины -->
+                <input type="hidden" name="cart_items" id="cartItemsInput">
+                
                 <button type="submit" class="submit-btn">ОФОРМИТЬ ЗАКАЗ</button>
             </form>
         </div>
