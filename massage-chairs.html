@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кресла с массажем - Мебель для здоровья</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Стиль для кнопки Назад */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 15px;
+            background-color: #f0f0f0;
+            color: #333;
+            border: none;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+            text-decoration: none;
+        }
+        
+        .back-btn:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .back-btn i {
+            font-size: 16px;
+        }
+        
+        /* Стили для кнопки ПОДРОБНЕЕ */
+        .details-btn {
+            padding: 8px 15px;
+            background-color: #8B6B4D;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-weight: 500;
+            margin-right: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .details-btn:hover {
+            background-color: #725a3f;
+        }
+        
+        /* Стиль для отображения цены */
+        .price {
+            font-weight: 600;
+            color: #333;
+            margin: 10px 0;
+        }
+        
+        /* Стиль для изображений товаров */
+        .product-image {
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .product-image:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Улучшенные стили модальных окон */
+        .product-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        
+        .product-modal-content {
+            max-width: 900px;
+            width: 90%;
+            margin: 50px auto;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .product-modal-header {
+            padding: 20px;
+            background-color: #f8f8f8;
+            border-bottom: 1px solid #eee;
+            position: relative;
+        }
+        
+        .product-modal-title {
+            margin: 0;
+            color: #333;
+            text-align: center;
+            font-size: 24px;
+        }
+        
+        .product-modal-close {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 28px;
+            color: #999;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .product-modal-close:hover {
+            color: #333;
+        }
+        
+        .product-modal-body {
+            padding: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        
+        .product-modal-image {
+            max-width: 350px;
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .product-modal-info {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .product-modal-feature {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+            padding: 12px 15px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        
+        .product-modal-feature:hover {
+            transform: translateX(5px);
+            background-color: #f2f2f2;
+        }
+        
+        .product-modal-feature i {
+            color: #8B6B4D;
+            font-size: 18px;
+        }
+
+        /* Стили для категорий */
+        .category-section {
+            margin-bottom: 50px;
+        }
+        
+        .category-title {
+            margin-bottom: 30px;
+            position: relative;
+            text-align: center;
+            font-size: 28px;
+        }
+        
+        .category-image {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .category-image:hover {
+            transform: translateY(-5px);
+        }
+        
+        @media (max-width: 768px) {
+            .product-modal-body {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .product-modal-image {
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <a href="index.html">
+                    <img src="images/LOG 2.jpg" alt="Логотип" class="logo">
+                </a>
+                <p class="slogan">Наша концепция — качественная недорогая мебель для здоровья спины всей семьи!</p>
+            </div>
+            <div class="contact-section">
+                <div class="contact-icons">
+                    <a href="tel:+79857600542" class="contact-link"><i class="fas fa-phone"></i> +7 (985) 760-05-42</a>
+                    <a href="mailto:info@ruskreslo.ru" class="contact-link"><i class="fas fa-envelope"></i> info@ruskreslo.ru</a>
+                    <button class="cart-btn">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">0</span>
+                    </button>
+                </div>
+                <button class="callback-btn">Обратный звонок</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Основное содержимое -->
+    <div class="container">
+        <a href="index.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i> На главную
+        </a>
+        
+        <h1 class="page-title">КРЕСЛА С МАССАЖЕМ</h1>
+        
+        <!-- Категории кресел -->
+        <div class="main-categories">
+            <div class="category-section">
+                <h2 class="category-title">СПОРТИВНЫЕ</h2>
+                <div class="products-grid">
+                    <div class="product-card">
+                        <img src="РАЗДЕЛЫ/КРЕС С МАССАЖ/спортивные/10.jpg" alt="Игровое кресло с массажем" class="product-image" onclick="showProduct('sport')">
+                        <h3>Компьютерное кресло игровое с массажем</h3>
+                        <p class="price">Цена: <span class="price-amount">17 900 ₽</span></p>
+                        <div class="product-card-buttons">
+                            <button class="details-btn" onclick="showProduct('sport')">ПОДРОБНЕЕ</button>
+                            <button class="add-to-cart-btn" onclick="addToCart('Компьютерное кресло игровое с массажем', 17900)">В КОРЗИНУ</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="category-section">
+                <h2 class="category-title">КЛАССИЧЕСКИЕ</h2>
+                <div class="products-grid">
+                    <div class="product-card">
+                        <img src="РАЗДЕЛЫ/КРЕС С МАССАЖ/классические/11.jpg" alt="Офисное кресло с массажем" class="product-image" onclick="showProduct('classic')">
+                        <h3>Компьютерное кресло офисное с массажем</h3>
+                        <p class="price">Цена: <span class="price-amount">19 900 ₽</span></p>
+                        <div class="product-card-buttons">
+                            <button class="details-btn" onclick="showProduct('classic')">ПОДРОБНЕЕ</button>
+                            <button class="add-to-cart-btn" onclick="addToCart('Компьютерное кресло офисное с массажем', 19900)">В КОРЗИНУ</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для спортивного кресла -->
+    <div id="sportModal" class="product-modal">
+        <div class="product-modal-content">
+            <div class="product-modal-header">
+                <h2 class="product-modal-title">Компьютерное кресло игровое с массажем</h2>
+                <span class="product-modal-close" onclick="closeProduct('sport')">&times;</span>
+            </div>
+            <div class="product-modal-body">
+                <img src="РАЗДЕЛЫ/КРЕС С МАССАЖ/спортивные/10.jpg" alt="Игровое кресло с массажем" class="product-modal-image">
+                <div class="product-modal-info">
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <p>Встроенная функция массажа поясничного отдела</p>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <p>Регулируемый подголовник</p>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <p>Эргономичная спинка с S-образным изгибом</p>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <p>Мягкие подлокотники для снятия напряжения в руках</p>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <p>Прочная конструкция из металла</p>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <p>Материал: высококачественная экокожа</p>
+                    </div>
+                    <p class="price">Цена: <span class="price-amount">17 900 ₽</span></p>
+                    <button class="add-to-cart-btn" onclick="addToCart('Компьютерное кресло игровое с массажем', 17900)">ДОБАВИТЬ В КОРЗИНУ</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для классического кресла -->
+    <div id="classicModal" class="product-modal">
+        <div class="product-modal-content">
+            <div class="product-modal-header">
+                <h2 class="product-modal-title">Компьютерное кресло офисное с массажем</h2>
+                <span class="product-modal-close" onclick="closeProduct('classic')">&times;</span>
+            </div>
+            <div class="product-modal-body">
+                <img src="РАЗДЕЛЫ/КРЕС С МАССАЖ/классические/11.jpg" alt="Офисное кресло с массажем" class="product-modal-image">
+                <div class="product-modal-info">
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <p>Встроенная система массажа спины и поясницы</p>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <p>Качественный механизм регулировки высоты</p>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <p>Эргономичная форма спинки для правильной осанки</p>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <p>Регулируемая поясничная поддержка</p>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <p>Комфортные подлокотники с мягкими накладками</p>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <p>Материал: премиальная экокожа</p>
+                    </div>
+                    <p class="price">Цена: <span class="price-amount">19 900 ₽</span></p>
+                    <button class="add-to-cart-btn" onclick="addToCart('Компьютерное кресло офисное с массажем', 19900)">ДОБАВИТЬ В КОРЗИНУ</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно корзины -->
+    <div class="modal" id="cartModal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Корзина</h2>
+            <div class="cart-items">
+                <!-- Товары будут добавляться сюда динамически -->
+            </div>
+            <div class="cart-total">
+                <p>Товаров в корзине: <span id="totalItems">0</span></p>
+            </div>
+            <form id="cartForm" action="https://formsubmit.co/info@ruskreslo.ru" method="POST">
+                <input type="hidden" name="_subject" value="Новый заказ (Кресла с массажем)">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_autoresponse" value="Спасибо за ваш заказ! Мы свяжемся с вами в ближайшее время.">
+                <input type="hidden" name="_url" value="https://ilyabatulin.github.io/chairs/massage-chairs.html">
+                <input type="hidden" id="cartItemsInput" name="cartItems" value="">
+                
+                <div class="form-group">
+                    <label for="cartName">Ваше имя:</label>
+                    <input type="text" id="cartName" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="cartEmail">Email:</label>
+                    <input type="email" id="cartEmail" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="cartPhone">Телефон:</label>
+                    <input type="tel" id="cartPhone" name="phone" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="cartComment">Комментарий к заказу:</label>
+                    <textarea id="cartComment" name="comment" rows="4"></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">ОФОРМИТЬ ЗАКАЗ</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+
+    <script>
+        // Открытие и закрытие модальных окон продуктов
+        function showProduct(productType) {
+            const modalId = productType + 'Modal';
+            document.getElementById(modalId).style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeProduct(productType) {
+            const modalId = productType + 'Modal';
+            document.getElementById(modalId).style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Закрытие модального окна при клике вне его
+        window.addEventListener('click', function(event) {
+            if (event.target.classList.contains('product-modal')) {
+                event.target.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+    </script>
+</body>
+</html> 
