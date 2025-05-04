@@ -379,10 +379,10 @@
             <span class="close">&times;</span>
             <h2>Корзина</h2>
             <div class="cart-items">
-                <!-- Товары будут добавляться здесь -->
+                <!-- Товары будут добавляться сюда динамически -->
             </div>
             <div class="cart-total">
-                Всего товаров: <span id="totalItems">0</span>
+                <p>Товаров в корзине: <span id="totalItems">0</span></p>
             </div>
             <form id="cartForm" action="https://formsubmit.co/info@ruskreslo.ru" method="POST">
                 <input type="hidden" name="_subject" value="Новый заказ (Кресла с массажем)">
@@ -416,111 +416,6 @@
         </div>
     </div>
 
-    <!-- Скрытые старые модальные окна (для совместимости) -->
-    <div class="modal" id="officeModal" style="display: none;">
-        <div class="modal-content">
-            <span class="close" onclick="closeOfficeModal()">&times;</span>
-            <h2>КРЕСЛА С МАССАЖЕМ ОФИСНЫЕ</h2>
-            
-            <div class="product-description">
-                <div class="description-features">
-                    <div class="feature-item">
-                        <i class="fas fa-star"></i>
-                        <span>Компьютерное кресло ПРЕМИУМ качества</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-home"></i>
-                        <span>Офисное кресло для дома и работы</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-spa"></i>
-                        <span>Функция вибромассажа ВСЕЙ СПИНЫ</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-shoe-prints"></i>
-                        <span>Выдвигаемая подставка для ног</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-chair"></i>
-                        <span>Регулируемое кресло мягкое BOSS</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-weight"></i>
-                        <span>Максимал. рекомендованный вес до 150кг</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="products-grid three-columns">
-                <div class="product-card">
-                    <img src="РАЗДЕЛЫ/КРЕС С МАССАЖ/классические/МОДЕЛИ/1.jpg" alt="Офисное кресло с массажем - Черное">
-                    <h3>Офисное кресло с массажем "Черное"</h3>
-                    <p>Классический дизайн и максимальный комфорт</p>
-                    <p class="price">89 990 ₽</p>
-                    <button class="order-btn" onclick='addToCart("Офисное кресло с массажем Черное", 89990)'>В КОРЗИНУ</button>
-                </div>
-                <div class="product-card">
-                    <img src="РАЗДЕЛЫ/КРЕС С МАССАЖ/классические/МОДЕЛИ/2.jpg" alt="Офисное кресло с массажем - Коричневое">
-                    <h3>Офисное кресло с массажем "Коричневое"</h3>
-                    <p>Премиум качество и комфорт</p>
-                    <p class="price">89 990 ₽</p>
-                    <button class="order-btn" onclick='addToCart("Офисное кресло с массажем Коричневое", 89990)'>В КОРЗИНУ</button>
-                </div>
-                <div class="product-card">
-                    <img src="РАЗДЕЛЫ/КРЕС С МАССАЖ/классические/МОДЕЛИ/3.jpg" alt="Офисное кресло с массажем - Серое">
-                    <h3>Офисное кресло с массажем "Серое"</h3>
-                    <p>Стильный дизайн и эргономичная форма</p>
-                    <p class="price">89 990 ₽</p>
-                    <button class="order-btn" onclick='addToCart("Офисное кресло с массажем Серое", 89990)'>В КОРЗИНУ</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal" id="sportModal" style="display: none;">
-        <div class="modal-content">
-            <span class="close" onclick="closeSportModal()">&times;</span>
-            <h2>КРЕСЛО С МАССАЖЕМ СПОРТИВНОЕ</h2>
-            
-            <div class="sport-chair-container">
-                <div class="sport-chair-image">
-                    <img src="РАЗДЕЛЫ/КРЕС С МАССАЖ/спортивные/10.jpg" alt="Игровое кресло с массажем">
-                </div>
-                <div class="sport-chair-info">
-                    <h3>КОМПЬЮТЕРНОЕ КРЕСЛО ИГРОВОЕ С МАССАЖЕМ</h3>
-                    <div class="description-features vertical">
-                        <div class="feature-item">
-                            <i class="fas fa-star"></i>
-                            <span>Компьютерное кресло ПРЕМИУМ качества</span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-gamepad"></i>
-                            <span>Игровое кресло для любителей компьютерных игр</span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-spa"></i>
-                            <span>Функция вибромассажа (пояснич.зоны)</span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-lightbulb"></i>
-                            <span>Функция подсветки</span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-shoe-prints"></i>
-                            <span>Выдвигаемая подставка для ног</span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-weight"></i>
-                            <span>Максимал. рекомендованный вес до 120кг</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <button class="order-btn full-width" onclick='addToCart("Кресло с массажем спортивное", 79990)'>В КОРЗИНУ</button>
-        </div>
-    </div>
-
     <script src="script.js"></script>
     <script>
         // Функции для модальных окон продуктов
@@ -538,23 +433,6 @@
 
         function closeProductModal2() {
             document.getElementById('productModal2').style.display = 'none';
-        }
-
-        // Сохраняем старые функции для совместимости
-        function openOfficeModal() {
-            document.getElementById('officeModal').style.display = 'block';
-        }
-
-        function closeOfficeModal() {
-            document.getElementById('officeModal').style.display = 'none';
-        }
-
-        function openSportModal() {
-            document.getElementById('sportModal').style.display = 'block';
-        }
-
-        function closeSportModal() {
-            document.getElementById('sportModal').style.display = 'none';
         }
 
         // Закрытие модальных окон при клике вне содержимого
