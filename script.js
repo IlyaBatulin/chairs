@@ -359,15 +359,18 @@ window.addEventListener('click', function(event) {
 // Обработка отправки формы корзины
 const cartForm = document.getElementById('cartForm');
 if (cartForm) {
-    console.log('Форма корзины найдена');
-    cartForm.addEventListener('submit', function(e) {
+    console.log('[Form Debug] Форма корзины найдена и слушатель будет добавлен.');
+    cartForm.addEventListener('submit', async function(e) {
+        e.preventDefault(); 
+        console.log('[Form Debug] Событие submit перехвачено.');
+
         // Проверяем, есть ли товары в корзине
         if (cart.length === 0) {
-            e.preventDefault();
             showNotification('Корзина пуста', 'error');
-            console.log('Отправка отменена - корзина пуста');
+            console.log('[Form Debug] Отправка отменена - корзина пуста.');
             return;
         }
+        console.log('[Form Debug] Корзина не пуста.');
 
         // Заполняем скрытое поле информацией о товарах в корзине
         const cartItemsField = document.getElementById('cartItemsInput');
@@ -382,23 +385,75 @@ if (cartForm) {
             
             cartText += `\nИтого: ${totalPrice.toLocaleString()} ₽`;
             cartItemsField.value = cartText;
-            console.log('Поле заполнено данными:', cartText);
+            console.log('[Form Debug] Поле cartItemsInput заполнено:', cartText);
         } else {
-            console.error('Поле cartItemsInput не найдено');
+            console.error('[Form Debug] Поле cartItemsInput не найдено!');
+            showNotification('Ошибка конфигурации формы', 'error');
+            return; 
         }
 
         // Показываем сообщение об отправке
         showNotification('Отправка заказа...', 'success');
+        console.log('[Form Debug] Показываем уведомление об отправке.');
         
-        // Очищаем корзину после успешной отправки
-        // (это произойдет после перенаправления)
-        localStorage.setItem('cart', JSON.stringify([]));
-        console.log('Корзина будет очищена после отправки');
-        
-        // FormSubmit сам обработает отправку и выполнит перенаправление
+        const formData = new FormData(cartForm);
+        const formAction = cartForm.action;
+        console.log('[Form Debug] Данные формы готовы к отправке на:', formAction);
+        // Логируем все данные FormData
+        for (let [key, value] of formData.entries()) { 
+            console.log(`[Form Debug] FormData: ${key}: ${value}`);
+        }
+
+        try {
+            console.log('[Form Debug] Попытка отправки fetch...');
+            const response = await fetch(formAction, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json' 
+                }
+            });
+            console.log('[Form Debug] Fetch выполнен. Статус:', response.status);
+
+            if (response.ok) {
+                console.log('[Form Debug] Форма успешно отправлена (fetch response.ok).');
+                // Очищаем корзину
+                cart = [];
+                cartCount = 0;
+                updateCartButton();
+                localStorage.setItem('cart', JSON.stringify([]));
+                console.log('[Form Debug] Корзина очищена.');
+                
+                if (cartModal) {
+                    cartModal.style.display = 'none';
+                }
+                
+                showNotification('Заказ успешно создан ✓', 'success');
+
+            } else {
+                console.error('[Form Debug] Ошибка при отправке формы (fetch response not ok).', response.status, response.statusText);
+                const errorText = await response.text(); // Читаем ответ как текст
+                console.error('[Form Debug] Текст ответа ошибки:', errorText);
+                let errorMessage = `Ошибка отправки: ${response.statusText}`;
+                try {
+                     // Пытаемся парсить JSON, если возможно
+                    const errorData = JSON.parse(errorText);
+                    if (errorData && errorData.message) {
+                        errorMessage = `Ошибка отправки: ${errorData.message}`;
+                    }
+                } catch(parseError) {
+                    // Оставляем текстовую ошибку, если JSON не парсится
+                    if(errorText) errorMessage = `Ошибка отправки: ${errorText.substring(0, 100)}`; // Обрезаем длинный текст
+                }
+                showNotification(errorMessage, 'error');
+            }
+        } catch (error) {
+            console.error('[Form Debug] Сетевая ошибка при отправке формы (catch блок):', error);
+            showNotification('Ошибка сети при отправке заказа', 'error');
+        }
     });
 } else {
-    console.error('Форма корзины не найдена');
+    console.error('[Form Debug] Форма корзины не найдена! Слушатель не добавлен.');
 }
 
 // Функция для показа большого уведомления
@@ -681,43 +736,45 @@ function closeReviewModal() {
 
 // Инициализация при загрузке страницы
 document.addEventListener('DOMContentLoaded', function() {
-    // Загружаем отзывы
-    loadReviews();
-    
-    // Обработка звездного рейтинга
-    const stars = document.querySelectorAll('.stars i');
-    if (stars.length > 0) {
-        stars.forEach(star => {
-            star.addEventListener('mouseover', function() {
-                const rating = this.dataset.rating;
-                // Подсвечиваем звезды до текущей
-                stars.forEach(s => {
-                    const sRating = s.dataset.rating;
-                    s.className = sRating <= rating ? 'fas fa-star' : 'far fa-star';
-                });
-            });
-
-            star.addEventListener('mouseout', function() {
-                // Возвращаем активные звезды
-                stars.forEach(s => {
-                    s.className = s.classList.contains('active') ? 'fas fa-star active' : 'far fa-star';
-                });
-            });
-
-            star.addEventListener('click', function() {
-                const rating = this.dataset.rating;
-                // Устанавливаем активные звезды
-                stars.forEach(s => {
-                    const sRating = s.dataset.rating;
-                    s.className = sRating <= rating ? 'fas fa-star active' : 'far fa-star';
-                });
-            });
-        });
+    // --- Инициализация Отзывов (только если есть контейнер) ---
+    const reviewsContainer = document.getElementById('reviewsContainer');
+    if (reviewsContainer) {
+        loadReviews();
     }
 
-    // Обработка отправки отзыва
+    // --- Инициализация Формы Отзывов (только если форма есть) ---
     const reviewForm = document.getElementById('reviewForm');
     if (reviewForm) {
+        console.log('Найдены элементы формы отзывов, инициализируем...');
+        // Обработка звездного рейтинга
+        const stars = document.querySelectorAll('.stars i');
+        if (stars.length > 0) {
+            stars.forEach(star => {
+                star.addEventListener('mouseover', function() {
+                    const rating = this.dataset.rating;
+                    stars.forEach(s => {
+                        const sRating = s.dataset.rating;
+                        s.className = sRating <= rating ? 'fas fa-star' : 'far fa-star';
+                    });
+                });
+
+                star.addEventListener('mouseout', function() {
+                    stars.forEach(s => {
+                        s.className = s.classList.contains('active') ? 'fas fa-star active' : 'far fa-star';
+                    });
+                });
+
+                star.addEventListener('click', function() {
+                    const rating = this.dataset.rating;
+                    stars.forEach(s => {
+                        const sRating = s.dataset.rating;
+                        s.className = sRating <= rating ? 'fas fa-star active' : 'far fa-star';
+                    });
+                });
+            });
+        }
+
+        // Обработка отправки отзыва
         reviewForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -751,15 +808,74 @@ document.addEventListener('DOMContentLoaded', function() {
             
             showNotification('Спасибо за ваш отзыв!');
         });
+
+        // Закрытие модального окна отзыва при клике вне его
+        window.addEventListener('click', function(event) {
+            const reviewModal = document.getElementById('reviewModal');
+            // Доп. проверка, что modal существует, перед сравнением
+            if (reviewModal && event.target === reviewModal) {
+                closeReviewModal();
+            }
+        });
+    } else {
+        console.log('Форма отзывов (#reviewForm) не найдена на этой странице.');
     }
 
-    // Закрытие модального окна при клике вне его
-    window.addEventListener('click', function(event) {
-        const modal = document.getElementById('reviewModal');
-        if (event.target === modal) {
-            closeReviewModal();
+    // --- Инициализация Галереи-Слайдера (только если есть элементы) ---
+    const galleryTrack = document.querySelector('.gallery-track');
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    const galleryPrevButton = document.querySelector('.gallery-prev');
+    const galleryNextButton = document.querySelector('.gallery-next');
+    
+    if (galleryTrack && galleryItems.length > 0 && galleryPrevButton && galleryNextButton) {
+        console.log('Найдены элементы галереи-слайдера, инициализируем...');
+        let currentIndex = 0;
+        let itemWidth = galleryItems[0].offsetWidth; // Пересчитываем при ресайзе
+        let visibleItems = Math.floor(galleryTrack.parentElement.offsetWidth / itemWidth);
+        let maxIndex = galleryItems.length - visibleItems;
+        
+        // Функция для обновления позиции галереи
+        function updateGalleryPosition() {
+            // Проверка на случай, если ширина стала 0 или отрицательной
+            if (itemWidth <= 0) return;
+            galleryTrack.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
         }
-    });
+        
+        // Обновление размеров при изменении окна
+        window.addEventListener('resize', function() {
+            itemWidth = galleryItems[0].offsetWidth;
+            visibleItems = Math.floor(galleryTrack.parentElement.offsetWidth / itemWidth);
+            // Проверка деления на ноль
+            if (isNaN(visibleItems) || visibleItems <= 0) visibleItems = 1;
+            maxIndex = galleryItems.length - visibleItems;
+            
+            if (currentIndex > maxIndex) {
+                currentIndex = maxIndex > 0 ? maxIndex : 0;
+            }
+            updateGalleryPosition(); // Обновляем позицию после ресайза
+        });
+        
+        // Обработчик для кнопки "Предыдущий"
+        galleryPrevButton.addEventListener('click', function() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateGalleryPosition();
+            }
+        });
+        
+        // Обработчик для кнопки "Следующий"
+        galleryNextButton.addEventListener('click', function() {
+            if (currentIndex < maxIndex) {
+                currentIndex++;
+                updateGalleryPosition();
+            }
+        });
+        
+        // Инициализация начальной позиции
+        updateGalleryPosition();
+    } else {
+        console.log('Элементы галереи-слайдера не найдены на этой странице.');
+    }
 });
 
 // Мобильное меню
@@ -788,55 +904,4 @@ document.addEventListener('click', (e) => {
         mobileMenu.classList.remove('active');
         document.body.style.overflow = '';
     }
-});
-
-// Галерея-слайдер
-document.addEventListener('DOMContentLoaded', function() {
-    const galleryTrack = document.querySelector('.gallery-track');
-    const galleryItems = document.querySelectorAll('.gallery-item');
-    const prevButton = document.querySelector('.gallery-prev');
-    const nextButton = document.querySelector('.gallery-next');
-    
-    if (!galleryTrack || !prevButton || !nextButton) return;
-    
-    let currentIndex = 0;
-    const itemWidth = galleryItems[0].offsetWidth;
-    const visibleItems = Math.floor(galleryTrack.parentElement.offsetWidth / itemWidth);
-    const maxIndex = galleryItems.length - visibleItems;
-    
-    // Обновление размеров при изменении окна
-    window.addEventListener('resize', function() {
-        const newItemWidth = galleryItems[0].offsetWidth;
-        const newVisibleItems = Math.floor(galleryTrack.parentElement.offsetWidth / newItemWidth);
-        const newMaxIndex = galleryItems.length - newVisibleItems;
-        
-        if (currentIndex > newMaxIndex) {
-            currentIndex = newMaxIndex > 0 ? newMaxIndex : 0;
-            updateGalleryPosition();
-        }
-    });
-    
-    // Функция для обновления позиции галереи
-    function updateGalleryPosition() {
-        galleryTrack.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
-    }
-    
-    // Обработчик для кнопки "Предыдущий"
-    prevButton.addEventListener('click', function() {
-        if (currentIndex > 0) {
-            currentIndex--;
-            updateGalleryPosition();
-        }
-    });
-    
-    // Обработчик для кнопки "Следующий"
-    nextButton.addEventListener('click', function() {
-        if (currentIndex < maxIndex) {
-            currentIndex++;
-            updateGalleryPosition();
-        }
-    });
-    
-    // Инициализация начальной позиции
-    updateGalleryPosition();
 }); 
