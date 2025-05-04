@@ -9,7 +9,7 @@ module.exports = async (req, res) => {
 
   // SMTP для REG.RU
   const transporter = nodemailer.createTransport({
-    host: 'smtp.ruskreslo.ru',
+    host: 'smtp.hosting.reg.ru',
     port: 465,
     secure: true,
     auth: {
