@@ -491,6 +491,128 @@
                 event.target.style.display = 'none';
             }
         }
+        
+        // Локальная функция добавления в корзину (независимая от внешнего скрипта)
+        function addToCart(name, price) {
+            console.log(`Добавление в корзину: ${name}, ${price}`);
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart.push({ name, price });
+            localStorage.setItem('cart', JSON.stringify(cart));
+            
+            // Обновляем счетчик в корзине
+            const cartCount = document.querySelector('.cart-count');
+            if (cartCount) {
+                cartCount.textContent = cart.length;
+            }
+            
+            // Показываем уведомление
+            alert(`Товар "${name}" добавлен в корзину`);
+        }
+        
+        // Специальный обработчик для формы корзины
+        document.addEventListener('DOMContentLoaded', function() {
+            // Корзина
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartBtn = document.querySelector('.cart-btn');
+            const cartCount = document.querySelector('.cart-count');
+            const cartModal = document.getElementById('cartModal');
+            const cartItemsContainer = document.querySelector('.cart-items');
+            const cartTotalElement = document.getElementById('totalItems');
+            
+            // Обновляем счетчик товаров при загрузке
+            if (cartCount) {
+                cartCount.textContent = cart.length;
+            }
+
+            // Открытие корзины при клике на кнопку
+            if (cartBtn) {
+                cartBtn.addEventListener('click', function() {
+                    updateCartModal();
+                    if (cartModal) {
+                        cartModal.style.display = 'block';
+                    }
+                });
+            }
+            
+            // Закрытие модального окна корзины при клике на крестик
+            const closeButtons = document.querySelectorAll('.close');
+            closeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const modal = this.closest('.modal');
+                    if (modal) {
+                        modal.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Обработка отправки формы
+            const cartForm = document.getElementById('cartForm');
+            if (cartForm) {
+                cartForm.addEventListener('submit', function(e) {
+                    console.log('Попытка отправки формы с массажными креслами');
+                    
+                    if (cart.length === 0) {
+                        e.preventDefault();
+                        alert('Корзина пуста. Добавьте товары перед оформлением заказа.');
+                        return;
+                    }
+                    
+                    // Заполняем скрытое поле с информацией о товарах
+                    const cartItemsField = document.getElementById('cartItemsInput');
+                    if (cartItemsField) {
+                        let cartText = '';
+                        let totalPrice = 0;
+                        
+                        cart.forEach(item => {
+                            cartText += `${item.name} - ${item.price.toLocaleString()} ₽\n`;
+                            totalPrice += item.price;
+                        });
+                        
+                        cartText += `\nИтого: ${totalPrice.toLocaleString()} ₽`;
+                        cartItemsField.value = cartText;
+                        console.log('Корзина содержит:', cartText);
+                    }
+                    
+                    // Очищаем корзину после отправки
+                    localStorage.setItem('cart', JSON.stringify([]));
+                    console.log('Корзина очищена, форма отправлена');
+                });
+            }
+            
+            // Обновление содержимого модального окна корзины
+            function updateCartModal() {
+                if (!cartItemsContainer) return;
+                
+                cartItemsContainer.innerHTML = '';
+                let total = 0;
+                
+                cart.forEach((item, index) => {
+                    const cartItem = document.createElement('div');
+                    cartItem.className = 'cart-item';
+                    cartItem.innerHTML = `
+                        <span class="cart-item-name">${item.name}</span>
+                        <span class="cart-item-price">${item.price.toLocaleString()} ₽</span>
+                        <span class="cart-item-remove" onclick="removeFromCart(${index})">×</span>
+                    `;
+                    cartItemsContainer.appendChild(cartItem);
+                    total += item.price;
+                });
+                
+                if (cartTotalElement) {
+                    cartTotalElement.textContent = cart.length;
+                }
+            }
+            
+            // Глобальная функция для удаления товара из корзины
+            window.removeFromCart = function(index) {
+                cart.splice(index, 1);
+                localStorage.setItem('cart', JSON.stringify(cart));
+                if (cartCount) {
+                    cartCount.textContent = cart.length;
+                }
+                updateCartModal();
+            };
+        });
     </script>
 </body>
 </html> 
