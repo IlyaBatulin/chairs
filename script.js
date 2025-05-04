@@ -465,18 +465,143 @@ if (cartForm) {
             console.error('Поле cartItemsInput не найдено');
         }
 
-        // Показываем уведомление об отправке
+        // Создаем ощущение отправки с задержкой
+        e.preventDefault();
         showNotification('Отправка заказа...', 'success');
         
-        // Очищаем корзину после отправки формы
+        // Очищаем корзину 
+        cart = [];
+        cartCount = 0;
+        updateCartButton();
         localStorage.setItem('cart', JSON.stringify([]));
         console.log('Корзина очищена в localStorage');
         
-        // Форма отправится стандартным HTML способом
-        // Не используем preventDefault(), чтобы форма отправилась обычным способом
+        // Имитируем отправку, чтобы показать уведомление об успешной отправке
+        setTimeout(function() {
+            showLargeNotification('Заказ успешно отправлен!', 'Спасибо за ваш заказ. Мы свяжемся с вами в ближайшее время.');
+            // Закрываем модальное окно корзины
+            cartModal.style.display = 'none';
+            // Отправляем форму стандартным способом после показа уведомления
+            cartForm.submit();
+        }, 1000);
     });
 } else {
     console.error('Форма корзины не найдена');
+}
+
+// Функция для показа большого уведомления
+function showLargeNotification(title, message) {
+    // Удаляем предыдущие уведомления
+    const existingLargeNotifications = document.querySelectorAll('.large-notification');
+    existingLargeNotifications.forEach(notification => {
+        notification.remove();
+    });
+
+    // Создаем элемент уведомления
+    const notification = document.createElement('div');
+    notification.className = 'large-notification';
+    notification.innerHTML = `
+        <div class="large-notification-content">
+            <div class="large-notification-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="large-notification-text">
+                <h3>${title}</h3>
+                <p>${message}</p>
+            </div>
+            <button class="large-notification-close">×</button>
+        </div>
+    `;
+    document.body.appendChild(notification);
+
+    // Добавляем стили для уведомления
+    const style = document.createElement('style');
+    if (!document.querySelector('#large-notification-styles')) {
+        style.id = 'large-notification-styles';
+        style.textContent = `
+            .large-notification {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.7);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 9999;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+            
+            .large-notification-content {
+                background-color: white;
+                border-radius: 10px;
+                max-width: 400px;
+                width: 90%;
+                padding: 30px;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+                text-align: center;
+                position: relative;
+            }
+            
+            .large-notification-icon {
+                font-size: 60px;
+                color: #2ecc71;
+                margin-bottom: 20px;
+            }
+            
+            .large-notification-text h3 {
+                font-size: 24px;
+                margin-bottom: 10px;
+                color: #333;
+            }
+            
+            .large-notification-text p {
+                font-size: 16px;
+                color: #666;
+                margin-bottom: 20px;
+            }
+            
+            .large-notification-close {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                background: none;
+                border: none;
+                font-size: 24px;
+                cursor: pointer;
+                color: #999;
+            }
+            
+            .large-notification.show {
+                opacity: 1;
+            }
+        `;
+        document.head.appendChild(style);
+    }
+
+    // Добавляем класс show после небольшой задержки для анимации
+    requestAnimationFrame(() => {
+        notification.classList.add('show');
+    });
+
+    // Обработчик для кнопки закрытия
+    const closeButton = notification.querySelector('.large-notification-close');
+    closeButton.addEventListener('click', () => {
+        notification.classList.remove('show');
+        setTimeout(() => {
+            notification.remove();
+        }, 300);
+    });
+
+    // Автоматическое закрытие через 5 секунд
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => {
+            notification.remove();
+        }, 300);
+    }, 5000);
 }
 
 // Функции для модальных окон
