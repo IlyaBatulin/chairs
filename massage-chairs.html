@@ -580,7 +580,7 @@
             const cartForm = document.getElementById('cartForm');
             if (cartForm) {
                 cartForm.addEventListener('submit', function(e) {
-                    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                    const cart = JSON.parse(localStorage.getItem('cart')) || [];
                     
                     if (cart.length === 0) {
                         e.preventDefault();
@@ -603,8 +603,21 @@
                         cartItemsField.value = cartText;
                     }
                     
+                    // Создаем ощущение отправки с задержкой
+                    e.preventDefault();
+                    alert('Отправка заказа...');
+                    
                     // Очищаем корзину после отправки
                     localStorage.setItem('cart', JSON.stringify([]));
+                    
+                    // Имитируем отправку и затем отправляем форму
+                    setTimeout(function() {
+                        alert('Заказ успешно отправлен! Спасибо за ваш заказ. Мы свяжемся с вами в ближайшее время.');
+                        // Закрываем модальное окно корзины
+                        cartModal.style.display = 'none';
+                        // Отправляем форму стандартным способом
+                        cartForm.submit();
+                    }, 1000);
                 });
             }
         });
