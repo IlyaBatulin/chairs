@@ -361,6 +361,9 @@
                 Всего товаров: <span id="totalItems">0</span>
             </div>
             <form id="cartForm" action="https://formsubmit.co/info@ruskreslo.ru" method="POST">
+                <input type="hidden" name="_subject" value="Новый заказ (Стулья)">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_honeypot" value="">
                 <input type="hidden" id="cartItemsInput" name="cartItems" value="">
                 <div class="form-group">
                     <label for="cartName">Ваше имя:</label>
@@ -373,6 +376,10 @@
                 <div class="form-group">
                     <label for="cartPhone">Телефон:</label>
                     <input type="tel" id="cartPhone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="cartComment">Комментарий к заказу:</label>
+                    <textarea id="cartComment" name="comment" rows="4"></textarea>
                 </div>
                 <button type="submit" class="submit-btn">ОФОРМИТЬ ЗАКАЗ</button>
             </form>
