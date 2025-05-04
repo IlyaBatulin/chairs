@@ -7,9 +7,11 @@ export default async function handler(req, res) {
 
   try {
     const data = req.body;
+    console.log('Получены данные заказа:', JSON.stringify(data));
 
     // Проверяем наличие всех необходимых данных
     if (!data.name || !data.email || !data.phone || !data.items) {
+      console.log('Ошибка валидации: не все поля заполнены');
       return res.status(400).json({ success: false, message: 'Не все данные заполнены' });
     }
 
@@ -28,6 +30,13 @@ export default async function handler(req, res) {
       message += `- ${item.name}\n`;
     });
 
+    console.log('Создание транспортера с настройками:');
+    console.log('- Host:', 'mail.ruskreslo.ru');
+    console.log('- Port:', 465);
+    console.log('- Secure:', true);
+    console.log('- User:', process.env.EMAIL_USER ? 'Установлен' : 'НЕ УСТАНОВЛЕН');
+    console.log('- Pass:', process.env.EMAIL_PASS ? 'Установлен' : 'НЕ УСТАНОВЛЕН');
+
     // Создаем транспортер для отправки писем
     // Настройки для почтового сервера ruskreslo.ru
     // Переменные окружения в Vercel:
@@ -43,8 +52,9 @@ export default async function handler(req, res) {
       }
     });
 
+    console.log('Отправка письма...');
     // Отправляем письмо
-    await transporter.sendMail({
+    const info = await transporter.sendMail({
       from: process.env.EMAIL_USER, // info@ruskreslo.ru
       to: 'info@ruskreslo.ru', // Адрес для получения заказов
       subject: 'Новый заказ с сайта',
@@ -52,9 +62,12 @@ export default async function handler(req, res) {
       replyTo: data.email
     });
 
+    console.log('Письмо отправлено успешно:', info.messageId);
     res.status(200).json({ success: true, message: 'Заказ успешно отправлен' });
   } catch (error) {
     console.error('Ошибка при отправке заказа:', error);
-    res.status(500).json({ success: false, message: 'Ошибка при отправке заказа' });
+    console.error('Детали ошибки:', error.message);
+    if (error.code) console.error('Код ошибки:', error.code);
+    res.status(500).json({ success: false, message: 'Ошибка при отправке заказа: ' + error.message });
   }
 } 
