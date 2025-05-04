@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Спасибо за заказ - Мебель для здоровья</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .thank-you-container {
+            text-align: center;
+            max-width: 800px;
+            margin: 100px auto;
+            padding: 40px;
+            background-color: #f9f9f9;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .thank-you-icon {
+            font-size: 80px;
+            color: #2ecc71;
+            margin-bottom: 20px;
+        }
+        
+        .thank-you-title {
+            font-size: 32px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        .thank-you-message {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .back-to-home {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #8B6B4D;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+        
+        .back-to-home:hover {
+            background-color: #785c42;
+        }
+
+        @media (max-width: 768px) {
+            .thank-you-container {
+                padding: 30px 20px;
+                margin: 50px 20px;
+            }
+            
+            .thank-you-title {
+                font-size: 24px;
+            }
+            
+            .thank-you-message {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <a href="index.html">
+                    <img src="images/LOG 2.jpg" alt="Логотип" class="logo">
+                </a>
+                <p class="slogan">Наша концепция — качественная недорогая мебель для здоровья спины всей семьи!</p>
+            </div>
+            <div class="contact-section">
+                <div class="contact-icons">
+                    <a href="tel:+79857600542" class="contact-link"><i class="fas fa-phone"></i> +7 (985) 760-05-42</a>
+                    <a href="mailto:info@ruskreslo.ru" class="contact-link"><i class="fas fa-envelope"></i> info@ruskreslo.ru</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Основной контент -->
+    <main>
+        <div class="thank-you-container">
+            <div class="thank-you-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h1 class="thank-you-title">Спасибо за ваш заказ!</h1>
+            <p class="thank-you-message">Мы получили информацию о вашем заказе и свяжемся с вами в ближайшее время для подтверждения деталей. Пожалуйста, проверьте вашу электронную почту - мы отправили вам копию данных заказа.</p>
+            <p class="thank-you-message">Если у вас возникнут вопросы, вы всегда можете связаться с нами по телефону <strong>+7 (985) 760-05-42</strong> или по электронной почте <strong>info@ruskreslo.ru</strong>.</p>
+            <a href="index.html" class="back-to-home">Вернуться на главную</a>
+        </div>
+    </main>
+
+    <script>
+        // Отслеживание события успешного заказа
+        document.addEventListener('DOMContentLoaded', function() {
+            // Здесь можно добавить код для аналитики или других действий после успешного заказа
+            console.log('Заказ успешно оформлен');
+        });
+    </script>
+</body>
+</html> 
