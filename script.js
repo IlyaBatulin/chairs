@@ -476,14 +476,25 @@ if (cartForm) {
         localStorage.setItem('cart', JSON.stringify([]));
         console.log('Корзина очищена в localStorage');
         
-        // Имитируем отправку, чтобы показать уведомление об успешной отправке
-        setTimeout(function() {
+        // Собираем данные формы
+        const formData = new FormData(cartForm);
+        const formAction = cartForm.getAttribute('action');
+        
+        // Отправляем данные через fetch
+        fetch(formAction, {
+            method: 'POST',
+            body: formData,
+            mode: 'no-cors' // Важно для cross-origin запросов
+        })
+        .then(response => {
+            console.log('Ответ сервера получен');
             showLargeNotification('Заказ успешно отправлен!', 'Спасибо за ваш заказ. Мы свяжемся с вами в ближайшее время.');
-            // Закрываем модальное окно корзины
             cartModal.style.display = 'none';
-            // Отправляем форму стандартным способом после показа уведомления
-            cartForm.submit();
-        }, 1000);
+        })
+        .catch(error => {
+            console.error('Ошибка отправки:', error);
+            showNotification('Произошла ошибка при отправке заказа. Пожалуйста, попробуйте позже.', 'error');
+        });
     });
 } else {
     console.error('Форма корзины не найдена');
