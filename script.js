@@ -409,14 +409,24 @@ if (cartForm) {
         console.log('Подготовлены данные для отправки:', formData);
         
         try {
-            // Отправляем запрос к API
-            const response = await fetch('/api/send-email', {
+            // Отправляем запрос к API с полным URL
+            const baseUrl = window.location.origin;
+            const apiUrl = `${baseUrl}/api/send-email`;
+            console.log('Отправка запроса на URL:', apiUrl);
+            
+            const response = await fetch(apiUrl, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(formData)
             });
+            
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error('Ошибка ответа сервера:', response.status, errorText);
+                throw new Error(`Ошибка сервера: ${response.status} ${errorText}`);
+            }
             
             const result = await response.json();
             console.log('Результат отправки:', result);
