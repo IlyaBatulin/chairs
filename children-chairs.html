@@ -368,23 +368,33 @@
             <div class="cart-total">
                 <p>Товаров в корзине: <span id="totalItems">0</span></p>
             </div>
-            <form id="cartForm">
+            <form id="cartForm" action="https://formsubmit.co/ilyabatulin22@gmail.com" method="POST">
+                <input type="hidden" name="_subject" value="Новый заказ">
+                <input type="hidden" name="_next" value="https://ruskreslo.ru/success.html">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_autoresponse" value="Спасибо за ваш заказ! Мы свяжемся с вами в ближайшее время.">
+                <input type="hidden" id="cartItemsInput" name="cartItems" value="">
+                
                 <div class="form-group">
-                    <label for="cartName">ВАШЕ ИМЯ</label>
+                    <label for="cartName">Ваше имя:</label>
                     <input type="text" id="cartName" name="name" required>
                 </div>
+                
                 <div class="form-group">
-                    <label for="cartEmail">ВАШ E-MAIL</label>
+                    <label for="cartEmail">Email:</label>
                     <input type="email" id="cartEmail" name="email" required>
                 </div>
+                
                 <div class="form-group">
-                    <label for="cartPhone">ВАШ ТЕЛЕФОН</label>
+                    <label for="cartPhone">Телефон:</label>
                     <input type="tel" id="cartPhone" name="phone" required>
                 </div>
+                
                 <div class="form-group">
-                    <label for="cartComment">КОММЕНТАРИЙ К ЗАКАЗУ</label>
+                    <label for="cartComment">Комментарий к заказу:</label>
                     <textarea id="cartComment" name="comment" rows="4"></textarea>
                 </div>
+                
                 <button type="submit" class="submit-btn">ОФОРМИТЬ ЗАКАЗ</button>
             </form>
         </div>

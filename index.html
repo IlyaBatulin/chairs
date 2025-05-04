@@ -236,9 +236,11 @@
                 <p>Товаров в корзине: <span id="totalItems">0</span></p>
             </div>
             <form id="cartForm" action="https://formsubmit.co/ilyabatulin22@gmail.com" method="POST">
-                <!-- Удаляем лишние настройки на время тестирования -->
-                <!-- <input type="hidden" name="_next" value="https://chairs-eight.vercel.app/thanks.html"> -->
-                <input type="hidden" name="_subject" value="Тестовый заказ">
+                <input type="hidden" name="_subject" value="Новый заказ">
+                <input type="hidden" name="_next" value="https://ruskreslo.ru/success.html">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_autoresponse" value="Спасибо за ваш заказ! Мы свяжемся с вами в ближайшее время.">
+                <input type="hidden" id="cartItemsInput" name="cartItems" value="">
                 
                 <div class="form-group">
                     <label for="cartName">ВАШЕ ИМЯ</label>
@@ -256,9 +258,6 @@
                     <label for="cartComment">КОММЕНТАРИЙ К ЗАКАЗУ</label>
                     <textarea id="cartComment" name="comment" rows="4"></textarea>
                 </div>
-                
-                <!-- Скрытое поле для товаров корзины -->
-                <input type="hidden" name="cart_items" id="cartItemsInput">
                 
                 <button type="submit" class="submit-btn">ОФОРМИТЬ ЗАКАЗ</button>
             </form>

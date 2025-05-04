@@ -438,10 +438,10 @@ const cartForm = document.getElementById('cartForm');
 if (cartForm) {
     console.log('Форма корзины найдена');
     cartForm.addEventListener('submit', function(e) {
-        e.preventDefault(); // Предотвращаем стандартную отправку формы
         console.log('Отправка формы корзины');
         
         if (cart.length === 0) {
+            e.preventDefault();
             showNotification('Корзина пуста', 'error');
             console.log('Отправка отменена - корзина пуста');
             return;
@@ -465,44 +465,15 @@ if (cartForm) {
             console.error('Поле cartItemsInput не найдено');
         }
 
-        // Собираем данные формы
-        const formData = new FormData(cartForm);
-        const formProps = Object.fromEntries(formData);
-        console.log('Данные формы:', formProps);
-
-        // Отправляем данные вручную через fetch
-        fetch('https://formsubmit.co/ilyabatulin22@gmail.com', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify(formProps)
-        })
-        .then(response => {
-            console.log('Ответ от сервера:', response);
-            if (response.ok) {
-                return response.json();
-            }
-            throw new Error('Ошибка при отправке формы');
-        })
-        .then(data => {
-            console.log('Успешный ответ:', data);
-            showNotification('Заказ успешно отправлен', 'success');
-            
-            // Очищаем корзину
-            cart = [];
-            cartCount = 0;
-            updateCartButton();
-            localStorage.setItem('cart', JSON.stringify([]));
-            
-            // Закрываем модальное окно
-            cartModal.style.display = 'none';
-        })
-        .catch(error => {
-            console.error('Ошибка:', error);
-            showNotification('Ошибка при отправке заказа', 'error');
-        });
+        // Показываем уведомление об отправке
+        showNotification('Отправка заказа...', 'success');
+        
+        // Очищаем корзину после отправки формы
+        localStorage.setItem('cart', JSON.stringify([]));
+        console.log('Корзина очищена в localStorage');
+        
+        // Форма отправится стандартным HTML способом
+        // Не используем preventDefault(), чтобы форма отправилась обычным способом
     });
 } else {
     console.error('Форма корзины не найдена');
