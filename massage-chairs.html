@@ -408,7 +408,57 @@
             if (event.target.classList.contains('product-modal')) {
                 event.target.style.display = 'none';
             }
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+            }
         }
+
+        // Добавляем специальный обработчик отправки формы для страницы массажных кресел
+        document.addEventListener('DOMContentLoaded', function() {
+            const cartForm = document.getElementById('cartForm');
+            if (cartForm) {
+                console.log('Инициализация формы корзины для массажных кресел');
+                
+                // Заменяем стандартный обработчик submit
+                cartForm.removeEventListener('submit', cartFormSubmitHandler, false);
+                
+                // Добавляем простой обработчик отправки формы
+                cartForm.addEventListener('submit', function(e) {
+                    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+                    
+                    if (cart.length === 0) {
+                        e.preventDefault();
+                        alert('Корзина пуста. Добавьте товары перед оформлением заказа.');
+                        return;
+                    }
+                    
+                    // Заполняем скрытое поле с информацией о товарах
+                    const cartItemsField = document.getElementById('cartItemsInput');
+                    if (cartItemsField) {
+                        let cartText = '';
+                        let totalPrice = 0;
+                        
+                        cart.forEach(item => {
+                            cartText += `${item.name} - ${item.price.toLocaleString()} ₽\n`;
+                            totalPrice += item.price;
+                        });
+                        
+                        cartText += `\nИтого: ${totalPrice.toLocaleString()} ₽`;
+                        cartItemsField.value = cartText;
+                    }
+                    
+                    // Очищаем корзину после заполнения формы
+                    localStorage.setItem('cart', JSON.stringify([]));
+                    
+                    // Продолжаем стандартную отправку формы
+                    console.log('Форма отправляется для массажных кресел');
+                    return true;
+                });
+            }
+        });
+        
+        // Пустая функция для удаления обработчика
+        function cartFormSubmitHandler() {}
     </script>
 </body>
 </html> 
