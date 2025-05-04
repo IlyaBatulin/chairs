@@ -139,6 +139,61 @@
                 margin: 0 auto;
             }
         }
+
+        /* Стили для вариантов кресел */
+        .chair-variants {
+            margin-top: 30px;
+            width: 100%;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+
+        .chair-variants h3 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 18px;
+        }
+
+        .variants-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .variant-card {
+            background: #f9f9f9;
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .variant-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .variant-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .variant-card h4 {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .variant-card .order-btn {
+            margin-top: auto;
+        }
     </style>
 </head>
 <body>
@@ -226,6 +281,30 @@
                     <div class="product-modal-feature">
                         <i class="fas fa-weight"></i>
                         <span>Максимал. рекомендованный вес до 150кг</span>
+                    </div>
+                </div>
+                
+                <div class="chair-variants">
+                    <h3>ВАРИАНТЫ ЦВЕТОВ И МОДЕЛЕЙ</h3>
+                    <div class="variants-grid">
+                        <div class="variant-card">
+                            <img src="images/models/massagechair_model1.jpg" alt="Офисное кресло с массажем - Черное">
+                            <h4>Офисное кресло с массажем "Черное"</h4>
+                            <p class="price">89 990 ₽</p>
+                            <button class="order-btn" onclick='addToCart("Офисное кресло с массажем Черное", 89990)'>В КОРЗИНУ</button>
+                        </div>
+                        <div class="variant-card">
+                            <img src="images/models/massagechair_model2.jpg" alt="Офисное кресло с массажем - Коричневое">
+                            <h4>Офисное кресло с массажем "Коричневое"</h4>
+                            <p class="price">89 990 ₽</p>
+                            <button class="order-btn" onclick='addToCart("Офисное кресло с массажем Коричневое", 89990)'>В КОРЗИНУ</button>
+                        </div>
+                        <div class="variant-card">
+                            <img src="images/models/massagechair_model3.jpg" alt="Офисное кресло с массажем - Серое">
+                            <h4>Офисное кресло с массажем "Серое"</h4>
+                            <p class="price">89 990 ₽</p>
+                            <button class="order-btn" onclick='addToCart("Офисное кресло с массажем Серое", 89990)'>В КОРЗИНУ</button>
+                        </div>
                     </div>
                 </div>
             </div>
