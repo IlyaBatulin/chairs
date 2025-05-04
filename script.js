@@ -436,36 +436,49 @@ window.addEventListener('click', function(event) {
 // Обработка отправки формы корзины
 const cartForm = document.getElementById('cartForm');
 if (cartForm) {
+    console.log('Форма корзины найдена');
     cartForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
+        console.log('Отправка формы корзины');
         if (cart.length === 0) {
+            e.preventDefault();
             showNotification('Корзина пуста', 'error');
+            console.log('Отправка отменена - корзина пуста');
             return;
         }
 
-        const formData = new FormData(cartForm);
-        const orderData = {
-            name: formData.get('name'),
-            email: formData.get('email'),
-            phone: formData.get('phone'),
-            comment: formData.get('comment'),
-            items: cart,
-            total: cart.reduce((sum, item) => sum + item.price, 0)
-        };
+        // Заполняем скрытое поле информацией о товарах в корзине
+        const cartItemsField = document.getElementById('cartItemsInput');
+        if (cartItemsField) {
+            let cartText = '';
+            let totalPrice = 0;
+            
+            cart.forEach(item => {
+                cartText += `${item.name} - ${item.price.toLocaleString()} ₽\n`;
+                totalPrice += item.price;
+            });
+            
+            cartText += `\nИтого: ${totalPrice.toLocaleString()} ₽`;
+            cartItemsField.value = cartText;
+            console.log('Поле заполнено данными:', cartText);
+        } else {
+            console.error('Поле cartItemsInput не найдено');
+        }
 
-        // Здесь можно добавить отправку данных на сервер
-        console.log('Order data:', orderData);
+        // Форма отправится стандартным HTML способом
+        showNotification('Отправка заказа...', 'success');
+        console.log('Форма отправляется');
         
-        cart = [];
-        cartCount = 0;
-        updateCartButton();
-        cartModal.style.display = 'none';
-        cartForm.reset();
-        // Очищаем корзину в localStorage после оформления заказа
-        localStorage.setItem('cart', JSON.stringify([]));
-        showNotification('Заказ успешно отправлен', 'success');
+        // После отправки очищаем корзину
+        setTimeout(function() {
+            cart = [];
+            cartCount = 0;
+            updateCartButton();
+            localStorage.setItem('cart', JSON.stringify([]));
+            console.log('Корзина очищена');
+        }, 1000);
     });
+} else {
+    console.error('Форма корзины не найдена');
 }
 
 // Функции для модальных окон
