@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "description": "Сайт с креслами для здоровья",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "deploy": "vercel --prod"
+  },
   "dependencies": {},
-  "devDependencies": {}
+  "devDependencies": {
+    "vercel": "^32.5.6"
+  }
 }
