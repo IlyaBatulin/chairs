@@ -396,22 +396,25 @@ if (cartForm) {
         showNotification('Отправка заказа...', 'success');
         console.log('[Form Debug] Показываем уведомление об отправке.');
         
-        const formData = new FormData(cartForm);
+        // --- ЗАМЕНА ОТПРАВКИ ДАННЫХ ---
         const formAction = cartForm.action;
-        console.log('[Form Debug] Данные формы готовы к отправке на:', formAction);
-        // Логируем все данные FormData
-        for (let [key, value] of formData.entries()) { 
-            console.log(`[Form Debug] FormData: ${key}: ${value}`);
-        }
-
+        const data = {
+            name: cartForm.cartName.value,
+            email: cartForm.cartEmail.value,
+            phone: cartForm.cartPhone.value,
+            cartItems: cartForm.cartItemsInput.value,
+            comment: cartForm.cartComment.value
+        };
+        console.log('[Form Debug] Данные для отправки (JSON):', data);
         try {
-            console.log('[Form Debug] Попытка отправки fetch...');
+            console.log('[Form Debug] Попытка отправки fetch (JSON)...');
             const response = await fetch(formAction, {
                 method: 'POST',
-                body: formData,
                 headers: {
-                    'Accept': 'application/json' 
-                }
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(data)
             });
             console.log('[Form Debug] Fetch выполнен. Статус:', response.status);
 
