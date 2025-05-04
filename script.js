@@ -398,15 +398,30 @@ if (cartForm) {
         updateCartButton();
         localStorage.setItem('cart', JSON.stringify([]));
         console.log('Корзина очищена в localStorage');
+
+        console.log('Попытка отправки формы через FormSubmit');
         
-        // Имитируем отправку, чтобы показать уведомление об успешной отправке
+        // Явно проверяем, что форма корректно настроена для FormSubmit
+        const formAction = cartForm.getAttribute('action');
+        console.log('Форма будет отправлена по адресу:', formAction);
+        
+        // Проверяем наличие всех необходимых полей FormSubmit
+        const hiddenFields = cartForm.querySelectorAll('input[type="hidden"]');
+        hiddenFields.forEach(field => {
+            console.log('Скрытое поле:', field.name, field.value);
+        });
+        
+        // Увеличиваем задержку перед отправкой формы
         setTimeout(function() {
             showLargeNotification('Заказ успешно отправлен!', 'Спасибо за ваш заказ. Мы свяжемся с вами в ближайшее время.');
             // Закрываем модальное окно корзины
             cartModal.style.display = 'none';
-            // Отправляем форму стандартным способом после показа уведомления
+            
+            // Используем прямое перенаправление на FormSubmit
+            console.log('Отправка формы...');
             cartForm.submit();
-        }, 1000);
+            console.log('Форма отправлена');
+        }, 2000); // Увеличили задержку до 2 секунд
     });
 } else {
     console.error('Форма корзины не найдена');
