@@ -7,20 +7,18 @@ module.exports = async (req, res) => {
 
   const { name, email, phone, cartItems, comment } = req.body;
 
-  // SMTP для REG.RU
+  // SMTP для Gmail
   const transporter = nodemailer.createTransport({
-    host: 'smtp.hosting.reg.ru',
-    port: 465,
-    secure: true,
+    service: 'gmail',
     auth: {
-      user: 'info@ruskreslo.ru',
-      pass: '08032009Mm-+',
+      user: 'batulinilya5@gmail.com',
+      pass: 'mitl lcrr jjft pbtg',
     },
   });
 
   try {
     await transporter.sendMail({
-      from: 'info@ruskreslo.ru',
+      from: 'batulinilya5@gmail.com',
       to: 'info@ruskreslo.ru',
       subject: 'Новый заказ с сайта',
       text: `\nИмя: ${name}\nEmail: ${email}\nТелефон: ${phone}\nТовары: ${cartItems}\nКомментарий: ${comment || '-'}\n`,
