@@ -177,30 +177,28 @@
 </head>
 <body>
     <!-- Шапка -->
-    <header class="header">
-        <div class="header-content">
-            <div class="logo-section">
+    <header class="header" style="height: 70px; min-height: 70px; display: flex; align-items: center; position: fixed; top: 0; left: 0; width: 100%; background: #fff; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+        <div class="header-content" style="display: flex; align-items: center; width: 100%; justify-content: space-between;">
+            <div class="logo-section" style="display: flex; align-items: center;">
                 <a href="index.html">
-                    <img src="images/LOG 2.jpg" alt="Логотип" class="logo">
+                    <img src="images/LOG 2.jpg" alt="Логотип" class="logo" style="height: 48px;">
                 </a>
-                <p class="slogan">Наша концепция — качественная недорогая мебель для здоровья спины всей семьи!</p>
             </div>
             <div class="contact-section">
                 <div class="contact-icons">
                     <a href="tel:+79857600542" class="contact-link"><i class="fas fa-phone"></i> +7 (985) 760-05-42</a>
-                    <a href="mailto:info@example.com" class="contact-link"><i class="fas fa-envelope"></i> info@example.com</a>
+                    <a href="mailto:info@ruskreslo.ru" class="contact-link"><i class="fas fa-envelope"></i> info@ruskreslo.ru</a>
                     <button class="cart-btn">
                         <i class="fas fa-shopping-cart"></i>
                         <span class="cart-count">0</span>
                     </button>
                 </div>
-                <button class="callback-btn">Обратный звонок</button>
             </div>
         </div>
     </header>
 
     <!-- Основной контент -->
-    <main>
+    <main style="margin-top: 80px;">
         <section class="category-header">
             <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Назад на главную</a>
             <h1>СТУЛЬЯ</h1>
@@ -211,32 +209,32 @@
             <div class="product-card">
                 <img src="images/chair1.jpg" alt="Стул ФРЕД" onclick="openProductModal(1)" class="product-image">
                 <h3>Стул ФРЕД</h3>
-                <p class="price">12 990 ₽</p>
-                <button class="order-btn" onclick='addToCart("Стул ФРЕД", 12990)'>ЗАКАЗАТЬ</button>
+                <p class="price">3 500 ₽</p>
+                <button class="order-btn" onclick='addToCart("Стул ФРЕД", 3500)'>ЗАКАЗАТЬ</button>
             </div>
             <div class="product-card">
                 <img src="images/chair2.jpg" alt="Стул РУМБА" onclick="openProductModal(2)" class="product-image">
                 <h3>Стул РУМБА</h3>
-                <p class="price">13 990 ₽</p>
-                <button class="order-btn" onclick='addToCart("Стул РУМБА", 13990)'>ЗАКАЗАТЬ</button>
+                <p class="price">3 800 ₽</p>
+                <button class="order-btn" onclick='addToCart("Стул РУМБА", 3800)'>ЗАКАЗАТЬ</button>
             </div>
             <div class="product-card">
                 <img src="images/chair3.jpg" alt="Стул КОРА" onclick="openProductModal(3)" class="product-image">
                 <h3>Стул КОРА</h3>
-                <p class="price">14 990 ₽</p>
-                <button class="order-btn" onclick='addToCart("Стул КОРА", 14990)'>ЗАКАЗАТЬ</button>
+                <p class="price">4 600 ₽</p>
+                <button class="order-btn" onclick='addToCart("Стул КОРА", 4600)'>ЗАКАЗАТЬ</button>
             </div>
             <div class="product-card">
                 <img src="images/chair4.jpg" alt="Стул-кресло ВЕРСАЛЬ" onclick="openProductModal(4)" class="product-image">
                 <h3>Стул-кресло ВЕРСАЛЬ</h3>
-                <p class="price">19 990 ₽</p>
-                <button class="order-btn" onclick='addToCart("Стул-кресло ВЕРСАЛЬ", 19990)'>ЗАКАЗАТЬ</button>
+                <p class="price">5 200 ₽</p>
+                <button class="order-btn" onclick='addToCart("Стул-кресло ВЕРСАЛЬ", 5200)'>ЗАКАЗАТЬ</button>
             </div>
             <div class="product-card">
                 <img src="images/chair5.jpg" alt="Стул-кресло СОФИЯ" onclick="openProductModal(5)" class="product-image">
                 <h3>Стул-кресло СОФИЯ</h3>
-                <p class="price">18 990 ₽</p>
-                <button class="order-btn" onclick='addToCart("Стул-кресло СОФИЯ", 18990)'>ЗАКАЗАТЬ</button>
+                <p class="price">5 600 ₽</p>
+                <button class="order-btn" onclick='addToCart("Стул-кресло СОФИЯ", 5600)'>ЗАКАЗАТЬ</button>
             </div>
             <div class="product-card">
                 <img src="images/chair6.jpg" alt="СТУЛЬЯ БАРНЫЕ, ПОЛУБАРНЫЕ" onclick="openProductModal(6)" class="product-image">

@@ -213,13 +213,12 @@
 </head>
 <body>
     <!-- Шапка -->
-    <header class="header">
-        <div class="header-content">
-            <div class="logo-section">
+    <header class="header" style="height: 70px; min-height: 70px; display: flex; align-items: center; position: fixed; top: 0; left: 0; width: 100%; background: #fff; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+        <div class="header-content" style="display: flex; align-items: center; width: 100%; justify-content: space-between;">
+            <div class="logo-section" style="display: flex; align-items: center;">
                 <a href="index.html">
-                    <img src="images/LOG 2.jpg" alt="Логотип" class="logo">
+                    <img src="images/LOG 2.jpg" alt="Логотип" class="logo" style="height: 48px;">
                 </a>
-                <p class="slogan">Наша концепция — качественная недорогая мебель для здоровья спины всей семьи !</p>
             </div>
             <div class="contact-section">
                 <div class="contact-icons">
@@ -235,7 +234,7 @@
     </header>
 
     <!-- Основной контент -->
-    <main>
+    <main style="margin-top: 80px;">
         <section class="category-header">
             <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Назад на главную</a>
             <h1>КРЕСЛА ДЕТСКИЕ РАСТУЩИЕ</h1>
@@ -244,20 +243,20 @@
 
         <section class="products-grid">
             <div class="product-card">
-                <img src="images/1detchair.jpg" alt="Растущее кресло Умник">
-                <h3>Растущее кресло "Умник"</h3>
+                <img src="images/1detchair.jpg" alt="Растущее кресло Модель 1">
+                <h3>Растущее кресло Модель 1</h3>
                 <p>Растет вместе с ребенком от 3 до 14 лет</p>
-                <p class="price">29 990 ₽</p>
+                <p class="price">14 000 ₽</p>
                 <button class="details-btn" onclick="openProductModal1()">ПОДРОБНЕЕ</button>
-                <button class="order-btn" onclick='addToCart("Растущее кресло Умник", 29990)'>В КОРЗИНУ</button>
+                <button class="order-btn" onclick='addToCart("Растущее кресло Модель 1", 14000)'>В КОРЗИНУ</button>
             </div>
             <div class="product-card">
-                <img src="images/2detchair.jpg" alt="Растущее кресло Гений">
-                <h3>Растущее кресло "Гений"</h3>
+                <img src="images/2detchair.jpg" alt="Растущее кресло Модель 2">
+                <h3>Растущее кресло Модель 2</h3>
                 <p>Растет вместе с ребенком от 3 до 14 лет</p>
-                <p class="price">32 990 ₽</p>
+                <p class="price">11 000 ₽</p>
                 <button class="details-btn" onclick="openProductModal2()">ПОДРОБНЕЕ</button>
-                <button class="order-btn" onclick='addToCart("Растущее кресло Гений", 32990)'>В КОРЗИНУ</button>
+                <button class="order-btn" onclick='addToCart("Растущее кресло Модель 2", 11000)'>В КОРЗИНУ</button>
             </div>
         </section>
     </main>
