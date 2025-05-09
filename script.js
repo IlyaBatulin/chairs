@@ -673,8 +673,14 @@ function initializeReviews() {
 // Загрузка отзывов при инициализации
 function loadReviews() {
     try {
-        // Всегда инициализируем демонстрационные отзывы при загрузке
-        initializeReviews();
+        const savedReviews = localStorage.getItem('reviews');
+        if (savedReviews) {
+            reviews = JSON.parse(savedReviews);
+        } else {
+            // Инициализируем демонстрационные отзывы только если нет сохраненных
+            initializeReviews();
+        }
+        displayReviews();
     } catch (error) {
         console.error('Ошибка при загрузке отзывов:', error);
         reviews = [];
