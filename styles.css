@@ -8,7 +8,7 @@ body {
 
 /* Шапка */
 .header {
-    background-image: url('images/ШАПКА.jpg');
+    background-image: url('images/common/ШАПКА.jpg');
     background-size: cover;
     background-position: center;
     padding: 20px 0;
