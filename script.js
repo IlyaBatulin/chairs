@@ -659,7 +659,11 @@ function displayReviews() {
         return;
     }
     
-    container.innerHTML = '';
+    // Если в контейнере уже есть отзывы, не перезаписываем их
+    if (container.children.length > 0) {
+        console.log('Отзывы уже отображаются в HTML');
+        return;
+    }
 
     if (reviews.length === 0) {
         container.innerHTML = '<p class="no-reviews">Пока нет отзывов. Будьте первым!</p>';
