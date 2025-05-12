@@ -173,6 +173,65 @@
                 margin-bottom: 20px;
             }
         }
+
+        .product-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .product-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+
+        .product-card h3 {
+            color: #333;
+            font-size: 18px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .product-card .price {
+            font-size: 24px;
+            font-weight: 600;
+            color: #8B6B4D;
+            margin: 15px 0;
+        }
+
+        .product-card .order-btn {
+            padding: 8px 15px;
+            background-color: #8B6B4D;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .product-card .order-btn:hover {
+            background-color: #725a3f;
+        }
     </style>
 </head>
 <body>
@@ -237,22 +296,31 @@
                 <button class="order-btn" onclick='addToCart("Стул-кресло СОФИЯ", 5600)'>ЗАКАЗАТЬ</button>
             </div>
             <div class="product-card">
-                <img src="images/chairs/chair6.jpg" alt="СТУЛЬЯ БАРНЫЕ, ПОЛУБАРНЫЕ" onclick="openProductModal(6)" class="product-image">
+                <img src="images/chairs/chair6.jpg" alt="СТУЛЬЯ БАРНЫЕ, ПОЛУБАРНЫЕ" class="product-image">
                 <h3>СТУЛЬЯ БАРНЫЕ, ПОЛУБАРНЫЕ</h3>
                 <p class="price">15 990 ₽</p>
-                <button class="order-btn" onclick='addToCart("СТУЛЬЯ БАРНЫЕ, ПОЛУБАРНЫЕ", 15990)'>ЗАКАЗАТЬ</button>
+                <div class="product-buttons">
+                    <button class="details-btn" onclick="openProductModal(6)">ПОДРОБНЕЕ</button>
+                    <button class="order-btn" onclick='addToCart("СТУЛЬЯ БАРНЫЕ, ПОЛУБАРНЫЕ", 15990)'>ЗАКАЗАТЬ</button>
+                </div>
             </div>
             <div class="product-card">
-                <img src="images/chairs/chair7.jpg" alt="СТУЛЬЯ ПОВОРОТНЫЕ" onclick="openProductModal(7)" class="product-image">
+                <img src="images/chairs/chair7.jpg" alt="СТУЛЬЯ ПОВОРОТНЫЕ" class="product-image">
                 <h3>СТУЛЬЯ ПОВОРОТНЫЕ</h3>
                 <p class="price">16 990 ₽</p>
-                <button class="order-btn" onclick='addToCart("СТУЛЬЯ ПОВОРОТНЫЕ", 16990)'>ЗАКАЗАТЬ</button>
+                <div class="product-buttons">
+                    <button class="details-btn" onclick="openProductModal(7)">ПОДРОБНЕЕ</button>
+                    <button class="order-btn" onclick='addToCart("СТУЛЬЯ ПОВОРОТНЫЕ", 16990)'>ЗАКАЗАТЬ</button>
+                </div>
             </div>
             <div class="product-card">
-                <img src="images/chairs/chair8.jpg" alt="СТУЛ-КРЕСЛО БАРНЫЙ, ПОЛУБАРНЫЙ" onclick="openProductModal(8)" class="product-image">
+                <img src="images/chairs/chair8.jpg" alt="СТУЛ-КРЕСЛО БАРНЫЙ, ПОЛУБАРНЫЙ" class="product-image">
                 <h3>СТУЛ-КРЕСЛО БАРНЫЙ, ПОЛУБАРНЫЙ</h3>
                 <p class="price">20 990 ₽</p>
-                <button class="order-btn" onclick='addToCart("СТУЛ-КРЕСЛО БАРНЫЙ, ПОЛУБАРНЫЙ", 20990)'>ЗАКАЗАТЬ</button>
+                <div class="product-buttons">
+                    <button class="details-btn" onclick="openProductModal(8)">ПОДРОБНЕЕ</button>
+                    <button class="order-btn" onclick='addToCart("СТУЛ-КРЕСЛО БАРНЫЙ, ПОЛУБАРНЫЙ", 20990)'>ЗАКАЗАТЬ</button>
+                </div>
             </div>
         </section>
     </main>
@@ -561,7 +629,7 @@
                 <span class="product-modal-close">&times;</span>
             </div>
             <div class="product-modal-body">
-                <img src="images/chairs/chair6.jpg" alt="СТУЛЬЯ БАРНЫЕ, ПОЛУБАРНЫЕ" class="product-modal-image">
+                <img src="images/chairsphoto/3.jpg" alt="СТУЛЬЯ БАРНЫЕ, ПОЛУБАРНЫЕ" class="product-modal-image">
                 <div class="product-modal-info">
                     <div class="product-modal-feature">
                         <i class="fas fa-check-circle"></i>
@@ -608,7 +676,7 @@
                 <span class="product-modal-close">&times;</span>
             </div>
             <div class="product-modal-body">
-                <img src="images/chairs/chair7.jpg" alt="СТУЛЬЯ ПОВОРОТНЫЕ" class="product-modal-image">
+                <img src="images/chairsphoto/6.jpg" alt="СТУЛЬЯ ПОВОРОТНЫЕ" class="product-modal-image">
                 <div class="product-modal-info">
                     <div class="product-modal-feature">
                         <i class="fas fa-check-circle"></i>
@@ -655,7 +723,7 @@
                 <span class="product-modal-close">&times;</span>
             </div>
             <div class="product-modal-body">
-                <img src="images/chairs/chair8.jpg" alt="СТУЛ-КРЕСЛО БАРНЫЙ, ПОЛУБАРНЫЙ" class="product-modal-image">
+                <img src="images/chairsphoto/9.jpg" alt="СТУЛ-КРЕСЛО БАРНЫЙ, ПОЛУБАРНЫЙ" class="product-modal-image">
                 <div class="product-modal-info">
                     <div class="product-modal-feature">
                         <i class="fas fa-check-circle"></i>
