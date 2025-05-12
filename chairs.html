@@ -176,9 +176,15 @@
 
         .product-buttons {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             gap: 10px;
             margin-top: 10px;
+            width: 100%;
+        }
+
+        .product-buttons button {
+            width: 100%;
+            padding: 10px;
         }
 
         .product-card {
@@ -190,6 +196,7 @@
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             transition: transform 0.3s ease;
+            width: 100%;
         }
 
         .product-card:hover {
