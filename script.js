@@ -852,6 +852,126 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         console.log('Элементы галереи-слайдера не найдены на этой странице.');
     }
+
+    // Оптимизация производительности
+    const lazyImages = document.querySelectorAll('img[data-src]');
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                img.src = img.dataset.src;
+                img.removeAttribute('data-src');
+                observer.unobserve(img);
+            }
+        });
+    });
+
+    lazyImages.forEach(img => imageObserver.observe(img));
+
+    // Оптимизация обработчиков событий
+    const debounce = (func, wait) => {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    };
+
+    // Оптимизация скролла
+    const handleScroll = debounce(() => {
+        // Ваш код обработки скролла
+    }, 100);
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    // Оптимизация модальных окон
+    const modals = document.querySelectorAll('.modal');
+    modals.forEach(modal => {
+        modal.addEventListener('touchstart', function(e) {
+            e.stopPropagation();
+        }, { passive: true });
+    });
+
+    // Оптимизация галереи
+    const initGallery = () => {
+        const galleryTrack = document.querySelector('.gallery-track');
+        if (!galleryTrack) return;
+
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        galleryTrack.addEventListener('mousedown', (e) => {
+            isDown = true;
+            galleryTrack.style.cursor = 'grabbing';
+            startX = e.pageX - galleryTrack.offsetLeft;
+            scrollLeft = galleryTrack.scrollLeft;
+        }, { passive: true });
+
+        galleryTrack.addEventListener('mouseleave', () => {
+            isDown = false;
+            galleryTrack.style.cursor = 'grab';
+        }, { passive: true });
+
+        galleryTrack.addEventListener('mouseup', () => {
+            isDown = false;
+            galleryTrack.style.cursor = 'grab';
+        }, { passive: true });
+
+        galleryTrack.addEventListener('mousemove', debounce((e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - galleryTrack.offsetLeft;
+            const walk = (x - startX) * 2;
+            galleryTrack.scrollLeft = scrollLeft - walk;
+        }, 10));
+
+        // Оптимизация для тач-устройств
+        galleryTrack.addEventListener('touchstart', (e) => {
+            isDown = true;
+            startX = e.touches[0].pageX - galleryTrack.offsetLeft;
+            scrollLeft = galleryTrack.scrollLeft;
+        }, { passive: true });
+
+        galleryTrack.addEventListener('touchend', () => {
+            isDown = false;
+        }, { passive: true });
+
+        galleryTrack.addEventListener('touchmove', debounce((e) => {
+            if (!isDown) return;
+            const x = e.touches[0].pageX - galleryTrack.offsetLeft;
+            const walk = (x - startX) * 2;
+            galleryTrack.scrollLeft = scrollLeft - walk;
+        }, 10));
+    };
+
+    // Инициализация галереи
+    initGallery();
+
+    // Оптимизация корзины
+    const cartItems = document.querySelectorAll('.cart-item');
+    cartItems.forEach(item => {
+        const removeBtn = item.querySelector('.cart-item-remove');
+        if (removeBtn) {
+            removeBtn.addEventListener('click', debounce((e) => {
+                e.preventDefault();
+                // Ваш код удаления товара
+            }, 100));
+        }
+    });
+
+    // Оптимизация форм
+    const forms = document.querySelectorAll('form');
+    forms.forEach(form => {
+        form.addEventListener('submit', debounce((e) => {
+            e.preventDefault();
+            // Ваш код обработки формы
+        }, 100));
+    });
 });
 
 // Мобильное меню

@@ -679,21 +679,26 @@ body {
         min-height: auto;
         height: auto;
         display: block;
+        will-change: transform;
+        transform: translateZ(0);
     }
     
     .header-content {
         flex-direction: column;
         align-items: center;
         padding: 15px 10px;
+        width: 100%;
+        box-sizing: border-box;
     }
     
     .logo-section, .contact-section {
         width: 100%;
-        max-width: none;
+        max-width: 100%;
         margin-bottom: 15px;
         padding: 10px;
-        background: none;
-        box-shadow: none;
+        background: rgba(255, 255, 255, 0.95);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        box-sizing: border-box;
     }
 
     .logo-section {
@@ -712,14 +717,20 @@ body {
         flex-wrap: wrap;
         justify-content: center;
         gap: 10px;
+        width: 100%;
     }
 
     .contact-link {
         font-size: 14px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
     }
 
     .cart-btn {
         padding: 8px 12px;
+        touch-action: manipulation;
     }
 
     .cart-count {
@@ -731,39 +742,24 @@ body {
     
     main {
         margin-top: 0;
-    }
-
-    main:has(.category-header) {
-        margin-top: 70px;
-    }
-
-    .category-header {
-        padding: 20px 15px;
-    }
-
-    .category-header h1 {
-        font-size: 1.8em;
-    }
-
-    .category-header .category-description {
-        display: none;
-    }
-
-    .back-btn {
-        font-size: 14px;
-        padding: 6px 12px;
+        width: 100%;
+        overflow-x: hidden;
     }
 
     .products-grid {
         grid-template-columns: 1fr;
         gap: 20px;
         padding: 20px 15px;
+        width: 100%;
+        box-sizing: border-box;
     }
 
     .product-card {
-        max-width: none;
+        max-width: 100%;
         padding: 15px;
         box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        transform: translateZ(0);
+        will-change: transform;
     }
     
     .product-card img {
@@ -771,197 +767,83 @@ body {
         max-height: 250px;
         object-fit: contain;
         margin-bottom: 15px;
-    }
-    
-    .product-card h3 {
-        font-size: 1.1em;
-        margin-bottom: 8px;
-    }
-    
-    .product-card p {
-        font-size: 0.9em;
-        margin-bottom: 10px;
+        transform: translateZ(0);
     }
 
-    .product-card .price {
-        font-size: 1.1em;
-        margin-bottom: 15px;
-    }
-    
-    .order-btn, .details-btn {
-        width: 100%;
-        margin: 5px 0;
-        padding: 10px 15px;
-        font-size: 15px;
-    }
-    
-    .details-btn {
-        margin-bottom: 10px;
-    }
-
-    .category-cards {
-        grid-template-columns: 1fr;
-        max-width: none;
-        padding: 0 15px;
-        gap: 20px;
-    }
-    
-    .category-card {
-        margin: 0;
-    }
-
-    .category-card img {
-        height: 250px;
-    }
-
-    .product-modal-content {
-        margin: 10px;
-        padding: 0;
-    }
-
-    .product-modal-header {
-        padding: 15px;
-    }
-
-    .product-modal-title {
-        font-size: 1.3em;
-    }
-
-    .product-modal-close {
-        font-size: 24px;
-        right: 15px;
-    }
-
-    .product-modal-body {
-        padding: 15px;
-        gap: 15px;
-        flex-direction: column;
-    }
-    
-    .product-modal-image {
-        max-width: 100%;
-        margin-bottom: 15px;
-    }
-
-    .product-modal-info {
-        min-width: auto;
-    }
-
-    .product-modal-feature {
-        padding: 10px;
-        gap: 10px;
-        margin-bottom: 10px;
-    }
-
-    .product-modal-feature i {
-        font-size: 16px;
-    }
-
-    .product-modal-feature span {
-        font-size: 14px;
-    }
-    
-    .chair-variants h3 {
-        font-size: 1.1em;
-        margin-bottom: 15px;
-    }
-
-    .variants-grid {
-        grid-template-columns: 1fr;
-        gap: 15px;
-    }
-
-    .variant-card img {
-        height: 180px;
-    }
-
-    .variant-card h4 {
-        font-size: 1em;
-    }
-    
-    .modal#cartModal .modal-content {
-        padding: 15px;
-    }
-
-    .modal#cartModal h2 {
-        font-size: 1.5em;
-        margin-bottom: 15px;
-    }
-
-    .cart-item {
-        padding: 8px 0;
-        gap: 8px;
-    }
-
-    .cart-item-name {
-        font-size: 14px;
-    }
-
-    .cart-item-price {
-        font-size: 14px;
-    }
-
-    .cart-total {
-        font-size: 1.1em;
-        margin-top: 15px;
-    }
-
-    #cartForm label {
-        font-size: 14px;
-    }
-
-    #cartForm input, 
-    #cartForm textarea {
-        padding: 8px 10px;
-        font-size: 15px;
-    }
-
-    #cartForm .submit-btn {
-        padding: 12px;
-        font-size: 16px;
-    }
-    
     .gallery-frame {
         padding: 15px 10px;
+        width: 100%;
+        box-sizing: border-box;
+        overflow: hidden;
     }
     
     .gallery-item {
         width: calc(100% - 20px);
         margin: 0 10px;
         flex-shrink: 0;
+        transform: translateZ(0);
     }
     
     .gallery-arrow {
         width: 35px;
         height: 35px;
         font-size: 16px;
-        background: rgba(0,0,0,0.4);
+        background: rgba(139, 107, 77, 0.8);
+        touch-action: manipulation;
     }
-    
-    .contact-info {
+
+    .modal-content {
+        width: 95%;
+        max-width: 100%;
+        margin: 20px auto;
+        padding: 15px;
+        box-sizing: border-box;
+        transform: translateZ(0);
+    }
+
+    .product-modal-body {
         flex-direction: column;
-        align-items: center;
-        text-align: center;
+        padding: 15px;
         gap: 15px;
     }
 
-    .contact-photo {
-        width: 150px;
-        height: 150px;
-        margin-bottom: 15px;
+    .product-modal-image {
+        max-width: 100%;
+        height: auto;
+        margin: 0 auto 15px;
     }
 
-    .contact-name {
-        font-size: 1.4em;
+    .cart-item {
+        padding: 10px;
+        flex-wrap: wrap;
+        gap: 10px;
     }
 
-    .contact-phone,
-    .contact-email {
-        font-size: 1em;
+    .cart-item-name {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 5px;
     }
 
-    .social-links {
-        justify-content: center;
+    .reviews-sources {
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .reviews-sources a {
+        flex: 1 1 auto;
+        min-width: 120px;
+        text-align: center;
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+
+    .review-card {
+        padding: 15px;
+        margin: 0 auto 15px;
+        width: 100%;
+        box-sizing: border-box;
     }
 }
 
@@ -1225,7 +1107,8 @@ body {
 
 @media (max-width: 360px) {
     .logo {
-        width: 120px;
+        width: 100px;
+        height: auto;
     }
     
     .slogan {
@@ -1249,42 +1132,42 @@ body {
     }
     
     .modal-content {
-        padding: 15px 10px;
+        padding: 10px;
     }
     
     .contact-name {
-        font-size: 20px;
+        font-size: 18px;
     }
     
     .contact-phone, .contact-email {
-        font-size: 14px;
+        font-size: 13px;
     }
 }
 
 /* Оптимизация для тач-устройств */
-@media (hover: none) {
-    .category-card:hover,
-    .product-card:hover,
-    .gallery-image:hover,
-    .order-btn:hover,
-    .details-btn:hover,
-    .submit-btn:hover,
-    .add-review-btn:hover,
-    .back-btn:hover,
-    .cart-btn:hover,
-    .review-buttons a.review-btn:hover,
-    .product-modal-feature:hover,
-    .variant-card:hover,
-    .review-card:hover,
-    .reviews-sources a:hover {
-        transform: none;
-        box-shadow: inherit;
-        background-color: inherit;
+@media (hover: none) and (pointer: coarse) {
+    .category-card,
+    .product-card,
+    .gallery-image,
+    .order-btn,
+    .details-btn,
+    .submit-btn,
+    .add-review-btn,
+    .back-btn,
+    .cart-btn,
+    .review-buttons a.review-btn,
+    .product-modal-feature,
+    .variant-card,
+    .review-card,
+    .reviews-sources a {
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
     }
     
     .order-btn:active,
     .callback-btn:active {
         transform: scale(0.98);
+        transition: transform 0.1s ease;
     }
 }
 
