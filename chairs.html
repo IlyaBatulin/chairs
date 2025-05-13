@@ -506,22 +506,22 @@
         /* Медиа запросы для мобильной версии */
         @media (max-width: 768px) {
             /* Скрываем шапку на страницах с товарами */
-            body:not(.home-page) .product-page-header {
-                display: none;
+            .product-page-header {
+                display: none !important;
             }
             
             /* Показываем плавающую корзину на страницах с товарами */
-            body:not(.home-page) .floating-cart {
-                display: block;
+            .floating-cart {
+                display: block !important;
             }
             
             /* Уменьшаем отступ сверху для контента */
-            body:not(.home-page) main {
+            main {
                 margin-top: 20px !important;
             }
             
             /* Отображаем кнопку "Назад" более заметно */
-            body:not(.home-page) .back-btn {
+            .back-btn {
                 margin-top: 15px;
                 margin-bottom: 20px;
                 display: inline-flex;
