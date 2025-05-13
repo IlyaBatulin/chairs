@@ -172,64 +172,6 @@
             .product-modal-image {
                 margin-bottom: 20px;
             }
-            
-            /* Скрываем шапку с контактными данными на страницах разделов */
-            body:not(.home-page) .header .contact-section {
-                display: none;
-            }
-            
-            /* Минимизируем высоту шапки на страницах разделов */
-            body:not(.home-page) .header {
-                height: 50px;
-                min-height: 50px;
-            }
-            
-            /* Оптимизируем скроллинг глобально */
-            html, body {
-                overflow-y: auto;
-                -webkit-overflow-scrolling: touch;
-                -ms-overflow-style: none;
-                scrollbar-width: none;
-                overscroll-behavior-y: none; /* Предотвращает "bounce" эффект */
-            }
-            
-            /* Скрываем полосу прокрутки для webkit браузеров */
-            body::-webkit-scrollbar {
-                display: none;
-            }
-            
-            /* Центрирование разделов */
-            .products-grid {
-                display: flex !important;
-                flex-direction: column !important;
-                align-items: center !important;
-                justify-content: center !important;
-                width: 100% !important;
-                padding: 0 !important;
-                margin: 0 auto !important;
-            }
-            
-            /* Центрирование карточек продуктов */
-            .product-card {
-                max-width: 90% !important;
-                width: 100% !important;
-                margin: 0 auto 20px !important;
-                display: flex !important;
-                flex-direction: column !important;
-                align-items: center !important;
-                justify-content: center !important;
-                text-align: center !important;
-                padding: 15px !important;
-            }
-            
-            /* Кнопка ПОДРОБНЕЕ в карточке стульев */
-            .product-card .order-btn {
-                width: 80%;
-                padding: 12px;
-                margin: 10px auto 0;
-                font-size: 16px;
-                display: block;
-            }
         }
 
         .product-buttons {
@@ -352,142 +294,132 @@
         .image-modal img { max-width: 90%; max-height: 90%; margin: 5% auto; object-fit: contain; }
         .image-modal-close { position: absolute; top: 10px; right: 20px; color: #fff; font-size: 30px; cursor: pointer; }
 
-        /* Дополнительные улучшения для очень маленьких экранов */
-        @media (max-width: 480px) {
+        /* Улучшенная мобильная адаптация */
+        @media (max-width: 768px) {
+            /* Шапка */
             .header {
-                height: auto;
-                min-height: auto;
-                padding: 10px 0;
+                padding: 5px 10px;
             }
             
-            .logo {
-                height: 40px;
+            .contact-icons {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
             }
             
             .contact-link {
+                margin: 2px 0;
                 font-size: 13px;
-                margin: 3px 0;
             }
             
-            main {
-                margin-top: 120px;
+            /* Контент */
+            .products-grid {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 25px;
+                padding: 20px 15px;
+            }
+            
+            .product-card {
+                max-width: 100%;
+                margin: 0 auto;
+                width: 90%;
+            }
+            
+            .product-card img {
+                height: 180px;
+            }
+            
+            /* Модальные окна */
+            .product-modal-content {
+                width: 95%;
+                margin: 30px auto;
+            }
+            
+            .product-modal-title {
+                font-size: 18px;
+            }
+            
+            .product-modal-body {
+                padding: 15px;
+                gap: 15px;
+            }
+            
+            .product-modal-image {
+                max-height: 300px !important;
             }
             
             .product-modal-feature {
+                padding: 8px 10px;
+                margin-bottom: 10px;
                 font-size: 14px;
             }
             
-            .product-modal-info {
-                padding: 0;
+            .additional-products {
+                grid-template-columns: 1fr;
+                gap: 15px;
             }
             
             .additional-product-image {
-                height: 150px;
+                height: 180px !important;
             }
             
-            .additional-product .order-btn {
-                padding: 10px;
-                font-size: 15px;
+            /* Модальное окно изображения */
+            .image-modal img {
+                max-width: 95%;
+                max-height: 95%;
             }
-            
-            /* Улучшение производительности скроллинга */
-            body {
-                -webkit-overflow-scrolling: touch;
-                overflow-x: hidden;
-                overscroll-behavior-y: none;
-                scroll-behavior: smooth;
-            }
-            
-            * {
-                -webkit-tap-highlight-color: transparent;
-                backface-visibility: hidden;
-                -webkit-backface-visibility: hidden;
-                transform: translateZ(0);
-                will-change: auto;
-            }
-            
-            /* Глобальное ускорение для всего контента */
-            main, .products-grid, .product-card {
-                will-change: transform;
-                transform: translateZ(0);
-                contain: layout style paint;
-            }
-            
-            /* Оптимизация изображений */
-            img {
-                will-change: transform;
-                transform: translateZ(0);
-                content-visibility: auto;
-            }
-            
-            /* Стили для фиксированной корзины внизу справа */
-            .mobile-cart-btn {
-                display: flex;
-                position: fixed;
-                bottom: 20px;
-                right: 20px;
-                width: 60px;
-                height: 60px;
-                border-radius: 50%;
-                background-color: #8B6B4D;
-                color: white;
+        }
+        
+        /* Стили для очень маленьких экранов */
+        @media (max-width: 480px) {
+            .header-content {
+                flex-direction: column;
                 align-items: center;
-                justify-content: center;
-                box-shadow: 0 3px 10px rgba(0,0,0,0.3);
-                z-index: 99;
-                font-size: 24px;
-                border: none;
-                cursor: pointer;
-                animation: pulse 2s infinite;
-                transform: translateZ(0); /* Включает аппаратное ускорение */
+                padding: 5px 0;
             }
             
-            .mobile-cart-btn .cart-count {
-                position: absolute;
-                top: 0;
-                right: 0;
-                background: #e74c3c;
-                color: white;
-                border-radius: 50%;
-                width: 24px;
-                height: 24px;
+            .logo-section {
+                margin-bottom: 5px;
+            }
+            
+            .contact-section {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+            }
+            
+            .contact-icons {
+                align-items: center;
+            }
+            
+            /* Увеличиваем заголовок категории */
+            .category-header h1 {
+                font-size: 20px;
+                text-align: center;
+            }
+            
+            .category-description {
+                text-align: center;
                 font-size: 14px;
-                display: flex;
-                align-items: center;
+            }
+            
+            /* Кнопки */
+            .back-btn {
+                width: 100%;
+                text-align: center;
                 justify-content: center;
+                margin-bottom: 10px;
             }
             
-            @keyframes pulse {
-                0% {
-                    transform: scale(1) translateZ(0);
-                }
-                70% {
-                    transform: scale(1.05) translateZ(0);
-                }
-                100% {
-                    transform: scale(1) translateZ(0);
-                }
-            }
-            
-            /* Скрыть обычную корзину в шапке на мобильных */
-            .header .cart-btn {
-                display: none;
+            .product-card .order-btn {
+                padding: 12px 10px;
+                font-size: 16px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Добавляем класс для идентификации не главной страницы -->
-    <script>
-        // Определяем, является ли текущая страница главной (index.html)
-        const isHomePage = window.location.pathname.endsWith('index.html') || 
-                            window.location.pathname.endsWith('/') || 
-                            window.location.pathname === '';
-        
-        // Добавляем соответствующий класс к body
-        document.body.classList.add(isHomePage ? 'home-page' : 'inner-page');
-    </script>
-
     <!-- Шапка -->
     <header class="header" style="height: 70px; min-height: 70px; display: flex; align-items: center; position: fixed; top: 0; left: 0; width: 100%; background: #fff; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
         <div class="header-content" style="display: flex; align-items: center; width: 100%; justify-content: space-between;">
@@ -552,19 +484,19 @@
                 <img src="images/chairs/chair6.jpg" alt="СТУЛЬЯ БАРНЫЕ, ПОЛУБАРНЫЕ" class="product-image" style="object-fit: contain; height: 200px; background: #f9f9f9;" onclick="openImageModal(this.src);">
                 <h3>СТУЛЬЯ БАРНЫЕ, ПОЛУБАРНЫЕ</h3>
                 <p class="price">от 4 600 ₽</p>
-                <button class="order-btn" onclick="openProductModal(6)" style="display: inline-block; width: auto; min-width: 200px; margin: 10px auto;">ПОДРОБНЕЕ</button>
+                <button class="order-btn" onclick="openProductModal(6)">ПОДРОБНЕЕ</button>
             </div>
             <div class="product-card">
                 <img src="images/chairs/chair7.jpg" alt="СТУЛЬЯ ПОВОРОТНЫЕ" class="product-image" style="object-fit: contain; height: 200px; background: #f9f9f9;" onclick="openImageModal(this.src);">
                 <h3>СТУЛЬЯ ПОВОРОТНЫЕ</h3>
                 <p class="price">от 5 300 ₽</p>
-                <button class="order-btn" onclick="openProductModal(7)" style="display: inline-block; width: auto; min-width: 200px; margin: 10px auto;">ПОДРОБНЕЕ</button>
+                <button class="order-btn" onclick="openProductModal(7)">ПОДРОБНЕЕ</button>
             </div>
             <div class="product-card">
                 <img src="images/chairs/chair8.jpg" alt="СТУЛ-КРЕСЛО БАРНЫЙ, ПОЛУБАРНЫЙ" class="product-image" style="object-fit: contain; height: 200px; background: #f9f9f9;" onclick="openImageModal(this.src);">
                 <h3>СТУЛ-КРЕСЛО БАРНЫЙ, ПОЛУБАРНЫЙ</h3>
                 <p class="price">от 6 600 ₽</p>
-                <button class="order-btn" onclick="openProductModal(8)" style="display: inline-block; width: auto; min-width: 200px; margin: 10px auto;">ПОДРОБНЕЕ</button>
+                <button class="order-btn" onclick="openProductModal(8)">ПОДРОБНЕЕ</button>
             </div>
         </section>
     </main>
@@ -610,7 +542,262 @@
         </div>
     </div>
 
-    <!-- Модальное окно для СТУЛЬЯ БАРНЫЕ, ПОЛУБАРНЫЕ (6) -->
+    <!-- Модальное окно детальной информации о товаре -->
+    <div class="product-modal" id="productModal">
+        <div class="product-modal-content">
+            <div class="product-modal-header">
+                <h2 class="product-modal-title">Стул ФРЕД</h2>
+                <span class="product-modal-close">&times;</span>
+            </div>
+            <div class="product-modal-body">
+                <img src="images/chairs/chair1.jpg" alt="Стул ФРЕД" class="product-modal-image">
+                <div class="product-modal-info">
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Стул кухонный ПРЕМИУМ качества</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Обивка - антивандальный микровелюр</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Огромное кол-во цветов и оттенков</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Легко чистится в домашних условиях</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Стул с мягкой спинкой</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Стул с мягким сиденьем</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Недорогой кухонный стул</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Максимал. рекомендованный вес до 140кг</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Примечание: данная модель может быть изготовлена с поворотным механизмом</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для второго товара -->
+    <div class="product-modal" id="productModal2">
+        <div class="product-modal-content">
+            <div class="product-modal-header">
+                <h2 class="product-modal-title">Стул РУМБА</h2>
+                <span class="product-modal-close">&times;</span>
+            </div>
+            <div class="product-modal-body">
+                <img src="images/chairs/chair2.jpg" alt="Стул РУМБА" class="product-modal-image">
+                <div class="product-modal-info">
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Стул кухонный ПРЕМИУМ качества</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Обивка - антивандальный микровелюр</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Огромное кол-во цветов и оттенков</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Легко чистится в домашних условиях</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Стул с мягкой спинкой</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Стул с мягким сиденьем</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Недорогой кухонный стул</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Максимал. рекомендованный вес до 140кг</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Примечание: данная модель может быть изготовлена с поворотным механизмом</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для третьего товара -->
+    <div class="product-modal" id="productModal3">
+        <div class="product-modal-content">
+            <div class="product-modal-header">
+                <h2 class="product-modal-title">Стул КОРА</h2>
+                <span class="product-modal-close">&times;</span>
+            </div>
+            <div class="product-modal-body">
+                <img src="images/chairs/chair3.jpg" alt="Стул КОРА" class="product-modal-image">
+                <div class="product-modal-info">
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Стул кухонный ПРЕМИУМ качества</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Обивка - антивандальный микровелюр</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Огромное кол-во цветов и оттенков</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Легко чистится в домашних условиях</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Стул с мягкой спинкой</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Стул с мягким сиденьем</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Недорогой кухонный стул</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Максимал. рекомендованный вес до 140кг</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Примечание: данная модель может быть изготовлена с поворотным механизмом</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для четвертого товара -->
+    <div class="product-modal" id="productModal4">
+        <div class="product-modal-content">
+            <div class="product-modal-header">
+                <h2 class="product-modal-title">Стул-кресло ВЕРСАЛЬ</h2>
+                <span class="product-modal-close">&times;</span>
+            </div>
+            <div class="product-modal-body">
+                <img src="images/chairs/chair4.jpg" alt="Стул-кресло ВЕРСАЛЬ" class="product-modal-image">
+                <div class="product-modal-info">
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Кресло-стул ПРЕМИУМ качества</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Обивка - антивандальный микровелюр</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Огромное кол-во цветов и оттенков</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Легко чистится в домашних условиях</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Стул с мягкой спинкой</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Стул с мягким сиденьем</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Недорогой кухонный стул</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Максимал. рекомендованный вес до 140кг</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Примечание: данная модель может быть изготовлена с поворотным механизмом</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для пятого товара -->
+    <div class="product-modal" id="productModal5">
+        <div class="product-modal-content">
+            <div class="product-modal-header">
+                <h2 class="product-modal-title">Стул-кресло СОФИЯ</h2>
+                <span class="product-modal-close">&times;</span>
+            </div>
+            <div class="product-modal-body">
+                <img src="images/chairs/chair5.jpg" alt="Стул-кресло СОФИЯ" class="product-modal-image">
+                <div class="product-modal-info">
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Кресло-стул ПРЕМИУМ качества</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Обивка - антивандальный микровелюр</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Огромное кол-во цветов и оттенков</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Легко чистится в домашних условиях</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Стул с мягкой спинкой</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Стул с мягким сиденьем</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Недорогой кухонный стул</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Максимал. рекомендованный вес до 140кг</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Примечание: данная модель может быть изготовлена с поворотным механизмом</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для шестого товара -->
     <div class="product-modal" id="productModal6">
         <div class="product-modal-content">
             <div class="product-modal-header">
@@ -671,7 +858,7 @@
         </div>
     </div>
 
-    <!-- Модальное окно для СТУЛЬЯ ПОВОРОТНЫЕ (7) -->
+    <!-- Модальное окно для седьмого товара -->
     <div class="product-modal" id="productModal7">
         <div class="product-modal-content">
             <div class="product-modal-header">
@@ -718,21 +905,21 @@
                     <div class="additional-product">
                         <img src="images/chairsphoto/4.jpg" alt="Стул полубарный поворотный" class="additional-product-image" style="object-fit: contain; height: 220px; background: #f9f9f9;" onclick="openImageModal(this.src);">
                         <div style="font-weight: 600; margin: 8px 0 4px;">Стул полубарный поворотный</div>
-                        <div style="color: #8B6B4D; font-weight: 500; margin-bottom: 6px;">5 300 ₽</div>
-                        <button class="order-btn" onclick='addToCart("Стул полубарный поворотный", 5300)'>КУПИТЬ</button>
+                         <div style="color: #8B6B4D; font-weight: 500; margin-bottom: 6px;">5 300 ₽</div>
+                         <button class="order-btn" onclick='addToCart("Стул полубарный поворотный", 5300)'>КУПИТЬ</button>
                     </div>
                     <div class="additional-product">
                         <img src="images/chairsphoto/5.jpg" alt="Стул барный поворотный" class="additional-product-image" style="object-fit: contain; height: 220px; background: #f9f9f9;" onclick="openImageModal(this.src);">
                         <div style="font-weight: 600; margin: 8px 0 4px;">Стул барный поворотный</div>
-                        <div style="color: #8B6B4D; font-weight: 500; margin-bottom: 6px;">5 500 ₽</div>
-                        <button class="order-btn" onclick='addToCart("Стул барный поворотный", 5500)'>КУПИТЬ</button>
+                         <div style="color: #8B6B4D; font-weight: 500; margin-bottom: 6px;">5 500 ₽</div>
+                         <button class="order-btn" onclick='addToCart("Стул барный поворотный", 5500)'>КУПИТЬ</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Модальное окно для СТУЛ-КРЕСЛО БАРНЫЙ, ПОЛУБАРНЫЙ (8) -->
+    <!-- Модальное окно для восьмого товара -->
     <div class="product-modal" id="productModal8">
         <div class="product-modal-content">
             <div class="product-modal-header">
@@ -779,14 +966,14 @@
                     <div class="additional-product">
                         <img src="images/chairsphoto/7.jpg" alt="Стул-кресло полубарный" class="additional-product-image" style="object-fit: contain; height: 220px; background: #f9f9f9;" onclick="openImageModal(this.src);">
                         <div style="font-weight: 600; margin: 8px 0 4px;">Стул-кресло полубарный</div>
-                        <div style="color: #8B6B4D; font-weight: 500; margin-bottom: 6px;">6 600 ₽</div>
-                        <button class="order-btn" onclick='addToCart("Стул-кресло полубарный", 6600)'>КУПИТЬ</button>
+                         <div style="color: #8B6B4D; font-weight: 500; margin-bottom: 6px;">6 600 ₽</div>
+                         <button class="order-btn" onclick='addToCart("Стул-кресло полубарный", 6600)'>КУПИТЬ</button>
                     </div>
                     <div class="additional-product">
                         <img src="images/chairsphoto/8.jpg" alt="Стул-кресло барный" class="additional-product-image" style="object-fit: contain; height: 220px; background: #f9f9f9;" onclick="openImageModal(this.src);">
                         <div style="font-weight: 600; margin: 8px 0 4px;">Стул-кресло барный</div>
-                        <div style="color: #8B6B4D; font-weight: 500; margin-bottom: 6px;">6 800 ₽</div>
-                        <button class="order-btn" onclick='addToCart("Стул-кресло барный", 6800)'>КУПИТЬ</button>
+                         <div style="color: #8B6B4D; font-weight: 500; margin-bottom: 6px;">6 800 ₽</div>
+                         <button class="order-btn" onclick='addToCart("Стул-кресло барный", 6800)'>КУПИТЬ</button>
                     </div>
                 </div>
             </div>
@@ -795,35 +982,20 @@
 
     <!-- Модальное окно для открытия изображения -->
     <div id="imageModal" class="image-modal">
-        <span class="image-modal-close" onclick="closeImageModal()" style="z-index: 2100;">&times;</span>
-        <img id="modalImage" src="" alt="Увеличенное изображение" style="max-width: 95%; max-height: 90%; margin: auto; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"/>
+        <span class="image-modal-close" onclick="closeImageModal()">&times;</span>
+        <img id="modalImage" src="" alt="Увеличенное изображение" />
     </div>
-
-    <!-- Добавляю кнопку корзины, фиксированную внизу справа только для мобильных устройств -->
-    <button class="mobile-cart-btn" id="mobileCartBtn" style="display: none;">
-        <i class="fas fa-shopping-cart"></i>
-        <span class="cart-count">0</span>
-    </button>
 
     <script src="script.js"></script>
     <script>
         // Функции для модальных окон товаров
         function openProductModal(id) {
-            try {
-                const modalId = 'productModal' + (id > 1 ? id : '');
-                const modal = document.getElementById(modalId);
-                
-                if (modal) {
-                    modal.style.display = 'block';
-                    // Предотвращение прокрутки страницы на мобильных устройствах при открытии модального окна
-                    document.body.style.overflow = 'hidden';
-                } else {
-                    console.error('Модальное окно с ID ' + modalId + ' не найдено');
-                    alert('Извините, информация о данном продукте временно недоступна');
-                }
-            } catch (error) {
-                console.error('Ошибка при открытии модального окна: ', error);
-            }
+            document.getElementById('productModal' + (id > 1 ? id : '')).style.display = 'block';
+            // Прокручиваем наверх модального окна
+            setTimeout(function() {
+                var modalBody = document.querySelector('#productModal' + (id > 1 ? id : '') + ' .product-modal-body');
+                if (modalBody) modalBody.scrollTop = 0;
+            }, 100);
         }
 
         // Обработка закрытия модальных окон
@@ -831,8 +1003,6 @@
             button.addEventListener('click', function() {
                 const modal = this.closest('.product-modal');
                 modal.style.display = 'none';
-                // Возобновление прокрутки страницы при закрытии модального окна
-                document.body.style.overflow = '';
             });
         });
 
@@ -840,10 +1010,9 @@
         window.onclick = function(event) {
             if (event.target.classList.contains('product-modal')) {
                 event.target.style.display = 'none';
-                document.body.style.overflow = '';
             }
             if (event.target.classList.contains('image-modal')) {
-                closeImageModal();
+                event.target.style.display = 'none';
             }
         }
 
@@ -852,156 +1021,50 @@
             var img = document.getElementById("modalImage");
             img.src = src;
             modal.style.display = "block";
-            document.body.style.overflow = 'hidden';
+            
+            // Добавляем обработчик свайпа для закрытия на мобильных устройствах
+            let touchstartY = 0;
+            let touchendY = 0;
+            
+            function checkSwipeDirection() {
+                if (touchendY - touchstartY > 50) { // Свайп вниз
+                    closeImageModal();
+                }
+            }
+            
+            modal.addEventListener('touchstart', function(e) {
+                touchstartY = e.changedTouches[0].screenY;
+            }, {passive: true});
+            
+            modal.addEventListener('touchend', function(e) {
+                touchendY = e.changedTouches[0].screenY;
+                checkSwipeDirection();
+            }, {passive: true});
         }
 
         function closeImageModal() {
             document.getElementById("imageModal").style.display = "none";
-            document.body.style.overflow = '';
         }
-
-        // Добавляю оптимизацию скроллинга и настройку корзины для мобильных устройств
+        
+        // Улучшенная обработка кликов для мобильных устройств
         document.addEventListener('DOMContentLoaded', function() {
-            // Проверка, является ли устройство мобильным
-            const isMobile = window.matchMedia("(max-width: 768px)").matches;
-            
-            if (isMobile) {
-                // Адаптация для мобильных устройств 
-                const header = document.querySelector('.header');
-                header.style.position = 'relative';
-                document.querySelector('main').style.marginTop = '20px';
-                
-                // Улучшение кликабельности элементов
-                document.querySelectorAll('.product-card, .product-image, .order-btn').forEach(el => {
-                    el.addEventListener('touchstart', function() {
-                        this.classList.add('touch-active');
-                    });
-                    el.addEventListener('touchend', function() {
-                        this.classList.remove('touch-active');
-                    });
-                });
-
-                // Показываем мобильную кнопку корзины только на телефонах
-                if (window.innerWidth <= 480) {
-                    const mobileCartBtn = document.getElementById('mobileCartBtn');
-                    mobileCartBtn.style.display = 'flex';
-                    
-                    // Клик по мобильной корзине открывает модальное окно корзины
-                    mobileCartBtn.addEventListener('click', function() {
-                        document.getElementById('cartModal').style.display = 'block';
-                        document.body.style.overflow = 'hidden'; // Блокируем скролл
-                    });
-                }
-                
-                // Дополнительная оптимизация скроллинга
-                let ticking = false;
-                let lastScrollY = window.scrollY;
-                
-                window.addEventListener('scroll', function() {
-                    if (!ticking) {
-                        window.requestAnimationFrame(function() {
-                            // Здесь можно добавить логику, зависящую от скролла
-                            // Например, скрытие/показ элементов
-                            ticking = false;
-                            lastScrollY = window.scrollY;
-                        });
-                        ticking = true;
-                    }
-                }, { passive: true });
-                
-                // Отложенная загрузка изображений для повышения производительности
-                const lazyImages = document.querySelectorAll('img:not(.logo)');
-                
-                if ('IntersectionObserver' in window) {
-                    const imageObserver = new IntersectionObserver((entries) => {
-                        entries.forEach(entry => {
-                            if (entry.isIntersecting) {
-                                const img = entry.target;
-                                // Установка оригинального источника
-                                if (img.dataset.src) {
-                                    img.src = img.dataset.src;
-                                    img.removeAttribute('data-src');
-                                }
-                                imageObserver.unobserve(img);
-                            }
-                        });
-                    });
-                    
-                    lazyImages.forEach(img => {
-                        // Сохраняем оригинальный источник в data-src если его еще нет
-                        if (!img.dataset.src && img.src) {
-                            img.dataset.src = img.src;
-                            // Устанавливаем заглушку или оставляем как есть
-                            // img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+            // Предотвращаем двойные нажатия (double-tap) на мобильных устройствах
+            document.querySelectorAll('.product-image, .product-modal-image, .additional-product-image').forEach(img => {
+                img.addEventListener('touchend', function(e) {
+                    if (e.target === this) {
+                        e.preventDefault();
+                        const onClick = this.getAttribute('onclick');
+                        if (onClick && onClick.includes('openImageModal')) {
+                            const src = this.getAttribute('src');
+                            openImageModal(src);
+                        } else if (onClick && onClick.includes('openProductModal')) {
+                            const funcCall = onClick.split('(')[1].split(')')[0];
+                            openProductModal(parseInt(funcCall));
                         }
-                        imageObserver.observe(img);
-                    });
-                }
-                
-                // Оптимизация карточек товаров для повышения производительности
-                const productCards = document.querySelectorAll('.product-card');
-                productCards.forEach(card => {
-                    card.style.willChange = 'transform';
-                    card.style.transform = 'translateZ(0)';
-                    card.style.contain = 'layout style paint';
+                    }
                 });
-                
-                // Синхронизация счетчиков корзины (обычного и мобильного)
-                function updateCartCount(count) {
-                    document.querySelectorAll('.cart-count').forEach(el => {
-                        el.textContent = count;
-                    });
-                }
-                
-                // Перехватываем функцию добавления товара в корзину для обновления счетчиков
-                const originalAddToCart = window.addToCart;
-                window.addToCart = function(name, price) {
-                    originalAddToCart(name, price);
-                    
-                    // Обновляем счетчик мобильной корзины
-                    const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-                    updateCartCount(cartItems.length);
-                };
-                
-                // Инициализация счетчика при загрузке
-                const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-                updateCartCount(cartItems.length);
-
-                // Добавляем дополнительные стили для главных 3 разделов на мобильных устройствах
-                const specialCards = document.querySelectorAll('.product-card:nth-child(n+6)');
-                specialCards.forEach(card => {
-                    card.style.maxWidth = '100%';
-                    card.style.width = '90%';
-                    card.style.margin = '0 auto 25px';
-                    card.style.display = 'flex';
-                    card.style.flexDirection = 'column';
-                    card.style.alignItems = 'center';
-                });
-                
-                // Центрирование сетки продуктов
-                const productsGrid = document.querySelector('.products-grid');
-                if (productsGrid) {
-                    productsGrid.style.display = 'flex';
-                    productsGrid.style.flexDirection = 'column';
-                    productsGrid.style.alignItems = 'center';
-                }
-            }
-        });
-
-        // Функция удаления товара из корзины (обновлена для синхронизации счетчиков)
-        function removeCartItem(index) {
-            let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-            cartItems.splice(index, 1);
-            localStorage.setItem('cartItems', JSON.stringify(cartItems));
-            
-            // Обновляем отображение корзины
-            displayCart();
-            
-            // Обновляем счетчики корзины
-            document.querySelectorAll('.cart-count').forEach(el => {
-                el.textContent = cartItems.length;
             });
-        }
+        });
     </script>
 </body>
 </html> 
