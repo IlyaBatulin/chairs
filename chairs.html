@@ -417,124 +417,12 @@
                 font-size: 16px;
             }
         }
-
-        /* Исправления для скроллинга на мобильных устройствах */
-        body {
-            -webkit-overflow-scrolling: touch;
-            overflow-y: auto;
-        }
-        
-        .product-modal {
-            -webkit-overflow-scrolling: touch;
-            overflow-y: auto;
-        }
-        
-        .product-modal-body {
-            -webkit-overflow-scrolling: touch;
-            overflow-y: auto;
-        }
-        
-        .product-image, .product-modal-image, .additional-product-image {
-            touch-action: pan-y; /* Разрешаем только вертикальный скроллинг */
-        }
-        
-        /* Дополнительные исправления для мобильных устройств */
-        @media (max-width: 768px) {
-            /* Увеличиваем область кликабельности кнопок */
-            .order-btn, .back-btn, .details-btn {
-                min-height: 44px;
-                padding-top: 12px;
-                padding-bottom: 12px;
-            }
-            
-            /* Увеличиваем область нажатия для закрытия модального окна */
-            .product-modal-close, .image-modal-close {
-                padding: 10px;
-                font-size: 32px;
-            }
-        }
-
-        /* Стили для плавающей кнопки корзины */
-        .floating-cart {
-            display: none; /* По умолчанию скрыта */
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 99;
-        }
-        
-        .floating-cart-btn {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background-color: #8B6B4D;
-            color: white;
-            border: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            position: relative;
-            transition: all 0.3s ease;
-        }
-        
-        .floating-cart-btn:hover {
-            background-color: #725a3f;
-            transform: scale(1.05);
-        }
-        
-        .floating-cart-btn i {
-            font-size: 24px;
-        }
-        
-        .floating-cart-count {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background-color: #e74c3c;
-            color: white;
-            border-radius: 50%;
-            width: 24px;
-            height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        /* Медиа запросы для мобильной версии */
-        @media (max-width: 768px) {
-            /* Скрываем шапку на страницах с товарами */
-            .product-page-header {
-                display: none !important;
-            }
-            
-            /* Показываем плавающую корзину на страницах с товарами */
-            .floating-cart {
-                display: block !important;
-            }
-            
-            /* Уменьшаем отступ сверху для контента */
-            main {
-                margin-top: 20px !important;
-            }
-            
-            /* Отображаем кнопку "Назад" более заметно */
-            .back-btn {
-                margin-top: 15px;
-                margin-bottom: 20px;
-                display: inline-flex;
-                font-size: 16px;
-                padding: 10px 15px;
-            }
-        }
     </style>
 </head>
 <body>
     <!-- Шапка -->
     <header class="header" style="height: 70px; min-height: 70px; display: flex; align-items: center; position: fixed; top: 0; left: 0; width: 100%; background: #fff; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
-        <div class="header-content product-page-header" style="display: flex; align-items: center; width: 100%; justify-content: space-between;">
+        <div class="header-content" style="display: flex; align-items: center; width: 100%; justify-content: space-between;">
             <div class="logo-section" style="display: flex; align-items: center;">
                 <a href="index.html">
                     <img src="images/common/LOG 2.jpg" alt="Логотип" class="logo" style="height: 48px; width: auto; max-width: 160px; object-fit: contain;">
@@ -1098,14 +986,6 @@
         <img id="modalImage" src="" alt="Увеличенное изображение" />
     </div>
 
-    <!-- Плавающая кнопка корзины для мобильных устройств -->
-    <div class="floating-cart">
-        <button class="floating-cart-btn" onclick="document.getElementById('cartModal').style.display='block'">
-            <i class="fas fa-shopping-cart"></i>
-            <span class="floating-cart-count">0</span>
-        </button>
-    </div>
-
     <script src="script.js"></script>
     <script>
         // Функции для модальных окон товаров
@@ -1141,271 +1021,116 @@
             var img = document.getElementById("modalImage");
             img.src = src;
             modal.style.display = "block";
+            
+            // Добавляем обработчик свайпа для закрытия на мобильных устройствах
+            let touchstartY = 0;
+            let touchendY = 0;
+            
+            function checkSwipeDirection() {
+                if (touchendY - touchstartY > 50) { // Свайп вниз
+                    closeImageModal();
+                }
+            }
+            
+            modal.addEventListener('touchstart', function(e) {
+                touchstartY = e.changedTouches[0].screenY;
+            }, {passive: true});
+            
+            modal.addEventListener('touchend', function(e) {
+                touchendY = e.changedTouches[0].screenY;
+                checkSwipeDirection();
+            }, {passive: true});
         }
 
         function closeImageModal() {
             document.getElementById("imageModal").style.display = "none";
         }
         
-        // Исправление обработки событий для мобильных устройств
-        document.addEventListener('DOMContentLoaded', function() {
-            // Удаляем онклик атрибуты с изображений
-            document.querySelectorAll('.product-image').forEach(img => {
-                const onclickValue = img.getAttribute('onclick');
-                if (onclickValue) {
-                    img.removeAttribute('onclick');
-                    // Только добавляем специальную привязку к изображениям, открывающим модальные окна изображений
-                    if (onclickValue.includes('openImageModal')) {
-                        img.classList.add('open-image-modal');
-                        img.dataset.src = img.getAttribute('src');
-                    } 
-                    // Для открытия модальных окон товаров, добавляем отдельные обработчики на кнопки
-                    else if (onclickValue.includes('openProductModal')) {
-                        const modalId = onclickValue.split('(')[1].split(')')[0];
-                        img.dataset.modalId = modalId;
-                    }
-                }
-            });
-            
-            // То же самое для изображений в модальных окнах
-            document.querySelectorAll('.product-modal-image, .additional-product-image').forEach(img => {
-                const onclickValue = img.getAttribute('onclick');
-                if (onclickValue && onclickValue.includes('openImageModal')) {
-                    img.removeAttribute('onclick');
-                    img.classList.add('open-image-modal');
-                    img.dataset.src = img.getAttribute('src');
-                }
-            });
-            
-            // Добавляем слушатели событий для открытия модальных окон изображений
-            document.addEventListener('click', function(e) {
-                if (e.target.classList.contains('open-image-modal')) {
-                    e.preventDefault();
-                    const src = e.target.dataset.src || e.target.getAttribute('src');
-                    if (src) {
-                        openImageModal(src);
-                    }
-                } else if (e.target.dataset.modalId) {
-                    e.preventDefault();
-                    openProductModal(parseInt(e.target.dataset.modalId));
-                }
-            });
-            
-            // Отключаем двойное нажатие для увеличения на мобильных
-            document.querySelectorAll('.product-image, .product-modal-image, .additional-product-image').forEach(img => {
-                img.addEventListener('touchstart', function(e) {
-                    if (e.touches.length > 1) {
-                        e.preventDefault(); // Предотвращаем зум при мультитач
-                    }
-                }, { passive: false });
-            });
-
-            // Исправляем скроллинг в модальных окнах
-            document.querySelectorAll('.product-modal').forEach(modal => {
-                modal.addEventListener('touchmove', function(e) {
-                    // Разрешаем скроллинг внутри содержимого модального окна
-                    e.stopPropagation();
-                }, { passive: true });
-            });
-            
-            // Добавляем обработчик свайпа для закрытия модального окна изображения
-            const imageModal = document.getElementById('imageModal');
-            let startY = 0;
-            
-            imageModal.addEventListener('touchstart', function(e) {
-                startY = e.touches[0].clientY;
-            }, { passive: true });
-            
-            imageModal.addEventListener('touchmove', function(e) {
-                const currentY = e.touches[0].clientY;
-                const diffY = currentY - startY;
-                
-                if (diffY > 50) { // Свайп вниз
-                    closeImageModal();
-                }
-            }, { passive: true });
-        });
-
-        // Обновление счетчика корзины для плавающей кнопки и обычной корзины
-        document.addEventListener('DOMContentLoaded', function() {
-            // Добавляем класс к body для определения текущей страницы
-            // Если это НЕ страница chairs.html, добавляем класс home-page к body
-            if (!window.location.href.includes('chairs.html')) {
-                document.body.classList.add('home-page');
-            }
-            
-            // Функция добавления товара в корзину
-            window.addToCart = function(name, price) {
-                let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-                
-                cartItems.push({
-                    name: name,
-                    price: price
-                });
-                
-                localStorage.setItem('cartItems', JSON.stringify(cartItems));
-                updateCartCount();
-                
-                // Показываем уведомление
-                showNotification('Товар добавлен в корзину');
+        // Функция для предотвращения случайных нажатий при скролле
+        function debounce(func, wait) {
+            let timeout;
+            return function() {
+                const context = this, args = arguments;
+                clearTimeout(timeout);
+                timeout = setTimeout(function() {
+                    func.apply(context, args);
+                }, wait);
             };
+        }
+        
+        // Обновлённая улучшенная обработка кликов для мобильных устройств
+        document.addEventListener('DOMContentLoaded', function() {
+            // Переопределяем обработку нажатий для всех интерактивных элементов
+            var isScrolling = false;
+            var startTouchY = 0;
+            var startTouchTime = 0;
             
-            // Функция обновления счетчика корзины
-            function updateCartCount() {
-                let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-                const count = cartItems.length;
-                
-                // Обновляем счетчик в обычной корзине
-                document.querySelectorAll('.cart-count').forEach(el => {
-                    el.textContent = count;
-                });
-                
-                // Обновляем счетчик в плавающей корзине
-                document.querySelectorAll('.floating-cart-count').forEach(el => {
-                    el.textContent = count;
-                });
-                
-                // При открытии модального окна корзины
-                updateCartModal();
-            }
-            
-            // Функция для отображения уведомления
-            function showNotification(message) {
-                // Создаем уведомление если его еще нет
-                let notification = document.getElementById('cart-notification');
-                if (!notification) {
-                    notification = document.createElement('div');
-                    notification.id = 'cart-notification';
-                    notification.style.cssText = `
-                        position: fixed;
-                        bottom: 90px;
-                        right: 20px;
-                        background-color: #8B6B4D;
-                        color: white;
-                        padding: 10px 20px;
-                        border-radius: 5px;
-                        z-index: 1000;
-                        opacity: 0;
-                        transition: opacity 0.3s ease;
-                        font-weight: 500;
-                    `;
-                    document.body.appendChild(notification);
-                }
-                
-                notification.textContent = message;
-                notification.style.opacity = 1;
-                
-                // Скрываем уведомление через 2 секунды
-                setTimeout(() => {
-                    notification.style.opacity = 0;
-                }, 2000);
-            }
-            
-            // Функция обновления модального окна корзины
-            function updateCartModal() {
-                let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-                let cartItemsContainer = document.querySelector('.cart-items');
-                let totalItemsContainer = document.getElementById('totalItems');
-                
-                if (cartItemsContainer && totalItemsContainer) {
-                    // Очищаем контейнер
-                    cartItemsContainer.innerHTML = '';
-                    
-                    if (cartItems.length === 0) {
-                        cartItemsContainer.innerHTML = '<p>Корзина пуста</p>';
-                        totalItemsContainer.textContent = '0';
-                    } else {
-                        let totalItems = cartItems.length;
-                        let itemsHTML = '';
-                        
-                        cartItems.forEach((item, index) => {
-                            itemsHTML += `
-                                <div class="cart-item">
-                                    <div class="cart-item-info">
-                                        <p>${item.name}</p>
-                                        <p class="cart-item-price">${item.price} ₽</p>
-                                    </div>
-                                    <button class="remove-item-btn" data-index="${index}">×</button>
-                                </div>
-                            `;
-                        });
-                        
-                        cartItemsContainer.innerHTML = itemsHTML;
-                        totalItemsContainer.textContent = totalItems;
-                        
-                        // Добавляем обработчик для удаления товаров
-                        document.querySelectorAll('.remove-item-btn').forEach(btn => {
-                            btn.addEventListener('click', function() {
-                                const index = parseInt(this.dataset.index);
-                                removeFromCart(index);
-                            });
-                        });
-                    }
-                    
-                    // Обновляем скрытое поле для отправки с формой
-                    if (document.getElementById('cartItemsInput')) {
-                        document.getElementById('cartItemsInput').value = JSON.stringify(cartItems);
-                    }
-                }
-            }
-            
-            // Функция удаления товара из корзины
-            function removeFromCart(index) {
-                let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-                
-                if (index >= 0 && index < cartItems.length) {
-                    cartItems.splice(index, 1);
-                    localStorage.setItem('cartItems', JSON.stringify(cartItems));
-                    updateCartCount();
-                }
-            }
-            
-            // Инициализация корзины
-            updateCartCount();
-            
-            // Добавляем обработчики событий для кнопок корзины
-            document.querySelectorAll('.cart-btn, .floating-cart-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    updateCartModal();
-                    document.getElementById('cartModal').style.display = 'block';
-                });
+            // Отслеживаем скроллинг
+            window.addEventListener('scroll', function() {
+                isScrolling = true;
+                // Сбрасываем состояние скроллинга через 200мс после окончания скролла
+                clearTimeout(window.scrollEndTimer);
+                window.scrollEndTimer = setTimeout(function() {
+                    isScrolling = false;
+                }, 200);
             });
             
-            // Обработчик закрытия модального окна корзины
-            let closeBtn = document.querySelector('#cartModal .close');
-            if (closeBtn) {
-                closeBtn.addEventListener('click', function() {
-                    document.getElementById('cartModal').style.display = 'none';
+            // Предотвращаем случайные нажатия при скроллинге
+            document.querySelectorAll('.product-image, .product-modal-image, .additional-product-image, .order-btn').forEach(elem => {
+                // Удаляем прямые onclick атрибуты, чтобы заменить их на более надёжные обработчики
+                const onClick = elem.getAttribute('onclick');
+                elem.removeAttribute('onclick');
+                
+                // Заменяем прямые клики на обработчики с проверкой скроллинга
+                elem.addEventListener('click', function(e) {
+                    if (isScrolling) {
+                        e.preventDefault();
+                        return false;
+                    }
+                    
+                    // Выполняем действие только если это не было скроллингом
+                    if (onClick && onClick.includes('openImageModal')) {
+                        const src = this.getAttribute('src');
+                        openImageModal(src);
+                    } else if (onClick && onClick.includes('openProductModal')) {
+                        const funcCall = onClick.split('(')[1].split(')')[0];
+                        openProductModal(parseInt(funcCall));
+                    } else if (onClick && onClick.includes('addToCart')) {
+                        // Извлекаем параметры из onclick и вызываем функцию
+                        const params = onClick.match(/addToCart\(\"(.*)\", (.*)\)/);
+                        if (params && params.length >= 3) {
+                            addToCart(params[1], parseFloat(params[2]));
+                        }
+                    }
                 });
-            }
-            
-            // Закрытие модального окна при клике вне его
-            window.addEventListener('click', function(event) {
-                if (event.target === document.getElementById('cartModal')) {
-                    document.getElementById('cartModal').style.display = 'none';
-                }
+                
+                // Улучшенная обработка касаний для мобильных устройств
+                elem.addEventListener('touchstart', function(e) {
+                    startTouchY = e.touches[0].clientY;
+                    startTouchTime = Date.now();
+                }, {passive: true});
+                
+                elem.addEventListener('touchend', function(e) {
+                    // Если это был скролл или свайп, игнорируем
+                    const endTouchY = e.changedTouches[0].clientY;
+                    const touchDuration = Date.now() - startTouchTime;
+                    const touchDistance = Math.abs(endTouchY - startTouchY);
+                    
+                    if (isScrolling || touchDistance > 10 || touchDuration > 200) {
+                        e.preventDefault();
+                        return false;
+                    }
+                }, {passive: false});
             });
             
-            // Обработка отправки формы заказа
-            let cartForm = document.getElementById('cartForm');
-            if (cartForm) {
-                cartForm.addEventListener('submit', function(e) {
+            // Также сбрасываем стандартные обработчики для всех модальных окон и добавляем улучшенные
+            document.querySelectorAll('.product-modal-close').forEach(btn => {
+                btn.addEventListener('touchend', function(e) {
                     e.preventDefault();
-                    
-                    // Имитация отправки формы
-                    let formData = new FormData(cartForm);
-                    
-                    // Показываем сообщение об успешной отправке
-                    alert('Заказ успешно отправлен! Мы свяжемся с вами в ближайшее время.');
-                    
-                    // Очищаем корзину
-                    localStorage.removeItem('cartItems');
-                    updateCartCount();
-                    
-                    // Закрываем модальное окно
-                    document.getElementById('cartModal').style.display = 'none';
+                    const modal = this.closest('.product-modal');
+                    modal.style.display = 'none';
                 });
-            }
+            });
         });
     </script>
 </body>
