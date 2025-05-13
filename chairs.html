@@ -417,6 +417,42 @@
                 font-size: 16px;
             }
         }
+
+        /* Исправления для скроллинга на мобильных устройствах */
+        body {
+            -webkit-overflow-scrolling: touch;
+            overflow-y: auto;
+        }
+        
+        .product-modal {
+            -webkit-overflow-scrolling: touch;
+            overflow-y: auto;
+        }
+        
+        .product-modal-body {
+            -webkit-overflow-scrolling: touch;
+            overflow-y: auto;
+        }
+        
+        .product-image, .product-modal-image, .additional-product-image {
+            touch-action: pan-y; /* Разрешаем только вертикальный скроллинг */
+        }
+        
+        /* Дополнительные исправления для мобильных устройств */
+        @media (max-width: 768px) {
+            /* Увеличиваем область кликабельности кнопок */
+            .order-btn, .back-btn, .details-btn {
+                min-height: 44px;
+                padding-top: 12px;
+                padding-bottom: 12px;
+            }
+            
+            /* Увеличиваем область нажатия для закрытия модального окна */
+            .product-modal-close, .image-modal-close {
+                padding: 10px;
+                font-size: 32px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1021,49 +1057,89 @@
             var img = document.getElementById("modalImage");
             img.src = src;
             modal.style.display = "block";
-            
-            // Добавляем обработчик свайпа для закрытия на мобильных устройствах
-            let touchstartY = 0;
-            let touchendY = 0;
-            
-            function checkSwipeDirection() {
-                if (touchendY - touchstartY > 50) { // Свайп вниз
-                    closeImageModal();
-                }
-            }
-            
-            modal.addEventListener('touchstart', function(e) {
-                touchstartY = e.changedTouches[0].screenY;
-            }, {passive: true});
-            
-            modal.addEventListener('touchend', function(e) {
-                touchendY = e.changedTouches[0].screenY;
-                checkSwipeDirection();
-            }, {passive: true});
         }
 
         function closeImageModal() {
             document.getElementById("imageModal").style.display = "none";
         }
         
-        // Улучшенная обработка кликов для мобильных устройств
+        // Исправление обработки событий для мобильных устройств
         document.addEventListener('DOMContentLoaded', function() {
-            // Предотвращаем двойные нажатия (double-tap) на мобильных устройствах
-            document.querySelectorAll('.product-image, .product-modal-image, .additional-product-image').forEach(img => {
-                img.addEventListener('touchend', function(e) {
-                    if (e.target === this) {
-                        e.preventDefault();
-                        const onClick = this.getAttribute('onclick');
-                        if (onClick && onClick.includes('openImageModal')) {
-                            const src = this.getAttribute('src');
-                            openImageModal(src);
-                        } else if (onClick && onClick.includes('openProductModal')) {
-                            const funcCall = onClick.split('(')[1].split(')')[0];
-                            openProductModal(parseInt(funcCall));
-                        }
+            // Удаляем онклик атрибуты с изображений
+            document.querySelectorAll('.product-image').forEach(img => {
+                const onclickValue = img.getAttribute('onclick');
+                if (onclickValue) {
+                    img.removeAttribute('onclick');
+                    // Только добавляем специальную привязку к изображениям, открывающим модальные окна изображений
+                    if (onclickValue.includes('openImageModal')) {
+                        img.classList.add('open-image-modal');
+                        img.dataset.src = img.getAttribute('src');
+                    } 
+                    // Для открытия модальных окон товаров, добавляем отдельные обработчики на кнопки
+                    else if (onclickValue.includes('openProductModal')) {
+                        const modalId = onclickValue.split('(')[1].split(')')[0];
+                        img.dataset.modalId = modalId;
                     }
-                });
+                }
             });
+            
+            // То же самое для изображений в модальных окнах
+            document.querySelectorAll('.product-modal-image, .additional-product-image').forEach(img => {
+                const onclickValue = img.getAttribute('onclick');
+                if (onclickValue && onclickValue.includes('openImageModal')) {
+                    img.removeAttribute('onclick');
+                    img.classList.add('open-image-modal');
+                    img.dataset.src = img.getAttribute('src');
+                }
+            });
+            
+            // Добавляем слушатели событий для открытия модальных окон изображений
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('open-image-modal')) {
+                    e.preventDefault();
+                    const src = e.target.dataset.src || e.target.getAttribute('src');
+                    if (src) {
+                        openImageModal(src);
+                    }
+                } else if (e.target.dataset.modalId) {
+                    e.preventDefault();
+                    openProductModal(parseInt(e.target.dataset.modalId));
+                }
+            });
+            
+            // Отключаем двойное нажатие для увеличения на мобильных
+            document.querySelectorAll('.product-image, .product-modal-image, .additional-product-image').forEach(img => {
+                img.addEventListener('touchstart', function(e) {
+                    if (e.touches.length > 1) {
+                        e.preventDefault(); // Предотвращаем зум при мультитач
+                    }
+                }, { passive: false });
+            });
+
+            // Исправляем скроллинг в модальных окнах
+            document.querySelectorAll('.product-modal').forEach(modal => {
+                modal.addEventListener('touchmove', function(e) {
+                    // Разрешаем скроллинг внутри содержимого модального окна
+                    e.stopPropagation();
+                }, { passive: true });
+            });
+            
+            // Добавляем обработчик свайпа для закрытия модального окна изображения
+            const imageModal = document.getElementById('imageModal');
+            let startY = 0;
+            
+            imageModal.addEventListener('touchstart', function(e) {
+                startY = e.touches[0].clientY;
+            }, { passive: true });
+            
+            imageModal.addEventListener('touchmove', function(e) {
+                const currentY = e.touches[0].clientY;
+                const diffY = currentY - startY;
+                
+                if (diffY > 50) { // Свайп вниз
+                    closeImageModal();
+                }
+            }, { passive: true });
         });
     </script>
 </body>
