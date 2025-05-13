@@ -453,6 +453,78 @@
                 padding: 10px;
                 font-size: 15px;
             }
+            
+            /* Улучшение производительности скроллинга */
+            body {
+                -webkit-overflow-scrolling: touch;
+                overflow-x: hidden;
+            }
+            
+            * {
+                -webkit-tap-highlight-color: transparent;
+                backface-visibility: hidden;
+                -webkit-backface-visibility: hidden;
+            }
+            
+            /* Оптимизация изображений */
+            img {
+                will-change: transform;
+                transform: translateZ(0);
+            }
+            
+            /* Стили для фиксированной корзины внизу справа */
+            .mobile-cart-btn {
+                display: flex;
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                background-color: #8B6B4D;
+                color: white;
+                align-items: center;
+                justify-content: center;
+                box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+                z-index: 99;
+                font-size: 24px;
+                border: none;
+                cursor: pointer;
+                animation: pulse 2s infinite;
+                transform: translateZ(0); /* Включает аппаратное ускорение */
+            }
+            
+            .mobile-cart-btn .cart-count {
+                position: absolute;
+                top: 0;
+                right: 0;
+                background: #e74c3c;
+                color: white;
+                border-radius: 50%;
+                width: 24px;
+                height: 24px;
+                font-size: 14px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            @keyframes pulse {
+                0% {
+                    transform: scale(1) translateZ(0);
+                }
+                70% {
+                    transform: scale(1.05) translateZ(0);
+                }
+                100% {
+                    transform: scale(1) translateZ(0);
+                }
+            }
+            
+            /* Скрыть обычную корзину в шапке на мобильных */
+            .header .cart-btn {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -1023,6 +1095,12 @@
         <img id="modalImage" src="" alt="Увеличенное изображение" style="max-width: 95%; max-height: 90%; margin: auto; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"/>
     </div>
 
+    <!-- Добавляю кнопку корзины, фиксированную внизу справа только для мобильных устройств -->
+    <button class="mobile-cart-btn" id="mobileCartBtn" style="display: none;">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-count">0</span>
+    </button>
+
     <script src="script.js"></script>
     <script>
         // Функции для модальных окон товаров
@@ -1066,7 +1144,7 @@
             document.body.style.overflow = '';
         }
 
-        // Добавление обработчика событий для адаптивной навигации на мобильных устройствах
+        // Добавляю оптимизацию скроллинга и настройку корзины для мобильных устройств
         document.addEventListener('DOMContentLoaded', function() {
             // Проверка, является ли устройство мобильным
             const isMobile = window.matchMedia("(max-width: 768px)").matches;
@@ -1086,8 +1164,74 @@
                         this.classList.remove('touch-active');
                     });
                 });
+
+                // Показываем мобильную кнопку корзины только на телефонах
+                if (window.innerWidth <= 480) {
+                    const mobileCartBtn = document.getElementById('mobileCartBtn');
+                    mobileCartBtn.style.display = 'flex';
+                    
+                    // Клик по мобильной корзине открывает модальное окно корзины
+                    mobileCartBtn.addEventListener('click', function() {
+                        document.getElementById('cartModal').style.display = 'block';
+                        document.body.style.overflow = 'hidden'; // Блокируем скролл
+                    });
+                }
+                
+                // Оптимизация скроллинга
+                let scrollTimeout;
+                window.addEventListener('scroll', function() {
+                    if (!scrollTimeout) {
+                        scrollTimeout = setTimeout(function() {
+                            // Отложенное выполнение тяжелых операций
+                            scrollTimeout = null;
+                        }, 100);
+                    }
+                }, { passive: true }); // passive: true повышает производительность
+                
+                // Оптимизация карточек товаров для повышения производительности
+                const productCards = document.querySelectorAll('.product-card');
+                productCards.forEach(card => {
+                    card.style.willChange = 'transform';
+                    card.style.transform = 'translateZ(0)';
+                });
+                
+                // Синхронизация счетчиков корзины (обычного и мобильного)
+                function updateCartCount(count) {
+                    document.querySelectorAll('.cart-count').forEach(el => {
+                        el.textContent = count;
+                    });
+                }
+                
+                // Перехватываем функцию добавления товара в корзину для обновления счетчиков
+                const originalAddToCart = window.addToCart;
+                window.addToCart = function(name, price) {
+                    originalAddToCart(name, price);
+                    
+                    // Обновляем счетчик мобильной корзины
+                    const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+                    updateCartCount(cartItems.length);
+                };
+                
+                // Инициализация счетчика при загрузке
+                const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+                updateCartCount(cartItems.length);
             }
         });
+
+        // Функция удаления товара из корзины (обновлена для синхронизации счетчиков)
+        function removeCartItem(index) {
+            let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+            cartItems.splice(index, 1);
+            localStorage.setItem('cartItems', JSON.stringify(cartItems));
+            
+            // Обновляем отображение корзины
+            displayCart();
+            
+            // Обновляем счетчики корзины
+            document.querySelectorAll('.cart-count').forEach(el => {
+                el.textContent = cartItems.length;
+            });
+        }
     </script>
 </body>
 </html> 
