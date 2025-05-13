@@ -258,10 +258,11 @@
 
         .additional-product-image {
             width: 100%;
-            height: 200px;
-            object-fit: cover;
+            height: 180px;
+            object-fit: contain;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            background: #f9f9f9;
         }
 
         .additional-product .order-btn {
@@ -349,12 +350,11 @@
                 <button class="order-btn" onclick='addToCart("Стул-кресло СОФИЯ", 5600)'>ЗАКАЗАТЬ</button>
             </div>
             <div class="product-card">
-                <img src="images/chairs/chair6.jpg" alt="СТУЛЬЯ БАРНЫЕ, ПОЛУБАРНЫЕ" class="product-image">
+                <img src="images/chairs/chair6.jpg" alt="СТУЛЬЯ БАРНЫЕ, ПОЛУБАРНЫЕ" class="product-image" style="object-fit: contain; height: 200px; background: #f9f9f9;">
                 <h3>СТУЛЬЯ БАРНЫЕ, ПОЛУБАРНЫЕ</h3>
-                <p class="price">15 990 ₽</p>
+                <p class="price">от 4 600 ₽</p>
                 <div class="product-buttons">
                     <button class="details-btn" onclick="openProductModal(6)">ПОДРОБНЕЕ</button>
-                    <button class="order-btn" onclick='addToCart("СТУЛЬЯ БАРНЫЕ, ПОЛУБАРНЫЕ", 15990)'>ЗАКАЗАТЬ</button>
                 </div>
             </div>
             <div class="product-card">
@@ -682,7 +682,7 @@
                 <span class="product-modal-close">&times;</span>
             </div>
             <div class="product-modal-body">
-                <img src="images/chairsphoto/3.jpg" alt="СТУЛЬЯ БАРНЫЕ, ПОЛУБАРНЫЕ" class="product-modal-image">
+                <img src="images/chairsphoto/3.jpg" alt="СТУЛЬЯ БАРНЫЕ, ПОЛУБАРНЫЕ" class="product-modal-image" style="object-fit: contain; max-height: 300px; width: 100%; background: #f9f9f9;">
                 <div class="product-modal-info">
                     <div class="product-modal-feature">
                         <i class="fas fa-check-circle"></i>
@@ -719,12 +719,16 @@
                 </div>
                 <div class="additional-products">
                     <div class="additional-product">
-                        <img src="images/chairsphoto/1.jpg" alt="Барный стул 1" class="additional-product-image">
-                        <button class="order-btn" onclick='addToCart("Барный стул 1", 15990)'>КУПИТЬ</button>
+                        <img src="images/chairsphoto/1.jpg" alt="Стул полубарный" class="additional-product-image" style="object-fit: contain; height: 180px; background: #f9f9f9;">
+                        <div style="font-weight: 600; margin: 8px 0 4px;">Стул полубарный</div>
+                        <div style="color: #8B6B4D; font-weight: 500; margin-bottom: 6px;">4 600 ₽</div>
+                        <button class="order-btn" onclick='addToCart("Стул полубарный", 4600)'>КУПИТЬ</button>
                     </div>
                     <div class="additional-product">
-                        <img src="images/chairsphoto/2.jpg" alt="Барный стул 2" class="additional-product-image">
-                        <button class="order-btn" onclick='addToCart("Барный стул 2", 15990)'>КУПИТЬ</button>
+                        <img src="images/chairsphoto/2.jpg" alt="Стул барный" class="additional-product-image" style="object-fit: contain; height: 180px; background: #f9f9f9;">
+                        <div style="font-weight: 600; margin: 8px 0 4px;">Стул барный</div>
+                        <div style="color: #8B6B4D; font-weight: 500; margin-bottom: 6px;">4 800 ₽</div>
+                        <button class="order-btn" onclick='addToCart("Стул барный", 4800)'>КУПИТЬ</button>
                     </div>
                 </div>
             </div>
