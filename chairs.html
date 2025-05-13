@@ -197,6 +197,34 @@
             body::-webkit-scrollbar {
                 display: none;
             }
+            
+            /* Центрирование разделов */
+            .products-grid {
+                grid-template-columns: 1fr;
+                padding: 10px;
+                justify-items: center;
+                align-items: center;
+            }
+            
+            /* Центрирование карточек продуктов */
+            .product-card {
+                max-width: 90%;
+                width: 100%;
+                margin: 0 auto 20px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            
+            /* Кнопка ПОДРОБНЕЕ в карточке стульев */
+            .product-card .order-btn {
+                width: 80%;
+                padding: 12px;
+                margin: 10px auto 0;
+                font-size: 16px;
+                display: block;
+            }
         }
 
         .product-buttons {
@@ -519,19 +547,19 @@
                 <img src="images/chairs/chair6.jpg" alt="СТУЛЬЯ БАРНЫЕ, ПОЛУБАРНЫЕ" class="product-image" style="object-fit: contain; height: 200px; background: #f9f9f9;" onclick="openImageModal(this.src);">
                 <h3>СТУЛЬЯ БАРНЫЕ, ПОЛУБАРНЫЕ</h3>
                 <p class="price">от 4 600 ₽</p>
-                <button class="order-btn" onclick="openProductModal(6)">ПОДРОБНЕЕ</button>
+                <button class="order-btn" onclick="openProductModal(6)" style="display: inline-block; width: auto; min-width: 200px; margin: 10px auto;">ПОДРОБНЕЕ</button>
             </div>
             <div class="product-card">
                 <img src="images/chairs/chair7.jpg" alt="СТУЛЬЯ ПОВОРОТНЫЕ" class="product-image" style="object-fit: contain; height: 200px; background: #f9f9f9;" onclick="openImageModal(this.src);">
                 <h3>СТУЛЬЯ ПОВОРОТНЫЕ</h3>
                 <p class="price">от 5 300 ₽</p>
-                <button class="order-btn" onclick="openProductModal(7)">ПОДРОБНЕЕ</button>
+                <button class="order-btn" onclick="openProductModal(7)" style="display: inline-block; width: auto; min-width: 200px; margin: 10px auto;">ПОДРОБНЕЕ</button>
             </div>
             <div class="product-card">
                 <img src="images/chairs/chair8.jpg" alt="СТУЛ-КРЕСЛО БАРНЫЙ, ПОЛУБАРНЫЙ" class="product-image" style="object-fit: contain; height: 200px; background: #f9f9f9;" onclick="openImageModal(this.src);">
                 <h3>СТУЛ-КРЕСЛО БАРНЫЙ, ПОЛУБАРНЫЙ</h3>
                 <p class="price">от 6 600 ₽</p>
-                <button class="order-btn" onclick="openProductModal(8)">ПОДРОБНЕЕ</button>
+                <button class="order-btn" onclick="openProductModal(8)" style="display: inline-block; width: auto; min-width: 200px; margin: 10px auto;">ПОДРОБНЕЕ</button>
             </div>
         </section>
     </main>
@@ -1176,6 +1204,25 @@
                 // Инициализация счетчика при загрузке
                 const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
                 updateCartCount(cartItems.length);
+
+                // Добавляем дополнительные стили для главных 3 разделов на мобильных устройствах
+                const specialCards = document.querySelectorAll('.product-card:nth-child(n+6)');
+                specialCards.forEach(card => {
+                    card.style.maxWidth = '100%';
+                    card.style.width = '90%';
+                    card.style.margin = '0 auto 25px';
+                    card.style.display = 'flex';
+                    card.style.flexDirection = 'column';
+                    card.style.alignItems = 'center';
+                });
+                
+                // Центрирование сетки продуктов
+                const productsGrid = document.querySelector('.products-grid');
+                if (productsGrid) {
+                    productsGrid.style.display = 'flex';
+                    productsGrid.style.flexDirection = 'column';
+                    productsGrid.style.alignItems = 'center';
+                }
             }
         });
 
