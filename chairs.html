@@ -172,6 +172,31 @@
             .product-modal-image {
                 margin-bottom: 20px;
             }
+            
+            /* Скрываем шапку с контактными данными на страницах разделов */
+            body:not(.home-page) .header .contact-section {
+                display: none;
+            }
+            
+            /* Минимизируем высоту шапки на страницах разделов */
+            body:not(.home-page) .header {
+                height: 50px;
+                min-height: 50px;
+            }
+            
+            /* Оптимизируем скроллинг глобально */
+            html, body {
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+                overscroll-behavior-y: none; /* Предотвращает "bounce" эффект */
+            }
+            
+            /* Скрываем полосу прокрутки для webkit браузеров */
+            body::-webkit-scrollbar {
+                display: none;
+            }
         }
 
         .product-buttons {
@@ -294,128 +319,6 @@
         .image-modal img { max-width: 90%; max-height: 90%; margin: 5% auto; object-fit: contain; }
         .image-modal-close { position: absolute; top: 10px; right: 20px; color: #fff; font-size: 30px; cursor: pointer; }
 
-        /* Улучшения для мобильной адаптивности */
-        @media (max-width: 768px) {
-            .header-content {
-                padding: 0 10px;
-                flex-direction: column;
-                height: auto;
-            }
-            
-            .logo-section {
-                margin-bottom: 5px;
-            }
-            
-            .contact-section {
-                width: 100%;
-                margin-top: 5px;
-                font-size: 14px;
-            }
-            
-            .contact-icons {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .products-grid {
-                grid-template-columns: 1fr;
-                padding: 10px;
-            }
-            
-            .product-card {
-                max-width: 100%;
-                width: 100%;
-                margin: 0 auto 20px;
-            }
-            
-            .product-card img {
-                height: 180px;
-                max-width: 100%;
-                object-fit: contain;
-            }
-            
-            .product-card h3 {
-                font-size: 16px;
-            }
-            
-            .product-card .price {
-                font-size: 20px;
-                margin: 8px 0;
-            }
-            
-            .product-card .order-btn {
-                width: 100%;
-                padding: 12px;
-                margin-top: 10px;
-                font-size: 16px;
-            }
-            
-            .product-modal-content {
-                width: 95%;
-                margin: 30px auto;
-            }
-            
-            .product-modal-image {
-                height: auto;
-                max-height: 250px;
-                width: 90%;
-                margin: 0 auto;
-            }
-            
-            .product-modal-title {
-                font-size: 18px;
-            }
-            
-            .product-modal-feature {
-                padding: 10px;
-                margin-bottom: 8px;
-            }
-            
-            .image-modal img {
-                max-width: 95%;
-                max-height: 80%;
-            }
-            
-            .additional-products {
-                grid-template-columns: 1fr;
-                gap: 15px;
-            }
-            
-            .additional-product-image {
-                height: 180px;
-            }
-            
-            /* Центрирование элементов */
-            .category-header {
-                text-align: center;
-                padding: 15px 10px;
-            }
-            
-            .back-btn {
-                display: inline-flex;
-                margin: 0 auto 15px;
-            }
-            
-            /* Исправление отступов в модальных окнах */
-            .product-modal-body {
-                padding: 15px;
-                gap: 15px;
-            }
-            
-            /* Увеличиваем размер кликабельной области */
-            .product-modal-close {
-                padding: 10px;
-                font-size: 32px;
-            }
-            
-            .image-modal-close {
-                padding: 15px;
-                font-size: 36px;
-                right: 10px;
-                top: 10px;
-            }
-        }
-        
         /* Дополнительные улучшения для очень маленьких экранов */
         @media (max-width: 480px) {
             .header {
@@ -458,18 +361,30 @@
             body {
                 -webkit-overflow-scrolling: touch;
                 overflow-x: hidden;
+                overscroll-behavior-y: none;
+                scroll-behavior: smooth;
             }
             
             * {
                 -webkit-tap-highlight-color: transparent;
                 backface-visibility: hidden;
                 -webkit-backface-visibility: hidden;
+                transform: translateZ(0);
+                will-change: auto;
+            }
+            
+            /* Глобальное ускорение для всего контента */
+            main, .products-grid, .product-card {
+                will-change: transform;
+                transform: translateZ(0);
+                contain: layout style paint;
             }
             
             /* Оптимизация изображений */
             img {
                 will-change: transform;
                 transform: translateZ(0);
+                content-visibility: auto;
             }
             
             /* Стили для фиксированной корзины внизу справа */
@@ -529,6 +444,17 @@
     </style>
 </head>
 <body>
+    <!-- Добавляем класс для идентификации не главной страницы -->
+    <script>
+        // Определяем, является ли текущая страница главной (index.html)
+        const isHomePage = window.location.pathname.endsWith('index.html') || 
+                            window.location.pathname.endsWith('/') || 
+                            window.location.pathname === '';
+        
+        // Добавляем соответствующий класс к body
+        document.body.classList.add(isHomePage ? 'home-page' : 'inner-page');
+    </script>
+
     <!-- Шапка -->
     <header class="header" style="height: 70px; min-height: 70px; display: flex; align-items: center; position: fixed; top: 0; left: 0; width: 100%; background: #fff; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
         <div class="header-content" style="display: flex; align-items: center; width: 100%; justify-content: space-between;">
@@ -1177,22 +1103,57 @@
                     });
                 }
                 
-                // Оптимизация скроллинга
-                let scrollTimeout;
+                // Дополнительная оптимизация скроллинга
+                let ticking = false;
+                let lastScrollY = window.scrollY;
+                
                 window.addEventListener('scroll', function() {
-                    if (!scrollTimeout) {
-                        scrollTimeout = setTimeout(function() {
-                            // Отложенное выполнение тяжелых операций
-                            scrollTimeout = null;
-                        }, 100);
+                    if (!ticking) {
+                        window.requestAnimationFrame(function() {
+                            // Здесь можно добавить логику, зависящую от скролла
+                            // Например, скрытие/показ элементов
+                            ticking = false;
+                            lastScrollY = window.scrollY;
+                        });
+                        ticking = true;
                     }
-                }, { passive: true }); // passive: true повышает производительность
+                }, { passive: true });
+                
+                // Отложенная загрузка изображений для повышения производительности
+                const lazyImages = document.querySelectorAll('img:not(.logo)');
+                
+                if ('IntersectionObserver' in window) {
+                    const imageObserver = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                const img = entry.target;
+                                // Установка оригинального источника
+                                if (img.dataset.src) {
+                                    img.src = img.dataset.src;
+                                    img.removeAttribute('data-src');
+                                }
+                                imageObserver.unobserve(img);
+                            }
+                        });
+                    });
+                    
+                    lazyImages.forEach(img => {
+                        // Сохраняем оригинальный источник в data-src если его еще нет
+                        if (!img.dataset.src && img.src) {
+                            img.dataset.src = img.src;
+                            // Устанавливаем заглушку или оставляем как есть
+                            // img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+                        }
+                        imageObserver.observe(img);
+                    });
+                }
                 
                 // Оптимизация карточек товаров для повышения производительности
                 const productCards = document.querySelectorAll('.product-card');
                 productCards.forEach(card => {
                     card.style.willChange = 'transform';
                     card.style.transform = 'translateZ(0)';
+                    card.style.contain = 'layout style paint';
                 });
                 
                 // Синхронизация счетчиков корзины (обычного и мобильного)
