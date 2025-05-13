@@ -293,6 +293,167 @@
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 2000; background: rgba(0,0,0,0.8); overflow: auto; text-align: center; }
         .image-modal img { max-width: 90%; max-height: 90%; margin: 5% auto; object-fit: contain; }
         .image-modal-close { position: absolute; top: 10px; right: 20px; color: #fff; font-size: 30px; cursor: pointer; }
+
+        /* Улучшения для мобильной адаптивности */
+        @media (max-width: 768px) {
+            .header-content {
+                padding: 0 10px;
+                flex-direction: column;
+                height: auto;
+            }
+            
+            .logo-section {
+                margin-bottom: 5px;
+            }
+            
+            .contact-section {
+                width: 100%;
+                margin-top: 5px;
+                font-size: 14px;
+            }
+            
+            .contact-icons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr;
+                padding: 10px;
+            }
+            
+            .product-card {
+                max-width: 100%;
+                width: 100%;
+                margin: 0 auto 20px;
+            }
+            
+            .product-card img {
+                height: 180px;
+                max-width: 100%;
+                object-fit: contain;
+            }
+            
+            .product-card h3 {
+                font-size: 16px;
+            }
+            
+            .product-card .price {
+                font-size: 20px;
+                margin: 8px 0;
+            }
+            
+            .product-card .order-btn {
+                width: 100%;
+                padding: 12px;
+                margin-top: 10px;
+                font-size: 16px;
+            }
+            
+            .product-modal-content {
+                width: 95%;
+                margin: 30px auto;
+            }
+            
+            .product-modal-image {
+                height: auto;
+                max-height: 250px;
+                width: 90%;
+                margin: 0 auto;
+            }
+            
+            .product-modal-title {
+                font-size: 18px;
+            }
+            
+            .product-modal-feature {
+                padding: 10px;
+                margin-bottom: 8px;
+            }
+            
+            .image-modal img {
+                max-width: 95%;
+                max-height: 80%;
+            }
+            
+            .additional-products {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .additional-product-image {
+                height: 180px;
+            }
+            
+            /* Центрирование элементов */
+            .category-header {
+                text-align: center;
+                padding: 15px 10px;
+            }
+            
+            .back-btn {
+                display: inline-flex;
+                margin: 0 auto 15px;
+            }
+            
+            /* Исправление отступов в модальных окнах */
+            .product-modal-body {
+                padding: 15px;
+                gap: 15px;
+            }
+            
+            /* Увеличиваем размер кликабельной области */
+            .product-modal-close {
+                padding: 10px;
+                font-size: 32px;
+            }
+            
+            .image-modal-close {
+                padding: 15px;
+                font-size: 36px;
+                right: 10px;
+                top: 10px;
+            }
+        }
+        
+        /* Дополнительные улучшения для очень маленьких экранов */
+        @media (max-width: 480px) {
+            .header {
+                height: auto;
+                min-height: auto;
+                padding: 10px 0;
+            }
+            
+            .logo {
+                height: 40px;
+            }
+            
+            .contact-link {
+                font-size: 13px;
+                margin: 3px 0;
+            }
+            
+            main {
+                margin-top: 120px;
+            }
+            
+            .product-modal-feature {
+                font-size: 14px;
+            }
+            
+            .product-modal-info {
+                padding: 0;
+            }
+            
+            .additional-product-image {
+                height: 150px;
+            }
+            
+            .additional-product .order-btn {
+                padding: 10px;
+                font-size: 15px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -360,28 +521,19 @@
                 <img src="images/chairs/chair6.jpg" alt="СТУЛЬЯ БАРНЫЕ, ПОЛУБАРНЫЕ" class="product-image" style="object-fit: contain; height: 200px; background: #f9f9f9;" onclick="openImageModal(this.src);">
                 <h3>СТУЛЬЯ БАРНЫЕ, ПОЛУБАРНЫЕ</h3>
                 <p class="price">от 4 600 ₽</p>
-                <div class="product-buttons">
-                    <button class="details-btn" onclick="openProductModal(6)">ПОДРОБНЕЕ</button>
-                    <button class="order-btn" onclick='addToCart("СТУЛЬЯ БАРНЫЕ, ПОЛУБАРНЫЕ", 4600)'>ЗАКАЗАТЬ</button>
-                </div>
+                <button class="order-btn" onclick="openProductModal(6)">ПОДРОБНЕЕ</button>
             </div>
             <div class="product-card">
                 <img src="images/chairs/chair7.jpg" alt="СТУЛЬЯ ПОВОРОТНЫЕ" class="product-image" style="object-fit: contain; height: 200px; background: #f9f9f9;" onclick="openImageModal(this.src);">
                 <h3>СТУЛЬЯ ПОВОРОТНЫЕ</h3>
                 <p class="price">от 5 300 ₽</p>
-                <div class="product-buttons">
-                    <button class="details-btn" onclick="openProductModal(7)">ПОДРОБНЕЕ</button>
-                    <button class="order-btn" onclick='addToCart("СТУЛЬЯ ПОВОРОТНЫЕ", 5300)'>ЗАКАЗАТЬ</button>
-                </div>
+                <button class="order-btn" onclick="openProductModal(7)">ПОДРОБНЕЕ</button>
             </div>
             <div class="product-card">
                 <img src="images/chairs/chair8.jpg" alt="СТУЛ-КРЕСЛО БАРНЫЙ, ПОЛУБАРНЫЙ" class="product-image" style="object-fit: contain; height: 200px; background: #f9f9f9;" onclick="openImageModal(this.src);">
                 <h3>СТУЛ-КРЕСЛО БАРНЫЙ, ПОЛУБАРНЫЙ</h3>
                 <p class="price">от 6 600 ₽</p>
-                <div class="product-buttons">
-                    <button class="details-btn" onclick="openProductModal(8)">ПОДРОБНЕЕ</button>
-                    <button class="order-btn" onclick='addToCart("СТУЛ-КРЕСЛО БАРНЫЙ, ПОЛУБАРНЫЙ", 6600)'>ЗАКАЗАТЬ</button>
-                </div>
+                <button class="order-btn" onclick="openProductModal(8)">ПОДРОБНЕЕ</button>
             </div>
         </section>
     </main>
@@ -867,8 +1019,8 @@
 
     <!-- Модальное окно для открытия изображения -->
     <div id="imageModal" class="image-modal">
-        <span class="image-modal-close" onclick="closeImageModal()">&times;</span>
-        <img id="modalImage" src="" alt="Увеличенное изображение" />
+        <span class="image-modal-close" onclick="closeImageModal()" style="z-index: 2100;">&times;</span>
+        <img id="modalImage" src="" alt="Увеличенное изображение" style="max-width: 95%; max-height: 90%; margin: auto; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"/>
     </div>
 
     <script src="script.js"></script>
@@ -876,6 +1028,8 @@
         // Функции для модальных окон товаров
         function openProductModal(id) {
             document.getElementById('productModal' + (id > 1 ? id : '')).style.display = 'block';
+            // Предотвращение прокрутки страницы на мобильных устройствах при открытии модального окна
+            document.body.style.overflow = 'hidden';
         }
 
         // Обработка закрытия модальных окон
@@ -883,6 +1037,8 @@
             button.addEventListener('click', function() {
                 const modal = this.closest('.product-modal');
                 modal.style.display = 'none';
+                // Возобновление прокрутки страницы при закрытии модального окна
+                document.body.style.overflow = '';
             });
         });
 
@@ -890,6 +1046,10 @@
         window.onclick = function(event) {
             if (event.target.classList.contains('product-modal')) {
                 event.target.style.display = 'none';
+                document.body.style.overflow = '';
+            }
+            if (event.target.classList.contains('image-modal')) {
+                closeImageModal();
             }
         }
 
@@ -898,11 +1058,36 @@
             var img = document.getElementById("modalImage");
             img.src = src;
             modal.style.display = "block";
+            document.body.style.overflow = 'hidden';
         }
 
         function closeImageModal() {
             document.getElementById("imageModal").style.display = "none";
+            document.body.style.overflow = '';
         }
+
+        // Добавление обработчика событий для адаптивной навигации на мобильных устройствах
+        document.addEventListener('DOMContentLoaded', function() {
+            // Проверка, является ли устройство мобильным
+            const isMobile = window.matchMedia("(max-width: 768px)").matches;
+            
+            if (isMobile) {
+                // Адаптация для мобильных устройств 
+                const header = document.querySelector('.header');
+                header.style.position = 'relative';
+                document.querySelector('main').style.marginTop = '20px';
+                
+                // Улучшение кликабельности элементов
+                document.querySelectorAll('.product-card, .product-image, .order-btn').forEach(el => {
+                    el.addEventListener('touchstart', function() {
+                        this.classList.add('touch-active');
+                    });
+                    el.addEventListener('touchend', function() {
+                        this.classList.remove('touch-active');
+                    });
+                });
+            }
+        });
     </script>
 </body>
 </html> 
