@@ -742,9 +742,20 @@ body:not(.home-page) .contact-section {
         height: 60px;
         min-height: 60px;
         max-height: 60px;
-        background-size: 100% auto;
         align-items: center;
         padding: 0;
+    }
+    
+    /* Специальные стили для главной страницы на мобильных устройствах */
+    body.home-page .header {
+        height: auto;
+        min-height: 350px;
+        max-height: none;
+        background-attachment: scroll;
+        background-position: top center;
+        background-repeat: no-repeat;
+        margin-bottom: 20px;
+        padding-bottom: 30px;
     }
     
     .header-content {
@@ -754,6 +765,13 @@ body:not(.home-page) .contact-section {
         justify-content: space-between;
     }
     
+    /* Специальные стили для главной страницы */
+    body.home-page .header-content {
+        flex-direction: column;
+        padding: 20px 15px;
+        align-items: center;
+    }
+    
     .logo-section, .contact-section {
         padding: 5px;
         background-color: transparent;
@@ -761,9 +779,24 @@ body:not(.home-page) .contact-section {
         border-radius: 0;
     }
     
+    /* Специальные стили для логотипа на главной странице */
+    body.home-page .logo-section {
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 10px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        margin-top: 10px;
+    }
+    
     .logo {
         height: 36px;
         max-width: 120px;
+    }
+    
+    /* Логотип на главной немного крупнее */
+    body.home-page .logo {
+        height: 42px;
+        max-width: 140px;
     }
     
     .slogan {
@@ -814,10 +847,21 @@ body:not(.home-page) .contact-section {
         margin-top: 70px;
     }
     
-    /* Стили для ссылок навигации (на главной странице) */
-    body.home-page .header {
-        margin-bottom: 20px;
-        padding-bottom: 30px;
+    /* Стили для категорий на главной странице */
+    .category-cards {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .category-card {
+        margin: 0 auto;
+        max-width: 100%;
+    }
+    
+    .category-card img {
+        height: 200px;
+        object-fit: cover;
+        object-position: center;
     }
     
     /* Стили для контента */

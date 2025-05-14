@@ -258,14 +258,17 @@
             
             // Проверяем ширину экрана для мобильной адаптации
             function checkMobileView() {
+                const header = document.querySelector('.header');
+                
                 if (window.innerWidth <= 768) {
-                    // Для мобильных устройств
-                    document.querySelector('.header').style.height = 'auto';
-                    document.querySelector('.header').style.minHeight = '350px';
+                    // Ничего не делаем, все стили уже определены в CSS через медиа-запросы
+                    // Убираем инлайновые стили, если они были
+                    header.style.height = '';
+                    header.style.minHeight = '';
                 } else {
                     // Для десктопов
-                    document.querySelector('.header').style.height = '100vh';
-                    document.querySelector('.header').style.minHeight = '500px';
+                    header.style.height = '100vh';
+                    header.style.minHeight = '500px';
                 }
             }
             
