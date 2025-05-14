@@ -21,6 +21,28 @@ body {
     align-items: flex-start;
 }
 
+/* Специальные стили для внутренних страниц */
+body:not(.home-page) .header {
+    height: 70px;
+    min-height: 70px;
+    background-image: none;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    padding: 0;
+}
+
+/* На этих страницах добавляем отступ для основного контента */
+body:not(.home-page) main {
+    margin-top: 80px;
+}
+
 .header-content {
     max-width: 1200px;
     margin: 0 auto;
@@ -33,6 +55,12 @@ body {
     z-index: 10;
 }
 
+/* Для внутренних страниц */
+body:not(.home-page) .header-content {
+    padding: 0 15px;
+    align-items: center;
+}
+
 .logo-section {
     display: flex;
     flex-direction: column;
@@ -43,9 +71,33 @@ body {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Для внутренних страниц */
+body:not(.home-page) .logo-section {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    padding: 0;
+    background-color: transparent;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+/* Для внутренних страниц скрываем слоган */
+body:not(.home-page) .slogan {
+    display: none;
+}
+
 .logo {
     width: 150px;
     height: auto;
+}
+
+/* Для внутренних страниц */
+body:not(.home-page) .logo {
+    height: 48px;
+    width: auto;
+    max-width: 160px;
+    object-fit: contain;
 }
 
 .slogan {
@@ -69,6 +121,17 @@ body {
     padding: 15px;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Для внутренних страниц */
+body:not(.home-page) .contact-section {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    padding: 0;
+    background-color: transparent;
+    box-shadow: none;
+    border-radius: 0;
 }
 
 .contact-icons {
@@ -673,501 +736,146 @@ body {
     font-size: 18px;
 }
 
-/* Адаптивность */
+/* Медиа-запросы для мобильных устройств */
 @media (max-width: 768px) {
     .header {
-        min-height: auto;
-        height: auto;
-        display: block;
-        will-change: transform;
-        transform: translateZ(0);
+        height: 60px;
+        min-height: 60px;
+        max-height: 60px;
+        background-size: 100% auto;
+        align-items: center;
+        padding: 0;
     }
     
     .header-content {
-        flex-direction: column;
+        padding: 0 10px;
         align-items: center;
-        padding: 15px 10px;
-        width: 100%;
-        box-sizing: border-box;
+        flex-direction: row;
+        justify-content: space-between;
     }
     
     .logo-section, .contact-section {
-        width: 100%;
-        max-width: 100%;
-        margin-bottom: 15px;
-        padding: 10px;
-        background: rgba(255, 255, 255, 0.95);
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        box-sizing: border-box;
-    }
-
-    .logo-section {
-        align-items: center;
+        padding: 5px;
+        background-color: transparent;
+        box-shadow: none;
+        border-radius: 0;
     }
     
-    .contact-section {
-        align-items: center;
+    .logo {
+        height: 36px;
+        max-width: 120px;
     }
     
     .slogan {
         display: none;
     }
-
+    
     .contact-icons {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 10px;
-        width: 100%;
+        flex-wrap: nowrap;
+        gap: 8px;
     }
-
+    
     .contact-link {
+        font-size: 0; /* Скрываем текст, показываем только иконки */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: #f5f5f5;
+    }
+    
+    .contact-link i {
         font-size: 14px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        max-width: 100%;
     }
-
+    
     .cart-btn {
-        padding: 8px 12px;
-        touch-action: manipulation;
+        width: 32px;
+        height: 32px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f5f5f5;
+        border-radius: 50%;
     }
-
+    
     .cart-count {
-        font-size: 12px;
-        padding: 1px 5px;
-        top: -6px;
-        right: -6px;
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        width: 16px;
+        height: 16px;
+        font-size: 10px;
     }
     
     main {
-        margin-top: 0;
-        width: 100%;
-        overflow-x: hidden;
+        margin-top: 70px;
     }
-
+    
+    /* Стили для ссылок навигации (на главной странице) */
+    body.home-page .header {
+        margin-bottom: 20px;
+        padding-bottom: 30px;
+    }
+    
+    /* Стили для контента */
     .products-grid {
         grid-template-columns: 1fr;
         gap: 20px;
         padding: 20px 15px;
-        width: 100%;
-        box-sizing: border-box;
     }
-
+    
     .product-card {
         max-width: 100%;
-        padding: 15px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        transform: translateZ(0);
-        will-change: transform;
+        margin: 0 auto;
     }
     
     .product-card img {
-        width: 100%;
-        max-height: 250px;
-        object-fit: contain;
-        margin-bottom: 15px;
-        transform: translateZ(0);
-    }
-
-    .gallery-frame {
-        padding: 15px 10px;
-        width: 100%;
-        box-sizing: border-box;
-        overflow: hidden;
-    }
-    
-    .gallery-item {
-        width: calc(100% - 20px);
-        margin: 0 10px;
-        flex-shrink: 0;
-        transform: translateZ(0);
-    }
-    
-    .gallery-arrow {
-        width: 35px;
-        height: 35px;
-        font-size: 16px;
-        background: rgba(139, 107, 77, 0.8);
-        touch-action: manipulation;
-    }
-
-    .modal-content {
-        width: 95%;
-        max-width: 100%;
-        margin: 20px auto;
-        padding: 15px;
-        box-sizing: border-box;
-        transform: translateZ(0);
-    }
-
-    .product-modal-body {
-        flex-direction: column;
-        padding: 15px;
-        gap: 15px;
-    }
-
-    .product-modal-image {
-        max-width: 100%;
-        height: auto;
-        margin: 0 auto 15px;
-    }
-
-    .cart-item {
-        padding: 10px;
-        flex-wrap: wrap;
-        gap: 10px;
-    }
-
-    .cart-item-name {
-        width: 100%;
-        margin-right: 0;
-        margin-bottom: 5px;
-    }
-
-    .reviews-sources {
-        flex-wrap: wrap;
-        gap: 10px;
-        padding: 10px;
-    }
-
-    .reviews-sources a {
-        flex: 1 1 auto;
-        min-width: 120px;
-        text-align: center;
-        padding: 8px 12px;
-        font-size: 14px;
-    }
-
-    .review-card {
-        padding: 15px;
-        margin: 0 auto 15px;
-        width: 100%;
-        box-sizing: border-box;
-    }
-}
-
-@media (max-width: 640px) {
-    .main-categories, 
-    .gallery, 
-    .reviews, 
-    .contact {
-        padding: 30px 10px;
-    }
-    
-    .gallery-frame {
-        width: 90%;
-        margin: 0 auto;
-    }
-    
-    .category-cards {
-        grid-template-columns: 1fr;
-        max-width: 350px;
-        gap: 25px;
-    }
-    
-    .category-card {
-        margin: 10px auto;
-        max-width: 90%;
-    }
-    
-    .category-header {
-        padding: 30px 10px;
-    }
-    
-    .callback-btn {
-        width: 90%;
-        text-align: center;
-        margin: 10px auto;
-        padding: 12px 15px;
-    }
-    
-    .products-grid.three-columns {
-        padding: 20px 10px;
-    }
-    
-    .review-card {
-        padding: 15px;
-        margin: 0 auto 20px;
-        width: 90%;
-    }
-    
-    .product-description {
-        padding: 20px 10px;
-    }
-    
-    .description-features {
-        padding: 15px 5px;
-    }
-    
-    .subcategories-modal .modal-content {
-        padding: 20px 10px;
-    }
-    
-    #cartForm {
-        width: 95%;
-        margin: 0 auto;
-        padding: 15px 10px;
+        height: 200px;
     }
 }
 
 @media (max-width: 480px) {
     .header {
-        min-height: 350px;
-        height: auto;
-        display: block;
-        padding: 10px 0;
-    }
-    
-    .header-content {
-        padding: 15px;
-    }
-    
-    .logo-section, .contact-section {
-        width: 100%;
-        padding: 10px;
+        height: 50px;
+        min-height: 50px;
+        max-height: 50px;
     }
     
     .logo {
-        width: 120px;
-        margin: 0 auto;
-        display: block;
-    }
-
-    .slogan {
-        font-size: 16px;
-        padding: 8px 0;
-        max-width: 280px;
-    }
-    
-    .category-cards {
-        grid-template-columns: 1fr;
-        max-width: 300px;
-        gap: 20px;
-    }
-    
-    .category-card img {
-        height: 250px;
-    }
-    
-    .category-card h3 {
-        font-size: 16px;
-        padding: 12px;
-    }
-
-    .contact-icons {
-        flex-direction: column;
-        gap: 10px;
-        align-items: center;
-    }
-
-    .gallery-item {
-        width: 200px;
-    }
-    
-    .gallery-image {
-        height: 150px;
-    }
-    
-    .gallery-arrow {
-        width: 30px;
         height: 30px;
-        font-size: 14px;
-    }
-
-    .product-card {
-        padding: 15px;
-        width: 95%;
-        margin: 0 auto;
-    }
-
-    .product-card img {
-        height: 200px;
-        width: 80%;
-        margin: 0 auto;
-    }
-
-    .product-card h3 {
-        font-size: 16px;
-        text-align: center;
-        margin: 10px auto;
-    }
-
-    .product-card p {
-        font-size: 14px;
-        text-align: center;
-        padding: 0 5px;
-    }
-
-    .product-card .price {
-        font-size: 20px;
-        text-align: center;
-        margin: 10px auto;
-    }
-
-    .order-btn {
-        padding: 8px 15px;
-        font-size: 14px;
-        width: 90%;
-        margin: 10px auto 0;
+        max-width: 100px;
     }
     
-    .form-group input,
-    .form-group textarea,
-    .form-group select {
-        width: 100%;
-    }
-    
-    .form-group label {
-        text-align: center;
-        display: block;
-        margin: 0 auto 5px;
-    }
-    
-    .subcategories-grid {
-        padding: 20px 10px;
-    }
-    
-    .subcategory-item {
-        padding: 10px;
-    }
-    
-    .subcategory-item img {
-        margin: 0 auto;
-    }
-    
-    .cart-item {
-        padding: 10px;
-        justify-content: center;
-        flex-direction: column;
-        text-align: center;
-    }
-    
-    .cart-item-name {
-        margin-bottom: 5px;
-    }
-    
-    .add-review-btn {
-        width: 90%;
-        margin: 10px auto;
-    }
-
-    .contact-photo {
-        width: 150px;
-        height: 150px;
-    }
-
-    .reviews-sources {
-        gap: 10px;
-        padding-bottom: 10px;
-    }
-    
-    .reviews-sources a {
-        font-size: 14px;
-        padding: 8px 10px;
-        display: flex;
-        justify-content: center;
+    /* Компактное расположение в одну строку */
+    .header-content {
+        flex-direction: row;
         align-items: center;
-        border-radius: 4px;
-        background-color: #f5f5f5;
+        justify-content: space-between;
     }
     
-    .reviews-content {
-        padding: 15px;
+    .logo-section {
+        margin-bottom: 0;
     }
     
-    .reviews-content h1 {
-        font-size: 22px;
-        margin-bottom: 20px;
+    .contact-section {
+        width: auto;
     }
     
-    .review-card {
-        padding: 15px;
-    }
-    
-    .review-author {
-        font-size: 16px;
-    }
-    
-    .add-review-btn {
-        padding: 10px 15px;
-        font-size: 14px;
-        display: flex;
+    .contact-icons {
         align-items: center;
-        justify-content: center;
-        width: 100%;
-    }
-
-    .reviews-sources a.active {
-        background-color: rgba(139, 107, 77, 0.2);
-        border: 1px solid #8B6B4D;
-        border-bottom: 2px solid #8B6B4D;
-    }
-}
-
-@media (max-width: 360px) {
-    .logo {
-        width: 100px;
-        height: auto;
+        gap: 5px;
     }
     
-    .slogan {
-        font-size: 18px;
+    .contact-link, .cart-btn {
+        width: 28px;
+        height: 28px;
     }
     
-    .product-card {
-        padding: 10px;
-    }
-    
-    .product-card img {
-        height: 180px;
-    }
-    
-    .feature-item {
-        padding: 8px;
-    }
-    
-    .feature-item i {
-        font-size: 18px;
-    }
-    
-    .modal-content {
-        padding: 10px;
-    }
-    
-    .contact-name {
-        font-size: 18px;
-    }
-    
-    .contact-phone, .contact-email {
-        font-size: 13px;
-    }
-}
-
-/* Оптимизация для тач-устройств */
-@media (hover: none) and (pointer: coarse) {
-    .category-card,
-    .product-card,
-    .gallery-image,
-    .order-btn,
-    .details-btn,
-    .submit-btn,
-    .add-review-btn,
-    .back-btn,
-    .cart-btn,
-    .review-buttons a.review-btn,
-    .product-modal-feature,
-    .variant-card,
-    .review-card,
-    .reviews-sources a {
-        -webkit-tap-highlight-color: transparent;
-        touch-action: manipulation;
-    }
-    
-    .order-btn:active,
-    .callback-btn:active {
-        transform: scale(0.98);
-        transition: transform 0.1s ease;
+    .contact-link i, .cart-btn i {
+        font-size: 12px;
     }
 }
 
@@ -1181,8 +889,8 @@ body {
     cursor: pointer;
     z-index: 1000;
     position: fixed;
-    top: 20px;
-    left: 20px;
+    top: 15px;
+    left: 15px;
 }
 
 .mobile-menu-btn span {
@@ -1234,19 +942,19 @@ body {
     .mobile-menu-btn {
         display: flex;
     }
-
+    
     .mobile-menu {
         display: block;
     }
-
+    
     .mobile-menu-btn.active span:nth-child(1) {
         transform: translateY(9px) rotate(45deg);
     }
-
+    
     .mobile-menu-btn.active span:nth-child(2) {
         opacity: 0;
     }
-
+    
     .mobile-menu-btn.active span:nth-child(3) {
         transform: translateY(-9px) rotate(-45deg);
     }
@@ -1598,5 +1306,37 @@ body {
     
     .review-card {
         max-width: 100%;
+    }
+}
+
+/* Дополнительные стили для плавного скрытия/появления шапки */
+body:not(.home-page) .header {
+    transition: transform 0.3s ease;
+}
+
+/* Добавление анимаций для мобильных интерактивных элементов */
+@media (hover: none) and (pointer: coarse) {
+    .category-card,
+    .product-card,
+    .gallery-image,
+    .order-btn,
+    .details-btn,
+    .submit-btn,
+    .add-review-btn,
+    .back-btn,
+    .cart-btn,
+    .review-buttons a.review-btn,
+    .product-modal-feature,
+    .variant-card,
+    .review-card,
+    .reviews-sources a {
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+    }
+    
+    .order-btn:active,
+    .callback-btn:active {
+        transform: scale(0.98);
+        transition: transform 0.1s ease;
     }
 } 

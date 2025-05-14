@@ -213,11 +213,16 @@
 </head>
 <body>
     <!-- Шапка -->
-    <header class="header" style="height: 70px; min-height: 70px; display: flex; align-items: center; position: fixed; top: 0; left: 0; width: 100%; background: #fff; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
-        <div class="header-content" style="display: flex; align-items: center; width: 100%; justify-content: space-between;">
-            <div class="logo-section" style="display: flex; align-items: center;">
+    <header class="header">
+        <div class="header-content">
+            <div class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="logo-section">
                 <a href="index.html">
-                    <img src="images/common/LOG 2.jpg" alt="Логотип" class="logo" style="height: 48px; width: auto; max-width: 160px; object-fit: contain;">
+                    <img src="images/common/LOG 2.jpg" alt="Логотип" class="logo">
                 </a>
             </div>
             <div class="contact-section">
@@ -233,8 +238,18 @@
         </div>
     </header>
 
+    <div class="mobile-menu">
+        <nav>
+            <a href="index.html">Главная</a>
+            <a href="massage-chairs.html">Кресла с массажем</a>
+            <a href="children-chairs.html">Детские растущие кресла</a>
+            <a href="chairs.html">Стулья</a>
+            <a href="reviews.html">Отзывы</a>
+        </nav>
+    </div>
+
     <!-- Основной контент -->
-    <main style="margin-top: 80px;">
+    <main>
         <section class="category-header">
             <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Назад на главную</a>
             <h1>КРЕСЛА ДЕТСКИЕ РАСТУЩИЕ</h1>

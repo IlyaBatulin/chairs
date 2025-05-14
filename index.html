@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="home-page">
     <!-- Шапка -->
     <header class="header">
         <div class="header-content">
@@ -250,5 +250,29 @@
     </div>
 
     <script src="script.js"></script>
+    <script>
+        // Скрипт для определения главной страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            // Добавляем класс home-page к телу документа
+            document.body.classList.add('home-page');
+            
+            // Проверяем ширину экрана для мобильной адаптации
+            function checkMobileView() {
+                if (window.innerWidth <= 768) {
+                    // Для мобильных устройств
+                    document.querySelector('.header').style.height = 'auto';
+                    document.querySelector('.header').style.minHeight = '350px';
+                } else {
+                    // Для десктопов
+                    document.querySelector('.header').style.height = '100vh';
+                    document.querySelector('.header').style.minHeight = '500px';
+                }
+            }
+            
+            // Запускаем проверку при загрузке и изменении размера окна
+            checkMobileView();
+            window.addEventListener('resize', checkMobileView);
+        });
+    </script>
 </body>
 </html> 

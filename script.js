@@ -1143,6 +1143,98 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
+
+    // Улучшенная обработка мобильной версии сайта
+    document.addEventListener('DOMContentLoaded', function() {
+        // Определяем, на какой странице мы находимся
+        const isHomePage = document.body.classList.contains('home-page');
+        
+        // Если это не главная страница, добавляем нужные классы для внутренней страницы
+        if (!isHomePage) {
+            document.body.classList.add('interior-page');
+        }
+        
+        // Мобильное меню
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const mobileMenu = document.querySelector('.mobile-menu');
+
+        // Добавляем проверки, что элементы существуют
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenuBtn.classList.toggle('active');
+                mobileMenu.classList.toggle('active');
+                document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+            });
+
+            // Закрытие меню при клике на ссылку
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenuBtn.classList.remove('active');
+                    mobileMenu.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            });
+
+            // Закрытие меню при клике вне меню
+            document.addEventListener('click', (e) => {
+                // Проверяем, активно ли меню *перед* проверкой contains
+                if (mobileMenu.classList.contains('active')) {
+                    // Убеждаемся, что клик был не по кнопке и не внутри меню
+                    if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                        mobileMenuBtn.classList.remove('active');
+                        mobileMenu.classList.remove('active');
+                        document.body.style.overflow = '';
+                    }
+                }
+            });
+        }
+        
+        // Оптимизация для скроллинга на мобильных устройствах
+        if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+            // Функция для отложенного выполнения
+            function debounce(func, wait) {
+                let timeout;
+                return function() {
+                    const context = this, args = arguments;
+                    clearTimeout(timeout);
+                    timeout = setTimeout(function() {
+                        func.apply(context, args);
+                    }, wait);
+                };
+            }
+            
+            // Отслеживание скроллинга
+            let isScrolling = false;
+            let lastScrollTop = 0;
+            let headerHeight = document.querySelector('.header').offsetHeight;
+            
+            // Плавное скрытие/показ шапки при скролле
+            window.addEventListener('scroll', debounce(function() {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                
+                if (scrollTop > lastScrollTop && scrollTop > headerHeight && !isHomePage) {
+                    // Скролл вниз - скрываем шапку
+                    document.querySelector('.header').style.transform = 'translateY(-100%)';
+                } else {
+                    // Скролл вверх - показываем шапку
+                    document.querySelector('.header').style.transform = 'translateY(0)';
+                }
+                
+                lastScrollTop = scrollTop;
+                
+                // Устанавливаем флаг скроллинга
+                isScrolling = true;
+                clearTimeout(window.scrollEndTimer);
+                window.scrollEndTimer = setTimeout(function() {
+                    isScrolling = false;
+                }, 200);
+            }, 50));
+            
+            // Улучшение отзывчивости касаний
+            // Добавление transition для шапки
+            document.querySelector('.header').style.transition = 'transform 0.3s ease';
+        }
+    });
 });
 
 // Мобильное меню
