@@ -972,6 +972,177 @@ document.addEventListener('DOMContentLoaded', function() {
             // Ваш код обработки формы
         }, 100));
     });
+
+    // Добавляю общие функции для обработки прикосновений на мобильных устройствах
+    // ... existing code ...
+
+    // Функции для предотвращения случайных нажатий при скроллинге
+    document.addEventListener('DOMContentLoaded', function() {
+        // Функция для отложенного выполнения (debounce)
+        function debounce(func, wait) {
+            let timeout;
+            return function() {
+                const context = this, args = arguments;
+                clearTimeout(timeout);
+                timeout = setTimeout(function() {
+                    func.apply(context, args);
+                }, wait);
+            };
+        }
+        
+        // Отслеживание скроллинга
+        let isScrolling = false;
+        let scrollEndTimer;
+        
+        window.addEventListener('scroll', function() {
+            isScrolling = true;
+            // Сбрасываем состояние скроллинга через 200мс после окончания скролла
+            clearTimeout(scrollEndTimer);
+            scrollEndTimer = setTimeout(function() {
+                isScrolling = false;
+            }, 200);
+        });
+        
+        // Определяем, используется ли мобильное устройство
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        
+        if (isMobile) {
+            // Собираем все интерактивные элементы
+            const interactiveElements = document.querySelectorAll(
+                '.product-image, .product-modal-image, .additional-product-image, ' +
+                '.order-btn, .details-btn, .gallery-image, .product-card img, ' +
+                '.category-card, .variant-card img, .review-card, .modal-close, ' +
+                '.product-modal-close, .gallery-nav-button'
+            );
+            
+            // Переменные для отслеживания касаний
+            let startTouchY = 0;
+            let startTouchX = 0;
+            let startTouchTime = 0;
+            
+            // Обрабатываем каждый интерактивный элемент
+            interactiveElements.forEach(elem => {
+                if (!elem) return; // Пропускаем, если элемент не существует
+                
+                // Сохраняем оригинальный обработчик клика из атрибута onclick
+                const onClickAttr = elem.getAttribute('onclick');
+                if (onClickAttr) {
+                    elem.removeAttribute('onclick');
+                    
+                    // Добавляем новый обработчик события click
+                    elem.addEventListener('click', function(e) {
+                        if (isScrolling) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            return false;
+                        }
+                        
+                        // Вызываем оригинальный обработчик
+                        const functionWithParams = onClickAttr.match(/([^\(]+)(\([^\)]*\))/);
+                        if (functionWithParams && functionWithParams.length >= 3) {
+                            const functionName = functionWithParams[1].trim();
+                            const params = functionWithParams[2];
+                            eval(functionName + params);
+                        } else {
+                            eval(onClickAttr);
+                        }
+                    });
+                    
+                    // Улучшенная обработка касаний для мобильных устройств
+                    elem.addEventListener('touchstart', function(e) {
+                        startTouchY = e.touches[0].clientY;
+                        startTouchX = e.touches[0].clientX;
+                        startTouchTime = Date.now();
+                    }, {passive: true});
+                    
+                    elem.addEventListener('touchend', function(e) {
+                        // Вычисляем параметры жеста
+                        const endTouchY = e.changedTouches[0].clientY;
+                        const endTouchX = e.changedTouches[0].clientX;
+                        const touchDuration = Date.now() - startTouchTime;
+                        const touchDistanceY = Math.abs(endTouchY - startTouchY);
+                        const touchDistanceX = Math.abs(endTouchX - startTouchX);
+                        
+                        // Если это был скролл, свайп или долгое касание, игнорируем
+                        if (isScrolling || touchDistanceY > 10 || touchDistanceX > 10 || touchDuration > 200) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            return false;
+                        }
+                    });
+                }
+                
+                // Для элементов без атрибута onclick добавляем отслеживание касаний
+                if (!onClickAttr) {
+                    elem.addEventListener('touchstart', function(e) {
+                        startTouchY = e.touches[0].clientY;
+                        startTouchX = e.touches[0].clientX;
+                        startTouchTime = Date.now();
+                    }, {passive: true});
+                    
+                    elem.addEventListener('touchend', function(e) {
+                        // Вычисляем параметры жеста
+                        const endTouchY = e.changedTouches[0].clientY;
+                        const endTouchX = e.changedTouches[0].clientX;
+                        const touchDuration = Date.now() - startTouchTime;
+                        const touchDistanceY = Math.abs(endTouchY - startTouchY);
+                        const touchDistanceX = Math.abs(endTouchX - startTouchX);
+                        
+                        // Если это был скролл, свайп или долгое касание, игнорируем
+                        if (isScrolling || touchDistanceY > 10 || touchDistanceX > 10 || touchDuration > 200) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            return false;
+                        }
+                    });
+                }
+            });
+            
+            // Улучшенная обработка модальных окон на мобильных устройствах
+            const modalCloseButtons = document.querySelectorAll('.modal-close, .product-modal-close');
+            modalCloseButtons.forEach(btn => {
+                btn.addEventListener('touchend', function(e) {
+                    e.stopPropagation();
+                });
+            });
+            
+            // Позволяем скроллить модальные окна без закрытия
+            const modalBodies = document.querySelectorAll('.modal-content, .product-modal-content');
+            modalBodies.forEach(body => {
+                body.addEventListener('touchmove', function(e) {
+                    e.stopPropagation();
+                }, {passive: true});
+            });
+            
+            // Модифицируем поведение галереи для мобильных устройств
+            const galleryTrack = document.querySelector('.gallery-track');
+            if (galleryTrack) {
+                let touchStartX = 0;
+                let trackStartPosition = 0;
+                
+                galleryTrack.addEventListener('touchstart', function(e) {
+                    touchStartX = e.touches[0].clientX;
+                    trackStartPosition = parseInt(getComputedStyle(galleryTrack).transform.split(',')[4]) || 0;
+                    
+                    // Останавливаем инерционную прокрутку, если она есть
+                    galleryTrack.style.transition = 'none';
+                }, {passive: true});
+                
+                galleryTrack.addEventListener('touchmove', function(e) {
+                    const touchCurrentX = e.touches[0].clientX;
+                    const delta = touchCurrentX - touchStartX;
+                    
+                    // Перемещаем галерею вслед за пальцем
+                    galleryTrack.style.transform = `translateX(${trackStartPosition + delta}px)`;
+                }, {passive: true});
+                
+                galleryTrack.addEventListener('touchend', function(e) {
+                    // Восстанавливаем плавную анимацию
+                    galleryTrack.style.transition = 'transform 0.5s ease-out';
+                }, {passive: true});
+            }
+        }
+    });
 });
 
 // Мобильное меню
