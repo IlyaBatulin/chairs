@@ -46,8 +46,6 @@
             margin-right: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            margin-bottom: 8px;
-            width: 100%;
         }
         
         .details-btn:hover {
@@ -218,20 +216,6 @@
             font-size: 18px;
             margin-bottom: 10px;
             text-align: center;
-            min-height: 44px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .product-card p {
-            color: #666;
-            margin-bottom: 20px;
-            font-size: 14px;
-            min-height: 42px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
         .product-card .price {
@@ -250,7 +234,6 @@
             font-weight: 500;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            width: 100%;
         }
 
         .product-card .order-btn:hover {
@@ -318,17 +301,6 @@
                 padding: 5px 10px;
             }
             
-            .contact-icons {
-                display: flex;
-                flex-direction: column;
-                align-items: flex-end;
-            }
-            
-            .contact-link {
-                margin: 2px 0;
-                font-size: 13px;
-            }
-            
             /* Контент */
             .products-grid {
                 display: grid;
@@ -390,25 +362,7 @@
         
         /* Стили для очень маленьких экранов */
         @media (max-width: 480px) {
-            .header-content {
-                flex-direction: column;
-                align-items: center;
-                padding: 5px 0;
-            }
-            
-            .logo-section {
-                margin-bottom: 5px;
-            }
-            
-            .contact-section {
-                width: 100%;
-                display: flex;
-                justify-content: center;
-            }
-            
-            .contact-icons {
-                align-items: center;
-            }
+            /* Удаляем проблемные стили для header-content */
             
             /* Увеличиваем заголовок категории */
             .category-header h1 {
@@ -486,133 +440,191 @@
                 <img src="images/chairs/chair1.jpg" alt="Стул ФРЕД" onclick="openProductModal(1)" class="product-image">
                 <h3>Стул ФРЕД</h3>
                 <p class="price">3 500 ₽</p>
-                <button class="details-btn" onclick="openProductModal(1)">ПОДРОБНЕЕ</button>
-                <button class="order-btn" onclick='addToCart("Стул ФРЕД", 3500)'>В КОРЗИНУ</button>
+                <button class="order-btn" onclick='addToCart("Стул ФРЕД", 3500)'>ЗАКАЗАТЬ</button>
             </div>
             <div class="product-card">
                 <img src="images/chairs/chair2.jpg" alt="Стул РУМБА" onclick="openProductModal(2)" class="product-image">
                 <h3>Стул РУМБА</h3>
                 <p class="price">3 800 ₽</p>
-                <button class="details-btn" onclick="openProductModal(2)">ПОДРОБНЕЕ</button>
-                <button class="order-btn" onclick='addToCart("Стул РУМБА", 3800)'>В КОРЗИНУ</button>
+                <button class="order-btn" onclick='addToCart("Стул РУМБА", 3800)'>ЗАКАЗАТЬ</button>
             </div>
             <div class="product-card">
                 <img src="images/chairs/chair3.jpg" alt="Стул КОРА" onclick="openProductModal(3)" class="product-image">
                 <h3>Стул КОРА</h3>
                 <p class="price">4 600 ₽</p>
-                <button class="details-btn" onclick="openProductModal(3)">ПОДРОБНЕЕ</button>
-                <button class="order-btn" onclick='addToCart("Стул КОРА", 4600)'>В КОРЗИНУ</button>
+                <button class="order-btn" onclick='addToCart("Стул КОРА", 4600)'>ЗАКАЗАТЬ</button>
             </div>
             <div class="product-card">
                 <img src="images/chairs/chair4.jpg" alt="Стул-кресло ВЕРСАЛЬ" onclick="openProductModal(4)" class="product-image">
                 <h3>Стул-кресло ВЕРСАЛЬ</h3>
                 <p class="price">5 200 ₽</p>
-                <button class="details-btn" onclick="openProductModal(4)">ПОДРОБНЕЕ</button>
-                <button class="order-btn" onclick='addToCart("Стул-кресло ВЕРСАЛЬ", 5200)'>В КОРЗИНУ</button>
+                <button class="order-btn" onclick='addToCart("Стул-кресло ВЕРСАЛЬ", 5200)'>ЗАКАЗАТЬ</button>
             </div>
             <div class="product-card">
                 <img src="images/chairs/chair5.jpg" alt="Стул-кресло СОФИЯ" onclick="openProductModal(5)" class="product-image">
                 <h3>Стул-кресло СОФИЯ</h3>
                 <p class="price">5 600 ₽</p>
-                <button class="details-btn" onclick="openProductModal(5)">ПОДРОБНЕЕ</button>
-                <button class="order-btn" onclick='addToCart("Стул-кресло СОФИЯ", 5600)'>В КОРЗИНУ</button>
+                <button class="order-btn" onclick='addToCart("Стул-кресло СОФИЯ", 5600)'>ЗАКАЗАТЬ</button>
             </div>
             <div class="product-card">
                 <img src="images/chairs/chair6.jpg" alt="СТУЛЬЯ БАРНЫЕ, ПОЛУБАРНЫЕ" class="product-image" style="object-fit: contain; height: 200px; background: #f9f9f9;" onclick="openImageModal(this.src);">
                 <h3>СТУЛЬЯ БАРНЫЕ, ПОЛУБАРНЫЕ</h3>
                 <p class="price">от 4 600 ₽</p>
-                <button class="details-btn" onclick="openProductModal(6)">ПОДРОБНЕЕ</button>
-                <button class="order-btn" onclick='addToCart("СТУЛЬЯ БАРНЫЕ, ПОЛУБАРНЫЕ", 4600)'>В КОРЗИНУ</button>
+                <button class="order-btn" onclick="openProductModal(6)">ПОДРОБНЕЕ</button>
             </div>
             <div class="product-card">
                 <img src="images/chairs/chair7.jpg" alt="СТУЛЬЯ БАРНЫЕ/ПОЛУБАРНЫЕ ПОВОРОТНЫЕ" class="product-image" style="object-fit: contain; height: 200px; background: #f9f9f9;" onclick="openImageModal(this.src);">
                 <h3>СТУЛЬЯ БАРНЫЕ/ПОЛУБАРНЫЕ ПОВОРОТНЫЕ</h3>
                 <p class="price">от 5 300 ₽</p>
-                <button class="details-btn" onclick="openProductModal(7)">ПОДРОБНЕЕ</button>
-                <button class="order-btn" onclick='addToCart("СТУЛЬЯ БАРНЫЕ/ПОЛУБАРНЫЕ ПОВОРОТНЫЕ", 5300)'>В КОРЗИНУ</button>
+                <button class="order-btn" onclick="openProductModal(7)">ПОДРОБНЕЕ</button>
             </div>
             <div class="product-card">
                 <img src="images/chairs/chair8.jpg" alt="СТУЛ-КРЕСЛО БАРНЫЙ, ПОЛУБАРНЫЙ" class="product-image" style="object-fit: contain; height: 200px; background: #f9f9f9;" onclick="openImageModal(this.src);">
                 <h3>СТУЛ-КРЕСЛО БАРНЫЙ, ПОЛУБАРНЫЙ</h3>
                 <p class="price">от 6 600 ₽</p>
-                <button class="details-btn" onclick="openProductModal(8)">ПОДРОБНЕЕ</button>
-                <button class="order-btn" onclick='addToCart("СТУЛ-КРЕСЛО БАРНЫЙ, ПОЛУБАРНЫЙ", 6600)'>В КОРЗИНУ</button>
+                <button class="order-btn" onclick="openProductModal(8)">ПОДРОБНЕЕ</button>
             </div>
         </section>
     </main>
 
-    <!-- Модальные окна для товаров -->
-    <!-- Модальное окно для ФРЕД -->
-    <div class="product-modal" id="productModal1">
+    <!-- Модальное окно корзины -->
+    <div class="modal" id="cartModal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Корзина</h2>
+            <div class="cart-items">
+                <!-- Товары будут добавляться сюда динамически -->
+            </div>
+            <div class="cart-total">
+                <p>Товаров в корзине: <span id="totalItems">0</span></p>
+            </div>
+            <form id="cartForm" action="/api/send-email" method="POST">
+                <input type="hidden" name="_subject" value="Новый заказ (Стулья)">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_honeypot" value="">
+                <input type="hidden" id="cartItemsInput" name="cartItems" value="">
+                <div class="form-group">
+                    <label for="cartName">Ваше имя:</label>
+                    <input type="text" id="cartName" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="cartEmail">Email:</label>
+                    <input type="email" id="cartEmail" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="cartPhone">Телефон:</label>
+                    <input type="tel" id="cartPhone" name="phone" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="cartComment">Комментарий к заказу:</label>
+                    <textarea id="cartComment" name="comment" rows="4"></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">ОФОРМИТЬ ЗАКАЗ</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Модальное окно детальной информации о товаре -->
+    <div class="product-modal" id="productModal">
         <div class="product-modal-content">
             <div class="product-modal-header">
                 <h2 class="product-modal-title">Стул ФРЕД</h2>
-                <span class="product-modal-close" onclick="closeProductModal(1)">&times;</span>
+                <span class="product-modal-close">&times;</span>
             </div>
             <div class="product-modal-body">
                 <img src="images/chairs/chair1.jpg" alt="Стул ФРЕД" class="product-modal-image">
                 <div class="product-modal-info">
                     <div class="product-modal-feature">
-                        <i class="fas fa-star"></i>
-                        <span>Элегантный дизайн, подходит для любого интерьера</span>
+                        <i class="fas fa-check-circle"></i>
+                        <span>Стул кухонный ПРЕМИУМ качества</span>
                     </div>
                     <div class="product-modal-feature">
-                        <i class="fas fa-home"></i>
-                        <span>Идеальный стул для дома и офиса</span>
+                        <i class="fas fa-check-circle"></i>
+                        <span>Обивка - антивандальный микровелюр</span>
                     </div>
                     <div class="product-modal-feature">
-                        <i class="fas fa-check"></i>
-                        <span>Эргономичная форма спинки</span>
+                        <i class="fas fa-check-circle"></i>
+                        <span>Огромное кол-во цветов и оттенков</span>
                     </div>
                     <div class="product-modal-feature">
-                        <i class="fas fa-check"></i>
-                        <span>Прочная металлическая конструкция</span>
+                        <i class="fas fa-check-circle"></i>
+                        <span>Легко чистится в домашних условиях</span>
                     </div>
                     <div class="product-modal-feature">
-                        <i class="fas fa-check"></i>
-                        <span>Мягкое и удобное сиденье</span>
+                        <i class="fas fa-check-circle"></i>
+                        <span>Стул с мягкой спинкой</span>
                     </div>
                     <div class="product-modal-feature">
-                        <i class="fas fa-weight"></i>
-                        <span>Выдерживает до 110 кг</span>
+                        <i class="fas fa-check-circle"></i>
+                        <span>Стул с мягким сиденьем</span>
                     </div>
-                    <button class="order-btn" onclick='addToCart("Стул ФРЕД", 3500)'>ДОБАВИТЬ В КОРЗИНУ - 3 500 ₽</button>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Недорогой кухонный стул</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Максимал. рекомендованный вес до 140кг</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Примечание: данная модель может быть изготовлена с поворотным механизмом</span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Модальное окно для РУМБА -->
+    <!-- Модальное окно для второго товара -->
     <div class="product-modal" id="productModal2">
         <div class="product-modal-content">
             <div class="product-modal-header">
                 <h2 class="product-modal-title">Стул РУМБА</h2>
-                <span class="product-modal-close" onclick="closeProductModal(2)">&times;</span>
+                <span class="product-modal-close">&times;</span>
             </div>
             <div class="product-modal-body">
                 <img src="images/chairs/chair2.jpg" alt="Стул РУМБА" class="product-modal-image">
                 <div class="product-modal-info">
                     <div class="product-modal-feature">
-                        <i class="fas fa-star"></i>
-                        <span>Стильный дизайн для современного интерьера</span>
+                        <i class="fas fa-check-circle"></i>
+                        <span>Стул кухонный ПРЕМИУМ качества</span>
                     </div>
                     <div class="product-modal-feature">
-                        <i class="fas fa-home"></i>
-                        <span>Подходит для кухни, столовой или гостиной</span>
+                        <i class="fas fa-check-circle"></i>
+                        <span>Обивка - антивандальный микровелюр</span>
                     </div>
                     <div class="product-modal-feature">
-                        <i class="fas fa-check"></i>
-                        <span>Комфортная эргономичная спинка</span>
+                        <i class="fas fa-check-circle"></i>
+                        <span>Огромное кол-во цветов и оттенков</span>
                     </div>
                     <div class="product-modal-feature">
-                        <i class="fas fa-check"></i>
-                        <span>Прочный металлический каркас</span>
+                        <i class="fas fa-check-circle"></i>
+                        <span>Легко чистится в домашних условиях</span>
                     </div>
                     <div class="product-modal-feature">
-                        <i class="fas fa-check"></i>
-                        <span>Качественная обивка</span>
+                        <i class="fas fa-check-circle"></i>
+                        <span>Стул с мягкой спинкой</span>
                     </div>
-                    <button class="order-btn" onclick='addToCart("Стул РУМБА", 3800)'>ДОБАВИТЬ В КОРЗИНУ - 3 800 ₽</button>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Стул с мягким сиденьем</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Недорогой кухонный стул</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Максимал. рекомендованный вес до 140кг</span>
+                    </div>
+                    <div class="product-modal-feature">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Примечание: данная модель может быть изготовлена с поворотным механизмом</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -954,72 +966,31 @@
         </div>
     </div>
 
-    <!-- Модальное окно корзины -->
-    <div class="modal" id="cartModal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Корзина</h2>
-            <div class="cart-items">
-                <!-- Товары будут добавляться здесь -->
-            </div>
-            <div class="cart-total">
-                Всего товаров: <span id="totalItems">0</span>
-            </div>
-            <form id="cartForm" action="https://formsubmit.co/info@ruskreslo.ru" method="POST">
-                <input type="hidden" name="_subject" value="Новый заказ (Стулья)">
-                <input type="hidden" name="_captcha" value="false">
-                <input type="hidden" name="_autoresponse" value="Спасибо за ваш заказ! Мы свяжемся с вами в ближайшее время.">
-                <input type="hidden" name="_honeypot" value="">
-                <input type="hidden" id="cartItemsInput" name="cartItems" value="">
-                <div class="form-group">
-                    <label for="cartName">Ваше имя:</label>
-                    <input type="text" id="cartName" name="name" required>
-                </div>
-                <div class="form-group">
-                    <label for="cartEmail">Email:</label>
-                    <input type="email" id="cartEmail" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="cartPhone">Телефон:</label>
-                    <input type="tel" id="cartPhone" name="phone" required>
-                </div>
-                <div class="form-group">
-                    <label for="cartComment">Комментарий к заказу:</label>
-                    <textarea id="cartComment" name="comment" rows="4"></textarea>
-                </div>
-                <button type="submit" class="submit-btn">ОФОРМИТЬ ЗАКАЗ</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Модальное окно для изображений -->
+    <!-- Модальное окно для открытия изображения -->
     <div id="imageModal" class="image-modal">
         <span class="image-modal-close" onclick="closeImageModal()">&times;</span>
-        <img id="modalImage" src="" alt="Полный размер изображения">
+        <img id="modalImage" src="" alt="Увеличенное изображение" />
     </div>
 
     <script src="script.js"></script>
     <script>
-        // Функции для модальных окон продуктов
+        // Функции для модальных окон товаров
         function openProductModal(id) {
-            document.getElementById('productModal' + id).style.display = 'block';
+            document.getElementById('productModal' + (id > 1 ? id : '')).style.display = 'block';
+            // Прокручиваем наверх модального окна
+            setTimeout(function() {
+                var modalBody = document.querySelector('#productModal' + (id > 1 ? id : '') + ' .product-modal-body');
+                if (modalBody) modalBody.scrollTop = 0;
+            }, 100);
         }
 
-        function closeProductModal(id) {
-            document.getElementById('productModal' + id).style.display = 'none';
-        }
-
-        // Для просмотра изображений
-        function openImageModal(src) {
-            const modal = document.getElementById('imageModal');
-            const modalImg = document.getElementById('modalImage');
-            modal.style.display = 'block';
-            modalImg.src = src;
-        }
-
-        function closeImageModal() {
-            document.getElementById('imageModal').style.display = 'none';
-        }
+        // Обработка закрытия модальных окон
+        document.querySelectorAll('.product-modal-close').forEach(button => {
+            button.addEventListener('click', function() {
+                const modal = this.closest('.product-modal');
+                modal.style.display = 'none';
+            });
+        });
 
         // Закрытие модальных окон при клике вне содержимого
         window.onclick = function(event) {
@@ -1029,10 +1000,124 @@
             if (event.target.classList.contains('image-modal')) {
                 event.target.style.display = 'none';
             }
-            if (event.target.classList.contains('modal')) {
-                event.target.style.display = 'none';
-            }
         }
+
+        function openImageModal(src) {
+            var modal = document.getElementById("imageModal");
+            var img = document.getElementById("modalImage");
+            img.src = src;
+            modal.style.display = "block";
+            
+            // Добавляем обработчик свайпа для закрытия на мобильных устройствах
+            let touchstartY = 0;
+            let touchendY = 0;
+            
+            function checkSwipeDirection() {
+                if (touchendY - touchstartY > 50) { // Свайп вниз
+                    closeImageModal();
+                }
+            }
+            
+            modal.addEventListener('touchstart', function(e) {
+                touchstartY = e.changedTouches[0].screenY;
+            }, {passive: true});
+            
+            modal.addEventListener('touchend', function(e) {
+                touchendY = e.changedTouches[0].screenY;
+                checkSwipeDirection();
+            }, {passive: true});
+        }
+
+        function closeImageModal() {
+            document.getElementById("imageModal").style.display = "none";
+        }
+        
+        // Функция для предотвращения случайных нажатий при скролле
+        function debounce(func, wait) {
+            let timeout;
+            return function() {
+                const context = this, args = arguments;
+                clearTimeout(timeout);
+                timeout = setTimeout(function() {
+                    func.apply(context, args);
+                }, wait);
+            };
+        }
+        
+        // Обновлённая улучшенная обработка кликов для мобильных устройств
+        document.addEventListener('DOMContentLoaded', function() {
+            // Переопределяем обработку нажатий для всех интерактивных элементов
+            var isScrolling = false;
+            var startTouchY = 0;
+            var startTouchTime = 0;
+            
+            // Отслеживаем скроллинг
+            window.addEventListener('scroll', function() {
+                isScrolling = true;
+                // Сбрасываем состояние скроллинга через 200мс после окончания скролла
+                clearTimeout(window.scrollEndTimer);
+                window.scrollEndTimer = setTimeout(function() {
+                    isScrolling = false;
+                }, 200);
+            });
+            
+            // Предотвращаем случайные нажатия при скроллинге
+            document.querySelectorAll('.product-image, .product-modal-image, .additional-product-image, .order-btn').forEach(elem => {
+                // Удаляем прямые onclick атрибуты, чтобы заменить их на более надёжные обработчики
+                const onClick = elem.getAttribute('onclick');
+                elem.removeAttribute('onclick');
+                
+                // Заменяем прямые клики на обработчики с проверкой скроллинга
+                elem.addEventListener('click', function(e) {
+                    if (isScrolling) {
+                        e.preventDefault();
+                        return false;
+                    }
+                    
+                    // Выполняем действие только если это не было скроллингом
+                    if (onClick && onClick.includes('openImageModal')) {
+                        const src = this.getAttribute('src');
+                        openImageModal(src);
+                    } else if (onClick && onClick.includes('openProductModal')) {
+                        const funcCall = onClick.split('(')[1].split(')')[0];
+                        openProductModal(parseInt(funcCall));
+                    } else if (onClick && onClick.includes('addToCart')) {
+                        // Извлекаем параметры из onclick и вызываем функцию
+                        const params = onClick.match(/addToCart\(\"(.*)\", (.*)\)/);
+                        if (params && params.length >= 3) {
+                            addToCart(params[1], parseFloat(params[2]));
+                        }
+                    }
+                });
+                
+                // Улучшенная обработка касаний для мобильных устройств
+                elem.addEventListener('touchstart', function(e) {
+                    startTouchY = e.touches[0].clientY;
+                    startTouchTime = Date.now();
+                }, {passive: true});
+                
+                elem.addEventListener('touchend', function(e) {
+                    // Если это был скролл или свайп, игнорируем
+                    const endTouchY = e.changedTouches[0].clientY;
+                    const touchDuration = Date.now() - startTouchTime;
+                    const touchDistance = Math.abs(endTouchY - startTouchY);
+                    
+                    if (isScrolling || touchDistance > 10 || touchDuration > 200) {
+                        e.preventDefault();
+                        return false;
+                    }
+                }, {passive: false});
+            });
+            
+            // Также сбрасываем стандартные обработчики для всех модальных окон и добавляем улучшенные
+            document.querySelectorAll('.product-modal-close').forEach(btn => {
+                btn.addEventListener('touchend', function(e) {
+                    e.preventDefault();
+                    const modal = this.closest('.product-modal');
+                    modal.style.display = 'none';
+                });
+            });
+        });
     </script>
 </body>
 </html> 
