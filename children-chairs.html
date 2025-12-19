@@ -209,6 +209,115 @@
         .back-btn i {
             font-size: 16px;
         }
+
+        /* Стили для галереи в модальном окне */
+        .product-modal-gallery-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .product-modal-gallery-container .product-modal-price {
+            font-size: 28px;
+            font-weight: 700;
+            color: #8B6B4D;
+            margin: 0;
+            text-align: center;
+        }
+
+        .product-gallery-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .product-gallery-image-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f9f9f9;
+            border-radius: 10px;
+            padding: 20px;
+            min-height: 500px;
+        }
+
+        .product-gallery-image {
+            max-width: 100%;
+            max-height: 600px;
+            height: auto;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: opacity 0.3s ease;
+            opacity: 1;
+        }
+
+        .gallery-nav-btn {
+            background: #8B6B4D;
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .gallery-nav-btn:hover {
+            background: #6B4F3A;
+            transform: scale(1.1);
+        }
+
+        .gallery-nav-btn:active {
+            transform: scale(0.95);
+        }
+
+        .gallery-counter {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .product-gallery-wrapper {
+                gap: 10px;
+            }
+
+            .gallery-nav-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+
+            .product-gallery-image-container {
+                min-height: 400px;
+                padding: 15px;
+            }
+
+            .product-gallery-image {
+                max-height: 400px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -252,7 +361,7 @@
         <section class="category-header">
             <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Назад на главную</a>
             <h1>ЭРГОНОМИЧНЫЕ КРЕСЛА</h1>
-            <p class="category-description">Эргономичные кресла, которые растут вместе с вашим ребенком</p>
+            <p class="category-description">Артепедические кресла, которые растут вместе с вашим ребенком</p>
         </section>
 
         <section class="products-grid">
@@ -299,42 +408,21 @@
                 <span class="product-modal-close" onclick="closeProductModal1()">&times;</span>
             </div>
             <div class="product-modal-body">
-                <div class="product-modal-image-container">
-                    <img src="images/children-chairs/2detchair.jpg" alt="Растущее кресло Модель 1" class="product-modal-image">
-                </div>
-                <div class="product-modal-info">
+                <div class="product-modal-gallery-container">
                     <p class="product-modal-price">12 800 ₽</p>
-                    <div class="product-modal-feature">
-                        <i class="fas fa-star"></i>
-                        <span>Детское кресло ПРЕМИУМ качества</span>
-                    </div>
-                    <div class="product-modal-feature">
-                        <i class="fas fa-chair"></i>
-                        <span>Уникальная система двойной спинки для правильной осанки</span>
-                    </div>
-                    <div class="product-modal-feature">
-                        <i class="fas fa-couch"></i>
-                        <span>Эргономичное мягкое сиденье с углублением</span>
-                    </div>
-                    <div class="product-modal-feature">
-                        <i class="fas fa-leaf"></i>
-                        <span>Экологически чистые материалы (без запаха)</span>
-                    </div>
-                    <div class="product-modal-feature">
-                        <i class="fas fa-hands"></i>
-                        <span>Удобные откидные подлокотники</span>
-                    </div>
-                    <div class="product-modal-feature">
-                        <i class="fas fa-arrows-alt-v"></i>
-                        <span>Регулировка высоты кресла и глубины сиденья</span>
-                    </div>
-                    <div class="product-modal-feature">
-                        <i class="fas fa-baby"></i>
-                        <span>Кресло для ребенка от 3 до 14 лет</span>
-                    </div>
-                    <div class="product-modal-feature">
-                        <i class="fas fa-weight"></i>
-                        <span>Максимал. рекомендованный вес до 129кг</span>
+                    <div class="product-gallery-wrapper">
+                        <button class="gallery-nav-btn gallery-prev-btn" onclick="changeGalleryImage('model1', -1)">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <div class="product-gallery-image-container">
+                            <img id="model1-gallery-image" src="images/podrob1/1.png" alt="Компьютерное кресло Модель 1" class="product-gallery-image">
+                            <div class="gallery-counter">
+                                <span id="model1-counter">1</span> / <span id="model1-total">11</span>
+                            </div>
+                        </div>
+                        <button class="gallery-nav-btn gallery-next-btn" onclick="changeGalleryImage('model1', 1)">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -349,42 +437,21 @@
                 <span class="product-modal-close" onclick="closeProductModal2()">&times;</span>
             </div>
             <div class="product-modal-body">
-                <div class="product-modal-image-container">
-                    <img src="images/children-chairs/1detchair.jpg" alt="Растущее кресло Модель 2" class="product-modal-image">
-                </div>
-                <div class="product-modal-info">
+                <div class="product-modal-gallery-container">
                     <p class="product-modal-price">14 800 ₽</p>
-                    <div class="product-modal-feature">
-                        <i class="fas fa-star"></i>
-                        <span>Детское кресло ПРЕМИУМ качества</span>
-                    </div>
-                    <div class="product-modal-feature">
-                        <i class="fas fa-lock"></i>
-                        <span>Автоматическая блокировка колес</span>
-                    </div>
-                    <div class="product-modal-feature">
-                        <i class="fas fa-gift"></i>
-                        <span>Комплект съёмных чехлов в подарок</span>
-                    </div>
-                    <div class="product-modal-feature">
-                        <i class="fas fa-heart"></i>
-                        <span>Мягкое кресло растущее – для здоровья ребенка</span>
-                    </div>
-                    <div class="product-modal-feature">
-                        <i class="fas fa-child"></i>
-                        <span>Растущий стул "растет" вместе с ребенком</span>
-                    </div>
-                    <div class="product-modal-feature">
-                        <i class="fas fa-arrows-alt-v"></i>
-                        <span>Расширенная регулировка по высоте и глубине</span>
-                    </div>
-                    <div class="product-modal-feature">
-                        <i class="fas fa-baby"></i>
-                        <span>Кресло для ребенка от 3 до 14 лет</span>
-                    </div>
-                    <div class="product-modal-feature">
-                        <i class="fas fa-weight"></i>
-                        <span>Максимал. рекомендованный вес до 120кг</span>
+                    <div class="product-gallery-wrapper">
+                        <button class="gallery-nav-btn gallery-prev-btn" onclick="changeGalleryImage('model2', -1)">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <div class="product-gallery-image-container">
+                            <img id="model2-gallery-image" src="images/podrob2/1.png" alt="Компьютерное кресло Модель 2" class="product-gallery-image">
+                            <div class="gallery-counter">
+                                <span id="model2-counter">1</span> / <span id="model2-total">12</span>
+                            </div>
+                        </div>
+                        <button class="gallery-nav-btn gallery-next-btn" onclick="changeGalleryImage('model2', 1)">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -435,17 +502,9 @@
 
     <script src="script.js"></script>
     <script>
-        // Функции для модальных окон продуктов
-        function openProductModal1() {
-            document.getElementById('productModal1').style.display = 'block';
-        }
-
+        // Функции для закрытия модальных окон
         function closeProductModal1() {
             document.getElementById('productModal1').style.display = 'none';
-        }
-
-        function openProductModal2() {
-            document.getElementById('productModal2').style.display = 'block';
         }
 
         function closeProductModal2() {
@@ -457,6 +516,100 @@
             if (event.target.classList.contains('product-modal')) {
                 event.target.style.display = 'none';
             }
+        }
+
+        // Галерея для модели 1 (podrob1)
+        const model1Images = [
+            'images/podrob1/1.png',
+            'images/podrob1/2.png',
+            'images/podrob1/3.png',
+            'images/podrob1/4.png',
+            'images/podrob1/5.png',
+            'images/podrob1/6.png',
+            'images/podrob1/7.png',
+            'images/podrob1/8.png',
+            'images/podrob1/10.png',
+            'images/podrob1/11.png',
+            'images/podrob1/12.png'
+        ];
+
+        // Галерея для модели 2 (podrob2)
+        const model2Images = [
+            'images/podrob2/1.png',
+            'images/podrob2/2.jpg',
+            'images/podrob2/3.png',
+            'images/podrob2/4.png',
+            'images/podrob2/5.png',
+            'images/podrob2/6.png',
+            'images/podrob2/7.png',
+            'images/podrob2/8.png',
+            'images/podrob2/9.png',
+            'images/podrob2/10.png',
+            'images/podrob2/11.png',
+            'images/podrob2/12.png'
+        ];
+
+        let currentImageIndex1 = 0;
+        let currentImageIndex2 = 0;
+
+        function changeGalleryImage(model, direction) {
+            let images, currentIndex, imageElement, counterElement, totalElement;
+            
+            if (model === 'model1') {
+                images = model1Images;
+                currentIndex = currentImageIndex1;
+                imageElement = document.getElementById('model1-gallery-image');
+                counterElement = document.getElementById('model1-counter');
+                totalElement = document.getElementById('model1-total');
+            } else if (model === 'model2') {
+                images = model2Images;
+                currentIndex = currentImageIndex2;
+                imageElement = document.getElementById('model2-gallery-image');
+                counterElement = document.getElementById('model2-counter');
+                totalElement = document.getElementById('model2-total');
+            } else {
+                return;
+            }
+
+            // Вычисляем новый индекс
+            let newIndex = currentIndex + direction;
+            
+            // Циклическая навигация
+            if (newIndex < 0) {
+                newIndex = images.length - 1;
+            } else if (newIndex >= images.length) {
+                newIndex = 0;
+            }
+
+            // Обновляем индекс
+            if (model === 'model1') {
+                currentImageIndex1 = newIndex;
+            } else {
+                currentImageIndex2 = newIndex;
+            }
+
+            // Плавное переключение
+            imageElement.style.opacity = '0';
+            setTimeout(() => {
+                imageElement.src = images[newIndex];
+                counterElement.textContent = newIndex + 1;
+                imageElement.style.opacity = '1';
+            }, 150);
+        }
+
+        // Сброс индексов при открытии модальных окон
+        function openProductModal1() {
+            currentImageIndex1 = 0;
+            document.getElementById('model1-gallery-image').src = model1Images[0];
+            document.getElementById('model1-counter').textContent = '1';
+            document.getElementById('productModal1').style.display = 'block';
+        }
+
+        function openProductModal2() {
+            currentImageIndex2 = 0;
+            document.getElementById('model2-gallery-image').src = model2Images[0];
+            document.getElementById('model2-counter').textContent = '1';
+            document.getElementById('productModal2').style.display = 'block';
         }
     </script>
 </body>
