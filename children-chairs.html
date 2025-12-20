@@ -319,6 +319,20 @@
             }
         }
     </style>
+    
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function(m,e,t,r,i,k,a){
+            m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();
+            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+        })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=105927640', 'ym');
+     
+        ym(105927640, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", accurateTrackBounce:true, trackLinks:true});
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/105927640" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
 </head>
 <body>
     <!-- Шапка -->
@@ -552,21 +566,48 @@
         let currentImageIndex1 = 0;
         let currentImageIndex2 = 0;
 
+        // Предзагрузка всех изображений для быстрого переключения
+        const preloadedImages1 = [];
+        const preloadedImages2 = [];
+
+        function preloadImages() {
+            // Предзагрузка для модели 1
+            model1Images.forEach((src, index) => {
+                const img = new Image();
+                img.src = src;
+                preloadedImages1[index] = img;
+            });
+
+            // Предзагрузка для модели 2
+            model2Images.forEach((src, index) => {
+                const img = new Image();
+                img.src = src;
+                preloadedImages2[index] = img;
+            });
+        }
+
+        // Запускаем предзагрузку при загрузке страницы
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', preloadImages);
+        } else {
+            preloadImages();
+        }
+
         function changeGalleryImage(model, direction) {
-            let images, currentIndex, imageElement, counterElement, totalElement;
+            let images, currentIndex, imageElement, counterElement, preloadedImages;
             
             if (model === 'model1') {
                 images = model1Images;
                 currentIndex = currentImageIndex1;
                 imageElement = document.getElementById('model1-gallery-image');
                 counterElement = document.getElementById('model1-counter');
-                totalElement = document.getElementById('model1-total');
+                preloadedImages = preloadedImages1;
             } else if (model === 'model2') {
                 images = model2Images;
                 currentIndex = currentImageIndex2;
                 imageElement = document.getElementById('model2-gallery-image');
                 counterElement = document.getElementById('model2-counter');
-                totalElement = document.getElementById('model2-total');
+                preloadedImages = preloadedImages2;
             } else {
                 return;
             }
@@ -588,26 +629,32 @@
                 currentImageIndex2 = newIndex;
             }
 
-            // Плавное переключение
-            imageElement.style.opacity = '0';
-            setTimeout(() => {
+            // Быстрое переключение с использованием предзагруженных изображений
+            const newImage = preloadedImages[newIndex];
+            if (newImage && newImage.complete) {
+                // Изображение уже загружено - мгновенное переключение
                 imageElement.src = images[newIndex];
                 counterElement.textContent = newIndex + 1;
-                imageElement.style.opacity = '1';
-            }, 150);
+            } else {
+                // Если изображение еще загружается, используем обычный способ
+                imageElement.src = images[newIndex];
+                counterElement.textContent = newIndex + 1;
+            }
         }
 
         // Сброс индексов при открытии модальных окон
         function openProductModal1() {
             currentImageIndex1 = 0;
-            document.getElementById('model1-gallery-image').src = model1Images[0];
+            const img = document.getElementById('model1-gallery-image');
+            img.src = model1Images[0];
             document.getElementById('model1-counter').textContent = '1';
             document.getElementById('productModal1').style.display = 'block';
         }
 
         function openProductModal2() {
             currentImageIndex2 = 0;
-            document.getElementById('model2-gallery-image').src = model2Images[0];
+            const img = document.getElementById('model2-gallery-image');
+            img.src = model2Images[0];
             document.getElementById('model2-counter').textContent = '1';
             document.getElementById('productModal2').style.display = 'block';
         }
