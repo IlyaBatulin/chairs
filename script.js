@@ -643,6 +643,7 @@ function loadReviews() {
         } else {
             reviews = [];
         }
+        // Всегда вызываем displayReviews для сортировки всех отзывов (статических + из localStorage)
         displayReviews();
     } catch (error) {
         console.error('Ошибка при загрузке отзывов:', error);
@@ -658,26 +659,77 @@ function displayReviews() {
         console.error('Контейнер отзывов не найден');
         return;
     }
-    
-    // Если в контейнере уже есть отзывы, не перезаписываем их
-    if (container.children.length > 0) {
-        console.log('Отзывы уже отображаются в HTML');
-        return;
+
+    // Функция для преобразования даты в формат для сортировки
+    function parseDate(dateString) {
+        // Формат даты: "03.04.2025" (DD.MM.YYYY) или "03.04.2025" с иконкой
+        let cleanDate = dateString.replace(/<[^>]*>/g, '').trim(); // Убираем HTML теги
+        cleanDate = cleanDate.replace(/[^\d.]/g, ''); // Оставляем только цифры и точки
+        const parts = cleanDate.split('.');
+        if (parts.length === 3) {
+            return new Date(parseInt(parts[2]), parseInt(parts[1]) - 1, parseInt(parts[0]));
+        }
+        // Если формат не распознан, возвращаем текущую дату
+        return new Date();
     }
 
-    if (reviews.length === 0) {
+    // Извлекаем статические отзывы из HTML
+    const staticReviewCards = container.querySelectorAll('.review-card');
+    const staticReviews = [];
+    
+    staticReviewCards.forEach(card => {
+        const authorElement = card.querySelector('.review-author');
+        const dateElement = card.querySelector('.review-date');
+        const ratingElement = card.querySelector('.review-rating');
+        const textElement = card.querySelector('.review-text');
+        
+        if (authorElement && dateElement && textElement) {
+            const author = authorElement.textContent.trim();
+            const dateText = dateElement.textContent.trim();
+            // Извлекаем дату из текста (формат: "03.04.2025")
+            const dateMatch = dateText.match(/(\d{2}\.\d{2}\.\d{4})/);
+            const date = dateMatch ? dateMatch[1] : dateText;
+            
+            // Подсчитываем рейтинг по звездам
+            const stars = ratingElement.querySelectorAll('.fas.fa-star').length;
+            
+            const text = textElement.textContent.trim();
+            
+            staticReviews.push({
+                name: author,
+                date: date,
+                rating: stars,
+                text: text
+            });
+        }
+    });
+
+    // Объединяем статические отзывы с отзывами из localStorage
+    const allReviews = [...staticReviews, ...reviews];
+
+    if (allReviews.length === 0) {
         container.innerHTML = '<p class="no-reviews">Пока нет отзывов. Будьте первым!</p>';
         return;
     }
 
-    reviews.forEach((review, index) => {
+    // Сортируем отзывы по дате: от новых к старым
+    const sortedReviews = allReviews.sort((a, b) => {
+        const dateA = parseDate(a.date);
+        const dateB = parseDate(b.date);
+        return dateB - dateA; // От новых к старым
+    });
+
+    // Очищаем контейнер и отображаем отсортированные отзывы
+    container.innerHTML = '';
+
+    sortedReviews.forEach((review, index) => {
         const reviewCard = document.createElement('div');
         reviewCard.className = 'review-card';
         reviewCard.innerHTML = `
             <div class="review-header">
                 <div class="review-info">
-                    <span class="review-author">${review.name}</span>
-                    <span class="review-date">${review.date}</span>
+                    <h3 class="review-author">${review.name}</h3>
+                    <div class="review-date"><i class="far fa-calendar-alt"></i> ${review.date}</div>
                 </div>
             </div>
             <div class="review-rating">
